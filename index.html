@@ -750,6 +750,21 @@
                         <div class="card-desc">Pembahasan dan evaluasi hasil</div>
                     </div>
                 </a>
+
+                <a href="https://personaresearchconsulting-alt.github.io/ALTES-PSIKOLOGI-1/" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </div>
+                            <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                        <div class="card-title">PSYMETRIC ASSESSMENT</div>
+                        <div class="card-desc">Asesmen dan evaluasi psikometri</div>
+                    </div>
+                </a>
             </div>
 
             <!-- Section 3: Information Cards -->
@@ -778,10 +793,18 @@
          JAVASCRIPT SYSTEM & PROTECTION
     ================================================== -->
     <script>
-        // 1. Password Generation (PRC000 - PRC100)
+        // 1. Password Generation Manual (PRC00 - PRC101)
         const VALID_PASSWORDS = [
-            'PRC000',
-            ...Array.from({ length: 100 }, (_, i) => `PRC${String(i + 1).padStart(3, '0')}`)
+            'PRC00', 'BAGAS11', 'ILHAM0801', 'CANDRA17', 'EGA12', 'PRC05', 'PRC06', 'PRC07', 'PRC08', 'PRC09', 'PRC10',
+            'PRC11', 'PRC12', 'PRC13', 'PRC14', 'PRC15', 'PRC16', 'PRC17', 'PRC18', 'PRC19', 'PRC20',
+            'PRC21', 'PRC22', 'PRC23', 'PRC24', 'PRC25', 'PRC26', 'PRC27', 'PRC28', 'PRC29', 'PRC30',
+            'PRC31', 'PRC32', 'PRC33', 'PRC34', 'PRC35', 'PRC36', 'PRC37', 'PRC38', 'PRC39', 'PRC40',
+            'PRC41', 'PRC42', 'PRC43', 'PRC44', 'PRC45', 'PRC46', 'PRC47', 'PRC48', 'PRC49', 'PRC50',
+            'PRC51', 'PRC52', 'PRC53', 'PRC54', 'PRC55', 'PRC56', 'PRC57', 'PRC58', 'PRC59', 'PRC60',
+            'PRC61', 'PRC62', 'PRC63', 'PRC64', 'PRC65', 'PRC66', 'PRC67', 'PRC68', 'PRC69', 'PRC70',
+            'PRC71', 'PRC72', 'PRC73', 'PRC74', 'PRC75', 'PRC76', 'PRC77', 'PRC78', 'PRC79', 'PRC80',
+            'PRC81', 'PRC82', 'PRC83', 'PRC84', 'PRC85', 'PRC86', 'PRC87', 'PRC88', 'PRC89', 'PRC90',
+            'PRC91', 'PRC92', 'PRC93', 'PRC94', 'PRC95', 'PRC96', 'PRC97', 'PRC98', 'PRC99', 'PRC100', 'PRC101'
         ];
 
         // 2. DOM Elements
@@ -794,7 +817,7 @@
 
         // 3. Login Logic
         function handleLogin() {
-            const inputVal = passwordInput.value.trim().toUpperCase();
+            const inputVal = passwordInput.value.trim();
 
             // Clear previous error
             errorMessage.textContent = '';
@@ -805,7 +828,10 @@
                 return;
             }
 
-            if (VALID_PASSWORDS.includes(inputVal)) {
+            // Memeriksa input secara akurat (cocokkan huruf besar/kecil persis atau dalam daftar resmi)
+            const isValid = VALID_PASSWORDS.some(pass => pass.toLowerCase() === inputVal.toLowerCase());
+
+            if (isValid) {
                 // Success: Hide Login, Show Dashboard
                 loginPage.style.display = 'none';
                 dashboard.style.display = 'flex';
