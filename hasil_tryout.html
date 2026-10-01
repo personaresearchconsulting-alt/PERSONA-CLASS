@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hasil Siswa - PRC CLASS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #0B192C;
+            --navy-light: #1E3E62;
+            --cream: #F8F9FA;
+            --cream-card: #FFFFFF;
+            --accent-rose: #D97757;
+            --text-main: #1D2A44;
+            --text-muted: #5C6B82;
+            --border-color: #E2E8F0;
+            --danger: #C0392B;
+            --success: #188A42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--cream-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 2rem;
+        }
+
+        .brand-logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--navy);
+            text-decoration: none;
+        }
+
+        .brand-logo span {
+            color: var(--accent-rose);
+        }
+
+        main {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 1.25rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+        }
+
+        .login-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--cream-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(11, 25, 44, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(11, 25, 44, 0.08);
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            border-radius: 9px;
+            padding: 1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background: var(--navy-light);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .message {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 9px;
+            font-size: 0.9rem;
+        }
+
+        .message.error {
+            display: block;
+            background: #FDECEC;
+            color: var(--danger);
+            border: 1px solid #F5C6C6;
+        }
+
+        .message.success {
+            display: block;
+            background: #EAF7EF;
+            color: var(--success);
+            border: 1px solid #BDE5C8;
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 2.5rem;
+        }
+
+        .student-heading {
+            background: var(--navy);
+            color: #FFFFFF;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .student-heading small {
+            display: block;
+            opacity: 0.75;
+            margin-bottom: 0.25rem;
+        }
+
+        .student-heading h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .table-wrapper {
+            background: var(--cream-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 4px 12px rgba(11, 25, 44, 0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            background: #F1F4F7;
+        }
+
+        th {
+            padding: 1rem 0.9rem;
+            text-align: left;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.88rem;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #FAFBFC;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-latihan {
+            background: #EEF2FF;
+            color: #5145CD;
+        }
+
+        .badge-tryout {
+            background: #FDEEE9;
+            color: #B94F2F;
+        }
+
+        .score {
+            font-weight: 800;
+        }
+
+        .score-low {
+            color: var(--danger);
+        }
+
+        .score-normal {
+            color: #315D9B;
+        }
+
+        .score-total {
+            color: var(--success);
+            font-size: 1rem;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .hint {
+            margin-top: 0.6rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 1rem 1.25rem;
+            }
+
+            main {
+                padding: 2rem 1rem 3rem;
+            }
+
+            .login-card {
+                padding: 1.5rem;
+            }
+
+            .student-heading {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="brand-logo">
+        PRC <span>CLASS</span>
+    </a>
+</header>
+
+
+<main>
+
+    <div class="page-header">
+
+        <h1>HASIL SISWA</h1>
+
+        <p>
+            Lihat riwayat latihan dan perkembangan hasil belajar.
+        </p>
+
+    </div>
+
+
+    <!-- FORM PENCARIAN -->
+
+    <div class="login-card">
+
+        <div class="form-group">
+
+            <label for="studentName">
+                Nama Siswa
+            </label>
+
+            <input
+                type="text"
+                id="studentName"
+                placeholder="Masukkan nama siswa"
+                autocomplete="off"
+            >
+
+            <div class="hint">
+                Masukkan minimal nama depan sesuai nama siswa.
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="checkButton"
+            class="btn btn-primary"
+            onclick="checkResult()"
+        >
+            LIHAT HASIL
+        </button>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+    </div>
+
+
+    <!-- HASIL -->
+
+    <section
+        id="resultsSection"
+        class="results-section"
+    >
+
+        <div class="student-heading">
+
+            <small>HASIL BELAJAR SISWA</small>
+
+            <h2 id="studentDisplayName">
+                -
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Aktivitas</th>
+                        <th>Kelompok</th>
+                        <th>Sub Tes</th>
+                        <th>Materi</th>
+                        <th>Nama Tes</th>
+                        <th>Tanggal</th>
+                        <th>Nilai</th>
+                        <th>Total</th>
+                        <th>Keterangan</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultsBody"></tbody>
+
+            </table>
+
+
+            <div
+                id="emptyState"
+                class="empty-state"
+            >
+                Belum ada hasil belajar.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <a
+        href="index.html"
+        class="back-link"
+    >
+        ← Kembali ke PRC CLASS
+    </a>
+
+</main>
+
+
+<script>
+
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxzzajqlZMq2qOSgxoLAvdpTeMgAOSDCJmkqZvIy0uMxfgPfCxlXNNKotDquzHmkqUa/exec";
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function getScoreClass(value) {
+
+    const number =
+        parseFloat(
+            String(value)
+                .replace(",", ".")
+        );
+
+    if (isNaN(number)) {
+        return "";
+    }
+
+    if (number < 60) {
+        return "score score-low";
+    }
+
+    return "score score-normal";
+
+}
+
+
+function getActivityBadge(activity) {
+
+    const value =
+        String(activity || "")
+            .toUpperCase();
+
+    if (value === "TRYOUT") {
+
+        return `
+            <span class="badge badge-tryout">
+                TRYOUT
+            </span>
+        `;
+
+    }
+
+    return `
+        <span class="badge badge-latihan">
+            ${escapeHtml(activity || "-")}
+        </span>
+    `;
+
+}
+
+
+async function checkResult() {
+
+    const name =
+        document
+            .getElementById("studentName")
+            .value
+            .trim();
+
+
+    const button =
+        document.getElementById("checkButton");
+
+    const message =
+        document.getElementById("message");
+
+    const resultsSection =
+        document.getElementById("resultsSection");
+
+    const resultsBody =
+        document.getElementById("resultsBody");
+
+
+    message.className = "message";
+    message.textContent = "";
+
+    resultsSection.style.display = "none";
+    resultsBody.innerHTML = "";
+
+
+    if (!name) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Nama siswa wajib diisi.";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+    button.textContent = "MEMUAT...";
+
+
+    try {
+
+        const url =
+            SCRIPT_URL +
+            "?name=" +
+            encodeURIComponent(name);
+
+
+        const response =
+            await fetch(url);
+
+
+        const data =
+            await response.json();
+
+
+        /* ===============================================
+           NAMA TIDAK DITEMUKAN
+           =============================================== */
+
+        if (
+            !data ||
+            data.status === "error"
+        ) {
+
+            throw new Error(
+                data?.message ||
+                "Nama siswa tidak ditemukan."
+            );
+
+        }
+
+
+        /* ===============================================
+           NAMA DEPAN DUPLIKAT
+           =============================================== */
+
+        if (
+            data.status === "multiple"
+        ) {
+
+            message.className =
+                "message error";
+
+            message.textContent =
+                data.message ||
+                "Ada lebih dari satu siswa dengan nama tersebut. Silakan masukkan nama lengkap.";
+
+            return;
+
+        }
+
+
+        /* ===============================================
+           DATA BERHASIL
+           =============================================== */
+
+        if (
+            data.status !== "success"
+        ) {
+
+            throw new Error(
+                "Data hasil tidak dapat ditampilkan."
+            );
+
+        }
+
+
+        document
+            .getElementById("studentDisplayName")
+            .textContent =
+            data.student?.name || name;
+
+
+        const results =
+            Array.isArray(data.results)
+                ? data.results
+                : [];
+
+
+        if (results.length === 0) {
+
+            document
+                .getElementById("emptyState")
+                .style.display = "block";
+
+        } else {
+
+            document
+                .getElementById("emptyState")
+                .style.display = "none";
+
+
+            results.forEach(function(item) {
+
+                const value =
+                    item.value ?? "-";
+
+                const total =
+                    item.total ?? "-";
+
+
+                const valueClass =
+                    getScoreClass(value);
+
+
+                const totalNumber =
+                    parseFloat(
+                        String(total)
+                            .replace(",", ".")
+                    );
+
+
+                const totalClass =
+                    !isNaN(totalNumber) &&
+                    totalNumber < 60
+                        ? "score score-low"
+                        : "score score-total";
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${getActivityBadge(item.activity)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.group || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.subtest || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.material || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.test || "-")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.date || "-")}
+                    </td>
+
+                    <td class="${valueClass}">
+                        ${escapeHtml(value)}
+                    </td>
+
+                    <td class="${totalClass}">
+                        ${escapeHtml(total)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(item.note || "-")}
+                    </td>
+
+                `;
+
+
+                resultsBody.appendChild(row);
+
+            });
+
+        }
+
+
+        resultsSection.style.display = "block";
+
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "Data hasil berhasil ditemukan.";
+
+
+    } catch (error) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            error.message ||
+            "Terjadi kesalahan saat mengambil data.";
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "LIHAT HASIL";
+
+    }
+
+}
+
+
+document
+    .getElementById("studentName")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            checkResult();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
