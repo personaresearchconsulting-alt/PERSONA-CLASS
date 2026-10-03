@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -37,10 +38,7 @@ body{
     margin:40px auto;
 }
 
-
-/* =====================================================
-   LOGIN ADMIN
-   ===================================================== */
+/* LOGIN */
 
 .admin-login{
     min-height:70vh;
@@ -112,10 +110,7 @@ body{
     min-height:18px;
 }
 
-
-/* =====================================================
-   ADMIN CONTENT
-   ===================================================== */
+/* CONTENT */
 
 #adminContent{
     display:none;
@@ -162,15 +157,11 @@ body{
     color:var(--navy);
 }
 
-
-/* =====================================================
-   SUMMARY
-   ===================================================== */
+/* SUMMARY */
 
 .summary{
     display:grid;
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:15px;
     margin-bottom:22px;
 }
@@ -179,9 +170,7 @@ body{
     background:white;
     border-radius:18px;
     padding:22px;
-    box-shadow:
-        0 8px 25px
-        rgba(23,32,51,.06);
+    box-shadow:0 8px 25px rgba(23,32,51,.06);
 }
 
 .summary-label{
@@ -196,24 +185,17 @@ body{
     color:var(--navy);
 }
 
-
-/* =====================================================
-   FILTER
-   ===================================================== */
+/* FILTER */
 
 .toolbar{
     background:white;
     border-radius:18px;
     padding:18px;
     margin-bottom:20px;
-
     display:flex;
     flex-wrap:wrap;
     gap:10px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(23,32,51,.06);
+    box-shadow:0 8px 25px rgba(23,32,51,.06);
 }
 
 .toolbar input,
@@ -235,24 +217,19 @@ body{
     min-width:140px;
 }
 
-
-/* =====================================================
-   TABLE
-   ===================================================== */
+/* TABLE */
 
 .table-wrap{
     background:white;
     border-radius:18px;
     overflow:auto;
-    box-shadow:
-        0 8px 25px
-        rgba(23,32,51,.06);
+    box-shadow:0 8px 25px rgba(23,32,51,.06);
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1100px;
+    min-width:1200px;
 }
 
 thead{
@@ -314,10 +291,7 @@ tbody tr:hover{
     font-size:13px;
 }
 
-
-/* =====================================================
-   RESPONSIVE
-   ===================================================== */
+/* RESPONSIVE */
 
 @media(max-width:700px){
 
@@ -352,15 +326,11 @@ tbody tr:hover{
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =====================================================
-     LOGIN ADMIN
-     ===================================================== -->
-
 <div class="container">
+
+    <!-- LOGIN ADMIN -->
 
     <div id="adminLogin" class="admin-login">
 
@@ -400,9 +370,7 @@ tbody tr:hover{
     </div>
 
 
-    <!-- =================================================
-         ADMIN CONTENT
-         ================================================= -->
+    <!-- ADMIN CONTENT -->
 
     <div id="adminContent">
 
@@ -417,7 +385,6 @@ tbody tr:hover{
                 </p>
 
             </div>
-
 
             <div class="header-actions">
 
@@ -466,7 +433,6 @@ tbody tr:hover{
 
             </div>
 
-
             <div class="summary-card">
 
                 <div class="summary-label">
@@ -482,11 +448,10 @@ tbody tr:hover{
 
             </div>
 
-
             <div class="summary-card">
 
                 <div class="summary-label">
-                    Rata-rata Nilai
+                    Rata-rata Nilai Akhir
                 </div>
 
                 <div
@@ -508,10 +473,9 @@ tbody tr:hover{
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Cari nama, sub tes, materi, atau nama tes..."
+                placeholder="Cari nama, program, nama tes, atau session..."
                 oninput="renderTable()"
             >
-
 
             <select
                 id="activityFilter"
@@ -520,10 +484,6 @@ tbody tr:hover{
 
                 <option value="">
                     Semua Aktivitas
-                </option>
-
-                <option value="LATIHAN">
-                    LATIHAN
                 </option>
 
                 <option value="TRYOUT">
@@ -539,19 +499,23 @@ tbody tr:hover{
             >
 
                 <option value="">
-                    Semua Kelompok
+                    Semua Program
                 </option>
 
-                <option value="Kecerdasan">
-                    Kecerdasan
+                <option value="POLRI">
+                    POLRI
                 </option>
 
-                <option value="Kepribadian">
-                    Kepribadian
+                <option value="TNI">
+                    TNI
                 </option>
 
-                <option value="Kecermatan">
-                    Kecermatan
+                <option value="KEDINASAN">
+                    KEDINASAN
+                </option>
+
+                <option value="LAINNYA">
+                    LAINNYA
                 </option>
 
             </select>
@@ -586,29 +550,32 @@ tbody tr:hover{
                     <tr>
 
                         <th>No</th>
-                        <th>Tanggal</th>
+                        <th>Timestamp</th>
                         <th>Nama</th>
-                        <th>Kode</th>
+                        <th>Session ID</th>
                         <th>Aktivitas</th>
-                        <th>Kelompok</th>
-                        <th>Sub Tes</th>
-                        <th>Materi</th>
-                        <th>Nama Tes</th>
-                        <th>Nilai</th>
-                        <th>Total</th>
-                        <th>Keterangan</th>
+                        <th>Program</th>
+                        <th>Nama Tryout</th>
+                        <th>Tanggal</th>
+                        <th>Kecerdasan</th>
+                        <th>Kepribadian</th>
+                        <th>Kecermatan</th>
+                        <th>TIU</th>
+                        <th>TWK</th>
+                        <th>TKP</th>
+                        <th>Pengetahuan Umum</th>
+                        <th>Nilai Akhir</th>
 
                     </tr>
 
                 </thead>
-
 
                 <tbody id="tableBody">
 
                     <tr>
 
                         <td
-                            colspan="12"
+                            colspan="16"
                             class="empty"
                         >
                             Memuat data...
@@ -630,10 +597,11 @@ tbody tr:hover{
 
 <script>
 
-
-/* =====================================================
-   APPS SCRIPT URL
-   ===================================================== */
+/*
+=====================================================
+APPS SCRIPT URL
+=====================================================
+*/
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
@@ -644,30 +612,29 @@ let allData = [];
 let adminPin = "";
 
 
-/* =====================================================
-   LOGIN
-   ===================================================== */
+/*
+=====================================================
+LOGIN ADMIN
+=====================================================
+*/
 
 async function loginAdmin(){
 
     const input =
-        document
-        .getElementById("pinInput");
+        document.getElementById("pinInput");
 
-    const error =
-        document
-        .getElementById("loginError");
+    const errorBox =
+        document.getElementById("loginError");
 
     const pin =
         input.value.trim();
 
-
-    error.textContent = "";
+    errorBox.textContent = "";
 
 
     if(!pin){
 
-        error.textContent =
+        errorBox.textContent =
             "Masukkan PIN admin.";
 
         input.focus();
@@ -686,7 +653,20 @@ async function loginAdmin(){
 
 
         const response =
-            await fetch(url);
+            await fetch(url, {
+                method:"GET",
+                cache:"no-store"
+            });
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
 
 
         const data =
@@ -698,7 +678,7 @@ async function loginAdmin(){
             "success"
         ){
 
-            error.textContent =
+            errorBox.textContent =
                 data.message ||
                 "PIN admin salah.";
 
@@ -708,11 +688,6 @@ async function loginAdmin(){
 
         }
 
-
-        /*
-         * PIN benar.
-         * Simpan hanya selama halaman aktif.
-         */
 
         adminPin = pin;
 
@@ -728,7 +703,9 @@ async function loginAdmin(){
 
 
         allData =
-            data.results || [];
+            Array.isArray(data.results)
+                ? data.results
+                : [];
 
 
         updateSummary();
@@ -748,21 +725,19 @@ async function loginAdmin(){
 
         console.error(error);
 
-        error =
-            document
-            .getElementById("loginError");
-
-        error.textContent =
-            "Tidak dapat terhubung ke server.";
+        errorBox.textContent =
+            "Tidak dapat terhubung ke server. Pastikan Apps Script sudah di-deploy sebagai Web App.";
 
     }
 
 }
 
 
-/* =====================================================
-   ENTER = LOGIN
-   ===================================================== */
+/*
+=====================================================
+ENTER = LOGIN
+=====================================================
+*/
 
 document
 .getElementById("pinInput")
@@ -780,9 +755,11 @@ document
 );
 
 
-/* =====================================================
-   LOAD DATA
-   ===================================================== */
+/*
+=====================================================
+LOAD DATA
+=====================================================
+*/
 
 async function loadData(){
 
@@ -807,13 +784,24 @@ async function loadData(){
         const url =
             SCRIPT_URL +
             "?mode=admin&adminPin=" +
-            encodeURIComponent(
-                adminPin
-            );
+            encodeURIComponent(adminPin);
 
 
         const response =
-            await fetch(url);
+            await fetch(url, {
+                method:"GET",
+                cache:"no-store"
+            });
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
 
 
         const data =
@@ -835,7 +823,9 @@ async function loadData(){
 
 
         allData =
-            data.results || [];
+            Array.isArray(data.results)
+                ? data.results
+                : [];
 
 
         updateSummary();
@@ -854,16 +844,18 @@ async function loadData(){
         console.error(error);
 
         status.textContent =
-            "Gagal mengambil data.";
+            "Gagal mengambil data dari Apps Script.";
 
     }
 
 }
 
 
-/* =====================================================
-   SUMMARY
-   ===================================================== */
+/*
+=====================================================
+SUMMARY
+=====================================================
+*/
 
 function updateSummary(){
 
@@ -884,10 +876,13 @@ function updateSummary(){
 
     allData.forEach(function(row){
 
-        if(row.name){
+        if(
+            row.name &&
+            String(row.name).trim()
+        ){
 
             students.add(
-                row.name
+                String(row.name).trim()
             );
 
         }
@@ -895,14 +890,13 @@ function updateSummary(){
 
         const score =
             parseFloat(
-                String(row.value)
-                .replace(",", ".")
+                String(
+                    row.value || ""
+                ).replace(",", ".")
             );
 
 
-        if(
-            !isNaN(score)
-        ){
+        if(!isNaN(score)){
 
             totalScore += score;
 
@@ -932,9 +926,11 @@ function updateSummary(){
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-   ===================================================== */
+/*
+=====================================================
+ESCAPE HTML
+=====================================================
+*/
 
 function escapeHtml(value){
 
@@ -952,16 +948,21 @@ function escapeHtml(value){
 }
 
 
-/* =====================================================
-   SCORE CLASS
-   ===================================================== */
+/*
+=====================================================
+SCORE CLASS
+=====================================================
+*/
 
 function scoreClass(value){
 
     const score =
         parseFloat(
-            String(value)
-            .replace(",", ".")
+            String(
+                value == null
+                    ? ""
+                    : value
+            ).replace(",", ".")
         );
 
 
@@ -980,9 +981,11 @@ function scoreClass(value){
 }
 
 
-/* =====================================================
-   ACTIVITY BADGE
-   ===================================================== */
+/*
+=====================================================
+ACTIVITY BADGE
+=====================================================
+*/
 
 function activityBadge(value){
 
@@ -1002,9 +1005,11 @@ function activityBadge(value){
 }
 
 
-/* =====================================================
-   RENDER TABLE
-   ===================================================== */
+/*
+=====================================================
+RENDER TABLE
+=====================================================
+*/
 
 function renderTable(){
 
@@ -1042,10 +1047,12 @@ function renderTable(){
                 const text =
                     [
                         row.name,
-                        row.subtest,
+                        row.code,
+                        row.group,
                         row.material,
                         row.test,
-                        row.code
+                        row.date,
+                        row.value
                     ]
                     .join(" ")
                     .toLowerCase();
@@ -1099,7 +1106,7 @@ function renderTable(){
             <tr>
 
                 <td
-                    colspan="12"
+                    colspan="16"
                     class="empty"
                 >
                     Tidak ada data yang sesuai.
@@ -1120,18 +1127,6 @@ function renderTable(){
         .map(
             function(row,index){
 
-                const score =
-                    escapeHtml(
-                        row.value
-                    );
-
-
-                const total =
-                    escapeHtml(
-                        row.total
-                    );
-
-
                 return `
 
                     <tr>
@@ -1142,7 +1137,7 @@ function renderTable(){
 
                         <td>
                             ${escapeHtml(
-                                row.date
+                                row.timestamp
                             )}
                         </td>
 
@@ -1174,35 +1169,75 @@ function renderTable(){
 
                         <td>
                             ${escapeHtml(
-                                row.subtest
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.material
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
                                 row.test
                             )}
                         </td>
 
+                        <td>
+                            ${escapeHtml(
+                                row.date
+                            )}
+                        </td>
+
                         <td class="${scoreClass(
-                            row.value
+                            row.kecerdasan
                         )}">
-                            ${score}
+                            ${escapeHtml(
+                                row.kecerdasan
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.kepribadian
+                        )}">
+                            ${escapeHtml(
+                                row.kepribadian
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.kecermatan
+                        )}">
+                            ${escapeHtml(
+                                row.kecermatan
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.tiu
+                        )}">
+                            ${escapeHtml(
+                                row.tiu
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.twk
+                        )}">
+                            ${escapeHtml(
+                                row.twk
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.tkp
+                        )}">
+                            ${escapeHtml(
+                                row.tkp
+                            )}
+                        </td>
+
+                        <td class="${scoreClass(
+                            row.pengetahuanUmum
+                        )}">
+                            ${escapeHtml(
+                                row.pengetahuanUmum
+                            )}
                         </td>
 
                         <td class="total-score">
-                            ${total}
-                        </td>
-
-                        <td>
                             ${escapeHtml(
-                                row.note
+                                row.value
                             )}
                         </td>
 
@@ -1217,9 +1252,11 @@ function renderTable(){
 }
 
 
-/* =====================================================
-   RESET FILTER
-   ===================================================== */
+/*
+=====================================================
+RESET FILTER
+=====================================================
+*/
 
 function resetFilter(){
 
@@ -1243,9 +1280,11 @@ function resetFilter(){
 }
 
 
-/* =====================================================
-   DOWNLOAD CSV
-   ===================================================== */
+/*
+=====================================================
+DOWNLOAD CSV
+=====================================================
+*/
 
 function downloadCSV(){
 
@@ -1292,10 +1331,12 @@ function downloadCSV(){
                 const text =
                     [
                         row.name,
-                        row.subtest,
+                        row.code,
+                        row.group,
                         row.material,
                         row.test,
-                        row.code
+                        row.date,
+                        row.value
                     ]
                     .join(" ")
                     .toLowerCase();
@@ -1353,25 +1394,26 @@ function downloadCSV(){
 
         "No",
         "Timestamp",
-        "Kode Siswa",
         "Nama Siswa",
-        "Jenis Aktivitas",
-        "Kelompok",
-        "Sub Tes",
-        "Materi",
-        "Nama Tes",
+        "Session ID",
+        "Aktivitas",
+        "Program",
+        "Nama Tryout",
         "Tanggal",
-        "Nilai",
-        "Total",
-        "Keterangan"
+        "Kecerdasan",
+        "Kepribadian",
+        "Kecermatan",
+        "TIU",
+        "TWK",
+        "TKP",
+        "Pengetahuan Umum",
+        "Nilai Akhir"
 
     ];
 
 
     const rows = [
-
         headers
-
     ];
 
 
@@ -1384,27 +1426,33 @@ function downloadCSV(){
 
                 row.timestamp || "",
 
-                row.code || "",
-
                 row.name || "",
+
+                row.code || "",
 
                 row.activity || "",
 
                 row.group || "",
 
-                row.subtest || "",
-
-                row.material || "",
-
                 row.test || "",
 
                 row.date || "",
 
-                row.value || "",
+                row.kecerdasan || "",
 
-                row.total || "",
+                row.kepribadian || "",
 
-                row.note || ""
+                row.kecermatan || "",
+
+                row.tiu || "",
+
+                row.twk || "",
+
+                row.tkp || "",
+
+                row.pengetahuanUmum || "",
+
+                row.value || ""
 
             ]);
 
@@ -1499,9 +1547,11 @@ function downloadCSV(){
 }
 
 
-/* =====================================================
-   LOGOUT
-   ===================================================== */
+/*
+=====================================================
+LOGOUT
+=====================================================
+*/
 
 function logoutAdmin(){
 
@@ -1560,3 +1610,4 @@ function logoutAdmin(){
 
 </body>
 </html>
+```
