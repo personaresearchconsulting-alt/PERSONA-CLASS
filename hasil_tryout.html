@@ -1,317 +1,336 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hasil Siswa - PRC CLASS - BIMBEL CERDAS NTB</title>
+<title>Hasil Siswa - PRC CLASS - BIMBEL CERDAS NTB</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --navy: #0B192C;
-            --navy-light: #1E3E62;
-            --cream: #F8F9FA;
-            --cream-card: #FFFFFF;
-            --accent-rose: #D97757;
-            --text-main: #1D2A44;
-            --text-muted: #5C6B82;
-            --border-color: #E2E8F0;
-            --danger: #C0392B;
-            --success: #188A42;
-        }
+<style>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+:root{
+    --navy:#0B192C;
+    --navy-light:#1E3E62;
+    --cream:#F8F9FA;
+    --cream-card:#FFFFFF;
+    --accent-rose:#D97757;
+    --text-main:#1D2A44;
+    --text-muted:#5C6B82;
+    --border-color:#E2E8F0;
+    --danger:#C0392B;
+    --success:#188A42;
+    --blue:#315D9B;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--cream);
-            color: var(--text-main);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        header {
-            background: var(--cream-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.25rem 2rem;
-        }
+body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--text-main);
+    min-height:100vh;
+    line-height:1.6;
+}
 
-        .brand-logo {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--navy);
-            text-decoration: none;
-        }
+header{
+    background:var(--cream-card);
+    border-bottom:1px solid var(--border-color);
+    padding:1.25rem 2rem;
+}
 
-        .brand-logo span {
-            color: var(--accent-rose);
-        }
+.brand-logo{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:800;
+    font-size:1.2rem;
+    color:var(--navy);
+    text-decoration:none;
+}
 
-        main {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3rem 1.25rem 4rem;
-        }
+.brand-logo span{
+    color:var(--accent-rose);
+}
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+main{
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+    padding:3rem 1.25rem 4rem;
+}
 
-        .page-header h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
+.page-header{
+    text-align:center;
+    margin-bottom:2rem;
+}
 
-        .page-header p {
-            color: var(--text-muted);
-        }
+.page-header h1{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:clamp(1.8rem,4vw,2.5rem);
+    color:var(--navy);
+    margin-bottom:.5rem;
+}
 
-        .login-card {
-            max-width: 500px;
-            margin: 0 auto;
-            background: var(--cream-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(11, 25, 44, 0.05);
-        }
+.page-header p{
+    color:var(--text-muted);
+}
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+.login-card{
+    max-width:500px;
+    margin:0 auto;
+    background:var(--cream-card);
+    border:1px solid var(--border-color);
+    border-radius:16px;
+    padding:2rem;
+    box-shadow:0 4px 12px rgba(11,25,44,.05);
+}
 
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
+.form-group{
+    margin-bottom:1.25rem;
+}
 
-        .form-group input {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 9px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            color: var(--text-main);
-            outline: none;
-        }
+.form-group label{
+    display:block;
+    font-weight:600;
+    color:var(--navy);
+    margin-bottom:.5rem;
+}
 
-        .form-group input:focus {
-            border-color: var(--navy);
-            box-shadow: 0 0 0 3px rgba(11, 25, 44, 0.08);
-        }
+.form-group input{
+    width:100%;
+    padding:.9rem 1rem;
+    border:1px solid var(--border-color);
+    border-radius:9px;
+    font-family:'Inter',sans-serif;
+    font-size:1rem;
+    color:var(--text-main);
+    outline:none;
+}
 
-        .btn {
-            width: 100%;
-            border: none;
-            border-radius: 9px;
-            padding: 1rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
+.form-group input:focus{
+    border-color:var(--navy);
+    box-shadow:0 0 0 3px rgba(11,25,44,.08);
+}
 
-        .btn-primary {
-            background: var(--navy);
-            color: #FFFFFF;
-        }
+.btn{
+    width:100%;
+    border:none;
+    border-radius:9px;
+    padding:1rem;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+}
 
-        .btn-primary:hover {
-            background: var(--navy-light);
-        }
+.btn-primary{
+    background:var(--navy);
+    color:#fff;
+}
 
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: wait;
-        }
+.btn-primary:hover{
+    background:var(--navy-light);
+}
 
-        .message {
-            display: none;
-            margin-top: 1rem;
-            padding: 0.9rem 1rem;
-            border-radius: 9px;
-            font-size: 0.9rem;
-        }
+.btn-primary:disabled{
+    opacity:.6;
+    cursor:wait;
+}
 
-        .message.error {
-            display: block;
-            background: #FDECEC;
-            color: var(--danger);
-            border: 1px solid #F5C6C6;
-        }
+.message{
+    display:none;
+    margin-top:1rem;
+    padding:.9rem 1rem;
+    border-radius:9px;
+    font-size:.9rem;
+}
 
-        .message.success {
-            display: block;
-            background: #EAF7EF;
-            color: var(--success);
-            border: 1px solid #BDE5C8;
-        }
+.message.error{
+    display:block;
+    background:#FDECEC;
+    color:var(--danger);
+    border:1px solid #F5C6C6;
+}
 
-        .results-section {
-            display: none;
-            margin-top: 2.5rem;
-        }
+.message.success{
+    display:block;
+    background:#EAF7EF;
+    color:var(--success);
+    border:1px solid #BDE5C8;
+}
 
-        .student-heading {
-            background: var(--navy);
-            color: #FFFFFF;
-            border-radius: 14px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
+.results-section{
+    display:none;
+    margin-top:2.5rem;
+}
 
-        .student-heading small {
-            display: block;
-            opacity: 0.75;
-            margin-bottom: 0.25rem;
-        }
+.student-heading{
+    background:var(--navy);
+    color:#fff;
+    border-radius:14px;
+    padding:1.5rem;
+    margin-bottom:1.5rem;
+}
 
-        .student-heading h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.5rem;
-        }
+.student-heading small{
+    display:block;
+    opacity:.75;
+    margin-bottom:.25rem;
+}
 
-        .table-wrapper {
-            background: var(--cream-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            overflow-x: auto;
-            box-shadow: 0 4px 12px rgba(11, 25, 44, 0.04);
-        }
+.student-heading h2{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:1.5rem;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
+.student-program{
+    margin-top:.35rem;
+    opacity:.8;
+    font-size:.9rem;
+}
 
-        thead {
-            background: #F1F4F7;
-        }
+.table-wrapper{
+    background:var(--cream-card);
+    border:1px solid var(--border-color);
+    border-radius:14px;
+    overflow-x:auto;
+    box-shadow:0 4px 12px rgba(11,25,44,.04);
+}
 
-        th {
-            padding: 1rem 0.9rem;
-            text-align: left;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.82rem;
-            color: var(--navy);
-            white-space: nowrap;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
 
-        td {
-            padding: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.88rem;
-            vertical-align: middle;
-        }
+thead{
+    background:#F1F4F7;
+}
 
-        tbody tr:hover {
-            background: #FAFBFC;
-        }
+th{
+    padding:1rem .8rem;
+    text-align:left;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.78rem;
+    color:var(--navy);
+    white-space:nowrap;
+}
 
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.65rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
+td{
+    padding:.9rem .8rem;
+    border-top:1px solid var(--border-color);
+    font-size:.84rem;
+    vertical-align:middle;
+}
 
-        .badge-latihan {
-            background: #EEF2FF;
-            color: #5145CD;
-        }
+tbody tr:hover{
+    background:#FAFBFC;
+}
 
-        .badge-tryout {
-            background: #FDEEE9;
-            color: #B94F2F;
-        }
+.badge{
+    display:inline-block;
+    padding:.3rem .65rem;
+    border-radius:20px;
+    font-size:.75rem;
+    font-weight:700;
+    white-space:nowrap;
+}
 
-        .score {
-            font-weight: 800;
-        }
+.badge-tryout{
+    background:#FDEEE9;
+    color:#B94F2F;
+}
 
-        .score-low {
-            color: var(--danger);
-        }
+.badge-program{
+    background:#EEF2FF;
+    color:#5145CD;
+}
 
-        .score-normal {
-            color: #315D9B;
-        }
+.score{
+    font-weight:800;
+}
 
-        .score-total {
-            color: var(--success);
-            font-size: 1rem;
-        }
+.score-low{
+    color:var(--danger);
+}
 
-        .empty-state {
-            display: none;
-            text-align: center;
-            padding: 2.5rem 1rem;
-            color: var(--text-muted);
-        }
+.score-normal{
+    color:var(--blue);
+}
 
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 2rem;
-            color: var(--navy);
-            font-weight: 600;
-            text-decoration: none;
-        }
+.score-total{
+    color:var(--success);
+    font-size:1rem;
+}
 
-        .back-link:hover {
-            text-decoration: underline;
-        }
+.empty-state{
+    display:none;
+    text-align:center;
+    padding:2.5rem 1rem;
+    color:var(--text-muted);
+}
 
-        .hint {
-            margin-top: 0.6rem;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
+.back-link{
+    display:block;
+    text-align:center;
+    margin-top:2rem;
+    color:var(--navy);
+    font-weight:600;
+    text-decoration:none;
+}
 
-        @media (max-width: 700px) {
+.back-link:hover{
+    text-decoration:underline;
+}
 
-            header {
-                padding: 1rem 1.25rem;
-            }
+.hint{
+    margin-top:.6rem;
+    font-size:.78rem;
+    color:var(--text-muted);
+}
 
-            main {
-                padding: 2rem 1rem 3rem;
-            }
+.loading{
+    text-align:center;
+    padding:2rem;
+    color:var(--text-muted);
+}
 
-            .login-card {
-                padding: 1.5rem;
-            }
+@media(max-width:700px){
 
-            .student-heading {
-                padding: 1.25rem;
-            }
-        }
-    </style>
+    header{
+        padding:1rem 1.25rem;
+    }
+
+    main{
+        padding:2rem 1rem 3rem;
+    }
+
+    .login-card{
+        padding:1.5rem;
+    }
+
+    .student-heading{
+        padding:1.25rem;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
+
     <a href="index.html" class="brand-logo">
         PRC <span>CLASS - BIMBEL CERDAS NTB</span>
     </a>
+
 </header>
 
 
@@ -328,7 +347,7 @@
     </div>
 
 
-    <!-- FORM PENCARIAN -->
+    <!-- PENCARIAN SISWA -->
 
     <div class="login-card">
 
@@ -346,7 +365,7 @@
             >
 
             <div class="hint">
-                Masukkan minimal nama depan sesuai nama siswa.
+                Masukkan nama sesuai yang digunakan saat mengikuti tryout.
             </div>
 
         </div>
@@ -385,6 +404,13 @@
                 -
             </h2>
 
+            <div
+                id="studentProgram"
+                class="student-program"
+            >
+                -
+            </div>
+
         </div>
 
 
@@ -395,18 +421,25 @@
                 <thead>
 
                     <tr>
+
+                        <th>No</th>
                         <th>Aktivitas</th>
-                        <th>Kelompok</th>
-                        <th>Sub Tes</th>
-                        <th>Materi</th>
-                        <th>Nama Tes</th>
+                        <th>Program</th>
+                        <th>Nama Tryout</th>
                         <th>Tanggal</th>
-                        <th>Nilai</th>
-                        <th>Total</th>
-                        <th>Keterangan</th>
+                        <th>Kecerdasan</th>
+                        <th>Kepribadian</th>
+                        <th>Kecermatan</th>
+                        <th>TIU</th>
+                        <th>TWK</th>
+                        <th>TKP</th>
+                        <th>Pengetahuan Umum</th>
+                        <th>Nilai Akhir</th>
+
                     </tr>
 
                 </thead>
+
 
                 <tbody id="resultsBody"></tbody>
 
@@ -437,23 +470,56 @@
 
 <script>
 
+/*
+=====================================================
+APPS SCRIPT URL
+=====================================================
+*/
+
 const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
+"https://script.google.com/macros/s/AKfycbyFxM0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 
 
-function escapeHtml(value) {
+/*
+=====================================================
+ESCAPE HTML
+=====================================================
+*/
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+function escapeHtml(value){
+
+    return String(
+        value == null
+            ? ""
+            : value
+    )
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-function getScoreClass(value) {
+/*
+=====================================================
+SCORE CLASS
+=====================================================
+*/
+
+function getScoreClass(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return "";
+
+    }
+
 
     const number =
         parseFloat(
@@ -461,74 +527,189 @@ function getScoreClass(value) {
                 .replace(",", ".")
         );
 
-    if (isNaN(number)) {
+
+    if(isNaN(number)){
+
         return "";
+
     }
 
-    if (number < 60) {
+
+    if(number < 60){
+
         return "score score-low";
+
     }
+
 
     return "score score-normal";
 
 }
 
 
-function getActivityBadge(activity) {
+/*
+=====================================================
+NILAI AKHIR
+=====================================================
+*/
 
-    const value =
-        String(activity || "")
-            .toUpperCase();
+function getFinalScoreClass(value){
 
-    if (value === "TRYOUT") {
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
 
-        return `
-            <span class="badge badge-tryout">
-                TRYOUT
-            </span>
-        `;
+        return "";
 
     }
 
+
+    const number =
+        parseFloat(
+            String(value)
+                .replace(",", ".")
+        );
+
+
+    if(isNaN(number)){
+
+        return "";
+
+    }
+
+
+    if(number < 60){
+
+        return "score score-low";
+
+    }
+
+
+    return "score score-total";
+
+}
+
+
+/*
+=====================================================
+PROGRAM BADGE
+=====================================================
+*/
+
+function getProgramBadge(program){
+
+    if(!program){
+
+        return "-";
+
+    }
+
+
     return `
-        <span class="badge badge-latihan">
-            ${escapeHtml(activity || "-")}
+        <span class="badge badge-program">
+            ${escapeHtml(program)}
         </span>
     `;
 
 }
 
 
-async function checkResult() {
+/*
+=====================================================
+TRYOUT BADGE
+=====================================================
+*/
 
-    const name =
-        document
-            .getElementById("studentName")
-            .value
-            .trim();
+function getActivityBadge(){
+
+    return `
+        <span class="badge badge-tryout">
+            TRYOUT
+        </span>
+    `;
+
+}
+
+
+/*
+=====================================================
+CHECK RESULT
+=====================================================
+*/
+
+async function checkResult(){
+
+    const input =
+        document.getElementById(
+            "studentName"
+        );
 
 
     const button =
-        document.getElementById("checkButton");
+        document.getElementById(
+            "checkButton"
+        );
+
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
+
 
     const resultsSection =
-        document.getElementById("resultsSection");
+        document.getElementById(
+            "resultsSection"
+        );
+
 
     const resultsBody =
-        document.getElementById("resultsBody");
+        document.getElementById(
+            "resultsBody"
+        );
 
 
-    message.className = "message";
-    message.textContent = "";
+    const emptyState =
+        document.getElementById(
+            "emptyState"
+        );
 
-    resultsSection.style.display = "none";
-    resultsBody.innerHTML = "";
+
+    const name =
+        input.value.trim();
 
 
-    if (!name) {
+    /*
+    -------------------------------------------------
+    RESET
+    -------------------------------------------------
+    */
+
+    message.className =
+        "message";
+
+    message.textContent =
+        "";
+
+    resultsSection.style.display =
+        "none";
+
+    resultsBody.innerHTML =
+        "";
+
+    emptyState.style.display =
+        "none";
+
+
+    /*
+    -------------------------------------------------
+    VALIDASI
+    -------------------------------------------------
+    */
+
+    if(!name){
 
         message.className =
             "message error";
@@ -536,75 +717,113 @@ async function checkResult() {
         message.textContent =
             "Nama siswa wajib diisi.";
 
+        input.focus();
+
         return;
 
     }
 
 
-    button.disabled = true;
-    button.textContent = "MEMUAT...";
+    /*
+    -------------------------------------------------
+    LOADING
+    -------------------------------------------------
+    */
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "MEMUAT...";
 
 
-    try {
+    try{
+
+        /*
+        Mode student khusus.
+        Apps Script membaca Sheet HasilTryout.
+        */
 
         const url =
             SCRIPT_URL +
-            "?name=" +
+            "?mode=student&name=" +
             encodeURIComponent(name);
 
 
         const response =
-            await fetch(url);
+            await fetch(
+                url,
+                {
+                    method:"GET",
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Server memberikan respons HTTP " +
+                response.status
+            );
+
+        }
 
 
         const data =
             await response.json();
 
 
-        /* ===============================================
-           NAMA TIDAK DITEMUKAN
-           =============================================== */
+        /*
+        -------------------------------------------------
+        ERROR DARI APPS SCRIPT
+        -------------------------------------------------
+        */
 
-        if (
+        if(
             !data ||
             data.status === "error"
-        ) {
+        ){
 
             throw new Error(
                 data?.message ||
-                "Nama siswa tidak ditemukan."
+                "Data siswa tidak ditemukan."
             );
 
         }
 
 
-        /* ===============================================
-           NAMA DEPAN DUPLIKAT
-           =============================================== */
+        /*
+        -------------------------------------------------
+        MULTIPLE NAME
+        -------------------------------------------------
+        */
 
-        if (
+        if(
             data.status === "multiple"
-        ) {
+        ){
 
             message.className =
                 "message error";
 
             message.textContent =
                 data.message ||
-                "Ada lebih dari satu siswa dengan nama tersebut. Silakan masukkan nama lengkap.";
+                "Nama tersebut digunakan oleh lebih dari satu siswa. Masukkan nama lengkap.";
 
             return;
 
         }
 
 
-        /* ===============================================
-           DATA BERHASIL
-           =============================================== */
+        /*
+        -------------------------------------------------
+        HARUS SUCCESS
+        -------------------------------------------------
+        */
 
-        if (
+        if(
             data.status !== "success"
-        ) {
+        ){
 
             throw new Error(
                 "Data hasil tidak dapat ditampilkan."
@@ -613,111 +832,195 @@ async function checkResult() {
         }
 
 
-        document
-            .getElementById("studentDisplayName")
-            .textContent =
-            data.student?.name || name;
+        /*
+        -------------------------------------------------
+        NAMA
+        -------------------------------------------------
+        */
 
+        document
+            .getElementById(
+                "studentDisplayName"
+            )
+            .textContent =
+            data.student?.name ||
+            name;
+
+
+        /*
+        -------------------------------------------------
+        PROGRAM
+        -------------------------------------------------
+        */
+
+        document
+            .getElementById(
+                "studentProgram"
+            )
+            .textContent =
+            data.student?.program
+                ? "Program: " +
+                  data.student.program
+                : "Riwayat hasil tryout";
+
+
+        /*
+        -------------------------------------------------
+        RESULTS
+        -------------------------------------------------
+        */
 
         const results =
-            Array.isArray(data.results)
+            Array.isArray(
+                data.results
+            )
                 ? data.results
                 : [];
 
 
-        if (results.length === 0) {
+        if(
+            results.length === 0
+        ){
 
-            document
-                .getElementById("emptyState")
-                .style.display = "block";
+            emptyState.style.display =
+                "block";
 
-        } else {
+            resultsSection.style.display =
+                "block";
 
-            document
-                .getElementById("emptyState")
-                .style.display = "none";
+            message.className =
+                "message success";
 
+            message.textContent =
+                "Nama ditemukan, tetapi belum ada hasil tryout.";
 
-            results.forEach(function(item) {
+            return;
 
-                const value =
-                    item.value ?? "-";
-
-                const total =
-                    item.total ?? "-";
-
-
-                const valueClass =
-                    getScoreClass(value);
+        }
 
 
-                const totalNumber =
-                    parseFloat(
-                        String(total)
-                            .replace(",", ".")
-                    );
+        /*
+        -------------------------------------------------
+        TAMPILKAN DATA
+        -------------------------------------------------
+        */
 
-
-                const totalClass =
-                    !isNaN(totalNumber) &&
-                    totalNumber < 60
-                        ? "score score-low"
-                        : "score score-total";
-
+        results.forEach(
+            function(item,index){
 
                 const row =
-                    document.createElement("tr");
+                    document.createElement(
+                        "tr"
+                    );
 
 
                 row.innerHTML = `
 
                     <td>
-                        ${getActivityBadge(item.activity)}
+                        ${index + 1}
                     </td>
 
                     <td>
-                        ${escapeHtml(item.group || "-")}
+                        ${getActivityBadge()}
                     </td>
 
                     <td>
-                        ${escapeHtml(item.subtest || "-")}
+                        ${getProgramBadge(
+                            item.program
+                        )}
                     </td>
 
                     <td>
-                        ${escapeHtml(item.material || "-")}
+                        <strong>
+                            ${escapeHtml(
+                                item.namaTryout
+                            )}
+                        </strong>
                     </td>
 
                     <td>
-                        ${escapeHtml(item.test || "-")}
+                        ${escapeHtml(
+                            item.tanggal
+                        )}
                     </td>
 
-                    <td>
-                        ${escapeHtml(item.date || "-")}
+                    <td class="${getScoreClass(
+                        item.kecerdasan
+                    )}">
+                        ${displayValue(
+                            item.kecerdasan
+                        )}
                     </td>
 
-                    <td class="${valueClass}">
-                        ${escapeHtml(value)}
+                    <td class="${getScoreClass(
+                        item.kepribadian
+                    )}">
+                        ${displayValue(
+                            item.kepribadian
+                        )}
                     </td>
 
-                    <td class="${totalClass}">
-                        ${escapeHtml(total)}
+                    <td class="${getScoreClass(
+                        item.kecermatan
+                    )}">
+                        ${displayValue(
+                            item.kecermatan
+                        )}
                     </td>
 
-                    <td>
-                        ${escapeHtml(item.note || "-")}
+                    <td class="${getScoreClass(
+                        item.tiu
+                    )}">
+                        ${displayValue(
+                            item.tiu
+                        )}
+                    </td>
+
+                    <td class="${getScoreClass(
+                        item.twk
+                    )}">
+                        ${displayValue(
+                            item.twk
+                        )}
+                    </td>
+
+                    <td class="${getScoreClass(
+                        item.tkp
+                    )}">
+                        ${displayValue(
+                            item.tkp
+                        )}
+                    </td>
+
+                    <td class="${getScoreClass(
+                        item.pengetahuanUmum
+                    )}">
+                        ${displayValue(
+                            item.pengetahuanUmum
+                        )}
+                    </td>
+
+                    <td class="${getFinalScoreClass(
+                        item.nilaiAkhir
+                    )}">
+                        ${displayValue(
+                            item.nilaiAkhir
+                        )}
                     </td>
 
                 `;
 
 
-                resultsBody.appendChild(row);
+                resultsBody.appendChild(
+                    row
+                );
 
-            });
+            }
+        );
 
-        }
 
-
-        resultsSection.style.display = "block";
+        resultsSection.style.display =
+            "block";
 
 
         message.className =
@@ -727,18 +1030,40 @@ async function checkResult() {
             "Data hasil berhasil ditemukan.";
 
 
-    } catch (error) {
+        /*
+        Scroll otomatis ke hasil.
+        */
+
+        setTimeout(
+            function(){
+
+                resultsSection.scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+
+            },
+            100
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
 
         message.className =
             "message error";
+
 
         message.textContent =
             error.message ||
             "Terjadi kesalahan saat mengambil data.";
 
-    } finally {
+    }finally{
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "LIHAT HASIL";
@@ -748,17 +1073,57 @@ async function checkResult() {
 }
 
 
+/*
+=====================================================
+DISPLAY VALUE
+=====================================================
+*/
+
+function displayValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return "-";
+
+    }
+
+
+    return escapeHtml(value);
+
+}
+
+
+/*
+=====================================================
+ENTER
+=====================================================
+*/
+
 document
-    .getElementById("studentName")
-    .addEventListener("keydown", function(event) {
+    .getElementById(
+        "studentName"
+    )
+    .addEventListener(
+        "keydown",
+        function(event){
 
-        if (event.key === "Enter") {
-            checkResult();
+            if(
+                event.key === "Enter"
+            ){
+
+                checkResult();
+
+            }
+
         }
-
-    });
+    );
 
 </script>
 
 </body>
 </html>
+```
