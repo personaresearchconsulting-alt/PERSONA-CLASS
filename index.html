@@ -3,44 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PRC CLASS - Platform Pembelajaran & Evaluasi Seleksi</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <title>PRC CLASS - Portal Pembelajaran & Evaluasi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --navy: #0B192C;
-            --navy-light: #1E3E62;
-            --cream: #F8F9FA;
-            --cream-card: #FFFFFF;
-            --accent-rose: #D97757;
-            --accent-lavender: #6C5CE7;
-            --text-main: #1D2A44;
-            --text-muted: #5C6B82;
+            --bg-page: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --navy-dark: #0B192C;
+            --navy-mid: #1E3E62;
+            --rose-accent: #D97757;
             --border-color: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --text-title: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --status-green-bg: #DCFCE7;
+            --status-green-text: #15803D;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--cream);
-            color: var(--text-main);
-            line-height: 1.6;
+            background-color: var(--bg-page);
+            color: var(--text-body);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
 
+        /* HEADER */
         header {
-            background-color: var(--cream-card);
+            background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
-            padding: 1.25rem 2rem;
+            padding: 1.1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,314 +61,333 @@
         .brand-logo {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--navy);
+            font-size: 1.3rem;
+            color: var(--navy-dark);
             text-decoration: none;
             letter-spacing: -0.5px;
         }
 
         .brand-logo span {
-            color: var(--accent-rose);
+            color: var(--rose-accent);
         }
 
-        main {
-            flex: 1;
+        .system-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--status-green-text);
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 3rem 1.5rem;
+            gap: 8px;
+            background: var(--status-green-bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
         }
 
-        .container {
-            max-width: 1000px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #16A34A;
+            border-radius: 50%;
+        }
+
+        /* MAIN CONTAINER */
+        main {
+            flex: 1;
+            max-width: 880px;
             width: 100%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .title-block {
             text-align: center;
-        }
-
-        .hero-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(2rem, 4vw, 2.75rem);
-            font-weight: 800;
-            color: var(--navy);
             margin-bottom: 0.75rem;
-            letter-spacing: -1px;
         }
 
-        .hero-subtitle {
-            font-size: 1.05rem;
+        .title-block h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-title);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .title-block p {
             color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 3rem auto;
+            font-size: 0.95rem;
         }
 
-        .access-grid {
+        /* KARTU UTAMA: MASUK SISWA (DOMINAN) */
+        .portal-main-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--navy-dark);
+            border-radius: 12px;
+            padding: 2.25rem;
+            box-shadow: 0 4px 20px rgba(11, 25, 44, 0.06);
+            position: relative;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .tag-primary {
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .portal-main-card h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .portal-main-card p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .program-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 2rem;
-            text-align: left;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
             margin-bottom: 2rem;
         }
 
-        .access-card {
-            background-color: var(--cream-card);
+        .program-box {
+            background-color: #F1F5F9;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow:
-                0 4px 6px -1px rgba(0, 0, 0, 0.02),
-                0 2px 4px -1px rgba(0, 0, 0, 0.01);
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .access-card:hover {
-            transform: translateY(-4px);
-            box-shadow:
-                0 10px 15px -3px rgba(11, 25, 44, 0.08);
-        }
-
-        .access-card.primary {
-            border-top: 4px solid var(--navy);
-        }
-
-        .access-card.secondary {
-            border-top: 4px solid var(--accent-rose);
-        }
-
-        .card-content h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.35rem;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.8rem;
             font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 0.75rem;
+            color: var(--navy-mid);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .card-content p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-        }
-
-        .card-badge {
-            display: inline-block;
-            font-size: 0.825rem;
-            font-weight: 600;
-            color: var(--accent-rose);
-            background: rgba(217, 119, 87, 0.1);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-action {
-            margin-top: 2rem;
-        }
-
-        .btn {
+        .btn-portal-main {
             display: block;
             width: 100%;
             text-align: center;
-            padding: 1rem 1.5rem;
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 1.1rem;
+            border-radius: 8px;
             text-decoration: none;
-            cursor: pointer;
-            transition:
-                background-color 0.2s ease,
-                opacity 0.2s ease;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease;
         }
 
-        .btn-navy {
-            background-color: var(--navy);
+        .btn-portal-main:hover {
+            background-color: var(--navy-mid);
+        }
+
+        /* KARTU SEKUNDER: CEK HASIL (RINGKAS & DI BAWAH) */
+        .portal-sub-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .portal-sub-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .sub-card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.25rem;
+        }
+
+        .sub-card-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .btn-portal-sub {
+            white-space: nowrap;
+            background-color: #FFFFFF;
+            color: var(--navy-dark);
+            border: 1.5px solid var(--navy-dark);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-portal-sub:hover {
+            background-color: var(--navy-dark);
             color: #FFFFFF;
         }
 
-        .btn-navy:hover {
-            background-color: var(--navy-light);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--navy);
-            border: 2px solid var(--navy);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(11, 25, 44, 0.05);
-        }
-
-        .existing-menus {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px dashed var(--border-color);
-            padding-top: 0.75rem;
-        }
-
-        .existing-menus span {
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        /* AREA ADMIN / REKAP */
-        .admin-access-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
+        /* ADMIN LINK */
+        .admin-section {
             text-align: center;
+            margin-top: 0.5rem;
         }
 
         .admin-link {
-            font-size: 0.875rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.825rem;
             color: var(--text-muted);
             text-decoration: none;
-            font-weight: 500;
             transition: color 0.2s ease;
         }
 
         .admin-link:hover {
-            color: var(--navy);
+            color: var(--navy-dark);
             text-decoration: underline;
         }
 
+        /* FOOTER */
         footer {
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
-            background-color: var(--cream-card);
+            padding: 1.25rem;
+            text-align: center;
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            margin-top: auto;
         }
 
-        @media (max-width: 768px) {
+        /* WA HELPDESK WIDGET */
+        .wa-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: #25D366;
+            color: #FFFFFF;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            z-index: 99;
+        }
+
+        @media (max-width: 640px) {
             main {
                 padding: 1.5rem 1rem;
             }
 
-            .access-card {
-                padding: 2rem 1.25rem;
+            .portal-sub-card {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .hero-title {
-                font-size: 1.75rem;
+            .btn-portal-sub {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
 </head>
-
 <body>
 
     <header>
         <a href="https://prcclass.web.id" class="brand-logo">
             PRC <span>CLASS</span>
         </a>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SISTEM AKTIF
+        </div>
     </header>
 
-
     <main>
-        <div class="container">
+        <div class="title-block">
+            <h1>PORTAL EVALUASI &amp; BELAJAR</h1>
+            <p>Persona Research & Consulting — Platform Terpadu</p>
+        </div>
 
-            <h1 class="hero-title">
-                Pilih Jalur Akses PRC CLASS
-            </h1>
-
-            <p class="hero-subtitle">
-                Platform terintegrasi untuk persiapan seleksi POLRI, TNI,
-                Kedinasan, serta pusat evaluasi dan pemantauan hasil latihan berkala.
-            </p>
-
-
-            <div class="access-grid">
-
-                <!-- AKSES 1: SISWA BELAJAR -->
-                <div class="access-card primary">
-
-                    <div class="card-content">
-
-                        <h2>
-                            MASUK UNTUK BELAJAR
-                        </h2>
-
-                        <p>
-                            Gunakan akses siswa untuk mengikuti latihan,
-                            materi, dan simulasi yang tersedia.
-                        </p>
-
-                        <div class="existing-menus">
-                            <span>Menu & Sistem Siswa:</span>
-                            POLRI, TNI, Kedinasan, Uji Komputer,
-                            Materi, Tryout, dll.
-                        </div>
-
-                    </div>
-
-                    <div class="card-action">
-
-                        <a href="login.html" class="btn btn-navy">
-                            MASUK SISWA
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <!-- AKSES 2: CEK HASIL SISWA / ORANG TUA -->
-                <div class="access-card secondary">
-
-                    <div class="card-content">
-
-                        <h2>
-                            CEK HASIL SISWA
-                        </h2>
-
-                        <p>
-                            Lihat hasil latihan, tryout, dan perkembangan
-                            nilai siswa secara berkala.
-                        </p>
-
-                        <span class="card-badge">
-                            Khusus untuk siswa dan orang tua
-                        </span>
-
-                    </div>
-
-                    <div class="card-action">
-
-                        <a href="hasil_tryout.html" class="btn btn-outline">
-                            LIHAT HASIL SISWA
-                        </a>
-
-                    </div>
-
-                </div>
-
+        <!-- UTAMA (MASUK SISWA) -->
+        <section class="portal-main-card">
+            <div class="card-meta">
+                <span class="tag-primary">AKSES UTAMA</span>
+                <span>PRC-GATEWAY</span>
+            </div>
+            <h2>MASUK SISWA / PORTAL BELAJAR</h2>
+            <p>Akses utama peserta untuk mengikuti materi pembelajaran, persiapan seleksi, latihan soal, dan simulasi tes terstruktur.</p>
+            
+            <div class="program-grid">
+                <div class="program-box">POLRI</div>
+                <div class="program-box">TNI</div>
+                <div class="program-box">KEDINASAN</div>
+                <div class="program-box">UJI KOMPUTER</div>
             </div>
 
+            <a href="login.html" class="btn-portal-main">MASUK SISWA</a>
+        </section>
 
-            <!-- AKSES 3: REKAP ADMIN -->
-            <div class="admin-access-section">
-
-                <a href="admin_rekap.html" class="admin-link">
-                    🔒 Area Pengelola / Rekap Admin
-                </a>
-
+        <!-- SEKUNDER (CEK HASIL SISWA - RINGKAS DI BAWAH) -->
+        <section class="portal-sub-card">
+            <div>
+                <div class="sub-card-title">CEK HASIL &amp; EVALUASI SISWA</div>
+                <div class="sub-card-desc">Akses khusus siswa dan orang tua untuk melihat rekapitulasi nilai dan grafik perkembangan.</div>
             </div>
+            <a href="hasil_tryout.html" class="btn-portal-sub">LIHAT HASIL</a>
+        </section>
 
+        <!-- AREA ADMIN -->
+        <div class="admin-section">
+            <a href="admin_rekap.html" class="admin-link">[ 🔒 Area Pengelola / Rekap Admin ]</a>
         </div>
     </main>
 
-
     <footer>
-        &copy; 2026 PRC CLASS. Research & Consulting Platform.
-        All rights reserved.
+        &copy; 2026 PRC CLASS. Persona Research & Consulting.
     </footer>
 
+    <!-- WHATSAPP HELPDESK -->
+    <a href="https://wa.me/628774255786?text=Halo%20Admin%20PRC%20CLASS,%20saya%20butuh%20bantuan." class="wa-float" target="_blank" title="Hubungi WhatsApp">
+        WA
+    </a>
+
+    <!-- SECURITY PROTOCOLS -->
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) e.preventDefault();
+            if (e.key === 'F12') e.preventDefault();
+        });
+    </script>
 </body>
 </html>
