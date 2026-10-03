@@ -327,186 +327,166 @@ tbody tr:hover{
 
 <header>
 
-    <a href="index.html" class="brand-logo">
-        PRC <span>CLASS - BIMBEL CERDAS NTB</span>
-    </a>
+<a href="index.html" class="brand-logo">
+    PRC <span>CLASS - BIMBEL CERDAS NTB</span>
+</a>
 
 </header>
 
-
 <main>
 
-    <div class="page-header">
+<div class="page-header">
 
-        <h1>HASIL SISWA</h1>
+    <h1>HASIL SISWA</h1>
 
-        <p>
-            Lihat riwayat latihan dan perkembangan hasil belajar.
-        </p>
+    <p>
+        Lihat riwayat latihan dan perkembangan hasil belajar.
+    </p>
 
-    </div>
-
-
-    <!-- PENCARIAN SISWA -->
-
-    <div class="login-card">
-
-        <div class="form-group">
-
-            <label for="studentName">
-                Nama Siswa
-            </label>
-
-            <input
-                type="text"
-                id="studentName"
-                placeholder="Masukkan nama siswa"
-                autocomplete="off"
-            >
-
-            <div class="hint">
-                Masukkan nama sesuai yang digunakan saat mengikuti tryout.
-            </div>
-
-        </div>
+</div>
 
 
-        <button
-            type="button"
-            id="checkButton"
-            class="btn btn-primary"
-            onclick="checkResult()"
+<div class="login-card">
+
+    <div class="form-group">
+
+        <label for="studentName">
+            Nama Siswa
+        </label>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Masukkan nama siswa"
+            autocomplete="off"
         >
-            LIHAT HASIL
-        </button>
 
-
-        <div
-            id="message"
-            class="message"
-        ></div>
+        <div class="hint">
+            Masukkan nama sesuai yang digunakan saat mengikuti tryout.
+        </div>
 
     </div>
 
 
-    <!-- HASIL -->
-
-    <section
-        id="resultsSection"
-        class="results-section"
+    <button
+        type="button"
+        id="checkButton"
+        class="btn btn-primary"
+        onclick="checkResult()"
     >
-
-        <div class="student-heading">
-
-            <small>HASIL BELAJAR SISWA</small>
-
-            <h2 id="studentDisplayName">
-                -
-            </h2>
-
-            <div
-                id="studentProgram"
-                class="student-program"
-            >
-                -
-            </div>
-
-        </div>
+        LIHAT HASIL
+    </button>
 
 
-        <div class="table-wrapper">
+    <div
+        id="message"
+        class="message"
+    ></div>
 
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>No</th>
-                        <th>Aktivitas</th>
-                        <th>Program</th>
-                        <th>Nama Tryout</th>
-                        <th>Tanggal</th>
-                        <th>Kecerdasan</th>
-                        <th>Kepribadian</th>
-                        <th>Kecermatan</th>
-                        <th>TIU</th>
-                        <th>TWK</th>
-                        <th>TKP</th>
-                        <th>Pengetahuan Umum</th>
-                        <th>Nilai Akhir</th>
-
-                    </tr>
-
-                </thead>
+</div>
 
 
-                <tbody id="resultsBody"></tbody>
+<section
+    id="resultsSection"
+    class="results-section"
+>
 
-            </table>
+<div class="student-heading">
 
+    <small>HASIL BELAJAR SISWA</small>
 
-            <div
-                id="emptyState"
-                class="empty-state"
-            >
-                Belum ada hasil belajar.
-            </div>
+    <h2 id="studentDisplayName">-</h2>
 
-        </div>
-
-    </section>
-
-
-    <a
-        href="index.html"
-        class="back-link"
+    <div
+        id="studentProgram"
+        class="student-program"
     >
-        ← Kembali ke PRC CLASS
-    </a>
+        -
+    </div>
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>No</th>
+    <th>Aktivitas</th>
+    <th>Program</th>
+    <th>Nama Tryout</th>
+    <th>Tanggal</th>
+    <th>Kecerdasan</th>
+    <th>Kepribadian</th>
+    <th>Kecermatan</th>
+    <th>TIU</th>
+    <th>TWK</th>
+    <th>TKP</th>
+    <th>Pengetahuan Umum</th>
+    <th>Nilai Akhir</th>
+</tr>
+
+</thead>
+
+<tbody id="resultsBody"></tbody>
+
+</table>
+
+
+<div
+    id="emptyState"
+    class="empty-state"
+>
+    Belum ada hasil belajar.
+</div>
+
+</div>
+
+</section>
+
+
+<a
+    href="index.html"
+    class="back-link"
+>
+    ← Kembali ke PRC CLASS
+</a>
 
 </main>
 
 
 <script>
 
-/*
-=====================================================
-APPS SCRIPT URL
-=====================================================
-*/
+/* =====================================================
+   APPS SCRIPT
+===================================================== */
 
 const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyFxM0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
+"https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 
 
-/*
-=====================================================
-ESCAPE HTML
-=====================================================
-*/
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHtml(value){
 
-    return String(
-        value == null
-            ? ""
-            : value
-    )
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    return String(value == null ? "" : value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-/*
-=====================================================
-SCORE CLASS
-=====================================================
-*/
+/* =====================================================
+   SCORE
+===================================================== */
 
 function getScoreClass(value){
 
@@ -515,43 +495,24 @@ function getScoreClass(value){
         value === undefined ||
         value === ""
     ){
-
         return "";
-
     }
-
 
     const number =
         parseFloat(
-            String(value)
-                .replace(",", ".")
+            String(value).replace(",", ".")
         );
 
-
     if(isNaN(number)){
-
         return "";
-
     }
 
-
-    if(number < 60){
-
-        return "score score-low";
-
-    }
-
-
-    return "score score-normal";
+    return number < 60
+        ? "score score-low"
+        : "score score-normal";
 
 }
 
-
-/*
-=====================================================
-NILAI AKHIR
-=====================================================
-*/
 
 function getFinalScoreClass(value){
 
@@ -560,52 +521,34 @@ function getFinalScoreClass(value){
         value === undefined ||
         value === ""
     ){
-
         return "";
-
     }
-
 
     const number =
         parseFloat(
-            String(value)
-                .replace(",", ".")
+            String(value).replace(",", ".")
         );
 
-
     if(isNaN(number)){
-
         return "";
-
     }
 
-
-    if(number < 60){
-
-        return "score score-low";
-
-    }
-
-
-    return "score score-total";
+    return number < 60
+        ? "score score-low"
+        : "score score-total";
 
 }
 
 
-/*
-=====================================================
-PROGRAM BADGE
-=====================================================
-*/
+/* =====================================================
+   BADGES
+===================================================== */
 
 function getProgramBadge(program){
 
     if(!program){
-
         return "-";
-
     }
-
 
     return `
         <span class="badge badge-program">
@@ -615,12 +558,6 @@ function getProgramBadge(program){
 
 }
 
-
-/*
-=====================================================
-TRYOUT BADGE
-=====================================================
-*/
 
 function getActivityBadge(){
 
@@ -633,90 +570,65 @@ function getActivityBadge(){
 }
 
 
-/*
-=====================================================
-CHECK RESULT
-=====================================================
-*/
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+function displayValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+        return "-";
+    }
+
+    return escapeHtml(value);
+
+}
+
+
+/* =====================================================
+   CHECK RESULT
+===================================================== */
 
 async function checkResult(){
 
     const input =
-        document.getElementById(
-            "studentName"
-        );
-
+        document.getElementById("studentName");
 
     const button =
-        document.getElementById(
-            "checkButton"
-        );
-
+        document.getElementById("checkButton");
 
     const message =
-        document.getElementById(
-            "message"
-        );
-
+        document.getElementById("message");
 
     const resultsSection =
-        document.getElementById(
-            "resultsSection"
-        );
-
+        document.getElementById("resultsSection");
 
     const resultsBody =
-        document.getElementById(
-            "resultsBody"
-        );
-
+        document.getElementById("resultsBody");
 
     const emptyState =
-        document.getElementById(
-            "emptyState"
-        );
-
+        document.getElementById("emptyState");
 
     const name =
         input.value.trim();
 
 
-    /*
-    -------------------------------------------------
-    RESET
-    -------------------------------------------------
-    */
+    message.className = "message";
+    message.textContent = "";
 
-    message.className =
-        "message";
+    resultsSection.style.display = "none";
+    resultsBody.innerHTML = "";
+    emptyState.style.display = "none";
 
-    message.textContent =
-        "";
-
-    resultsSection.style.display =
-        "none";
-
-    resultsBody.innerHTML =
-        "";
-
-    emptyState.style.display =
-        "none";
-
-
-    /*
-    -------------------------------------------------
-    VALIDASI
-    -------------------------------------------------
-    */
 
     if(!name){
 
-        message.className =
-            "message error";
-
-        message.textContent =
-            "Nama siswa wajib diisi.";
-
+        message.className = "message error";
+        message.textContent = "Nama siswa wajib diisi.";
         input.focus();
 
         return;
@@ -724,38 +636,37 @@ async function checkResult(){
     }
 
 
-    /*
-    -------------------------------------------------
-    LOADING
-    -------------------------------------------------
-    */
-
-    button.disabled =
-        true;
-
-    button.textContent =
-        "MEMUAT...";
+    button.disabled = true;
+    button.textContent = "MEMUAT...";
 
 
     try{
 
         /*
-        Mode student khusus.
-        Apps Script membaca Sheet HasilTryout.
-        */
+         * PENTING:
+         * URL dibuat menggunakan URLSearchParams
+         * agar parameter mode dan nama dikirim
+         * dengan benar.
+         */
+
+        const query =
+            new URLSearchParams({
+                mode: "student",
+                name: name
+            });
+
 
         const url =
-            SCRIPT_URL +
-            "?mode=student&name=" +
-            encodeURIComponent(name);
+            SCRIPT_URL + "?" + query.toString();
 
 
         const response =
             await fetch(
                 url,
                 {
-                    method:"GET",
-                    cache:"no-store"
+                    method: "GET",
+                    mode: "cors",
+                    cache: "no-store"
                 }
             );
 
@@ -774,37 +685,23 @@ async function checkResult(){
             await response.json();
 
 
-        /*
-        -------------------------------------------------
-        ERROR DARI APPS SCRIPT
-        -------------------------------------------------
-        */
-
         if(
             !data ||
             data.status === "error"
         ){
 
             throw new Error(
-                data?.message ||
-                "Data siswa tidak ditemukan."
+                data && data.message
+                    ? data.message
+                    : "Data siswa tidak ditemukan."
             );
 
         }
 
 
-        /*
-        -------------------------------------------------
-        MULTIPLE NAME
-        -------------------------------------------------
-        */
+        if(data.status === "multiple"){
 
-        if(
-            data.status === "multiple"
-        ){
-
-            message.className =
-                "message error";
+            message.className = "message error";
 
             message.textContent =
                 data.message ||
@@ -815,15 +712,7 @@ async function checkResult(){
         }
 
 
-        /*
-        -------------------------------------------------
-        HARUS SUCCESS
-        -------------------------------------------------
-        */
-
-        if(
-            data.status !== "success"
-        ){
+        if(data.status !== "success"){
 
             throw new Error(
                 "Data hasil tidak dapat ditampilkan."
@@ -832,64 +721,36 @@ async function checkResult(){
         }
 
 
-        /*
-        -------------------------------------------------
-        NAMA
-        -------------------------------------------------
-        */
-
-        document
-            .getElementById(
-                "studentDisplayName"
-            )
-            .textContent =
-            data.student?.name ||
-            name;
+        document.getElementById(
+            "studentDisplayName"
+        ).textContent =
+            data.student &&
+            data.student.name
+                ? data.student.name
+                : name;
 
 
-        /*
-        -------------------------------------------------
-        PROGRAM
-        -------------------------------------------------
-        */
-
-        document
-            .getElementById(
-                "studentProgram"
-            )
-            .textContent =
-            data.student?.program
-                ? "Program: " +
-                  data.student.program
+        document.getElementById(
+            "studentProgram"
+        ).textContent =
+            data.student &&
+            data.student.program
+                ? "Program: " + data.student.program
                 : "Riwayat hasil tryout";
 
 
-        /*
-        -------------------------------------------------
-        RESULTS
-        -------------------------------------------------
-        */
-
         const results =
-            Array.isArray(
-                data.results
-            )
+            Array.isArray(data.results)
                 ? data.results
                 : [];
 
 
-        if(
-            results.length === 0
-        ){
+        if(results.length === 0){
 
-            emptyState.style.display =
-                "block";
+            emptyState.style.display = "block";
+            resultsSection.style.display = "block";
 
-            resultsSection.style.display =
-                "block";
-
-            message.className =
-                "message success";
+            message.className = "message success";
 
             message.textContent =
                 "Nama ditemukan, tetapi belum ada hasil tryout.";
@@ -899,140 +760,83 @@ async function checkResult(){
         }
 
 
-        /*
-        -------------------------------------------------
-        TAMPILKAN DATA
-        -------------------------------------------------
-        */
-
         results.forEach(
             function(item,index){
 
                 const row =
-                    document.createElement(
-                        "tr"
-                    );
+                    document.createElement("tr");
 
 
                 row.innerHTML = `
 
-                    <td>
-                        ${index + 1}
-                    </td>
+                    <td>${index + 1}</td>
 
                     <td>
                         ${getActivityBadge()}
                     </td>
 
                     <td>
-                        ${getProgramBadge(
-                            item.program
-                        )}
+                        ${getProgramBadge(item.program)}
                     </td>
 
                     <td>
                         <strong>
-                            ${escapeHtml(
-                                item.namaTryout
-                            )}
+                            ${escapeHtml(item.namaTryout)}
                         </strong>
                     </td>
 
                     <td>
-                        ${escapeHtml(
-                            item.tanggal
-                        )}
+                        ${escapeHtml(item.tanggal)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.kecerdasan
-                    )}">
-                        ${displayValue(
-                            item.kecerdasan
-                        )}
+                    <td class="${getScoreClass(item.kecerdasan)}">
+                        ${displayValue(item.kecerdasan)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.kepribadian
-                    )}">
-                        ${displayValue(
-                            item.kepribadian
-                        )}
+                    <td class="${getScoreClass(item.kepribadian)}">
+                        ${displayValue(item.kepribadian)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.kecermatan
-                    )}">
-                        ${displayValue(
-                            item.kecermatan
-                        )}
+                    <td class="${getScoreClass(item.kecermatan)}">
+                        ${displayValue(item.kecermatan)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.tiu
-                    )}">
-                        ${displayValue(
-                            item.tiu
-                        )}
+                    <td class="${getScoreClass(item.tiu)}">
+                        ${displayValue(item.tiu)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.twk
-                    )}">
-                        ${displayValue(
-                            item.twk
-                        )}
+                    <td class="${getScoreClass(item.twk)}">
+                        ${displayValue(item.twk)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.tkp
-                    )}">
-                        ${displayValue(
-                            item.tkp
-                        )}
+                    <td class="${getScoreClass(item.tkp)}">
+                        ${displayValue(item.tkp)}
                     </td>
 
-                    <td class="${getScoreClass(
-                        item.pengetahuanUmum
-                    )}">
-                        ${displayValue(
-                            item.pengetahuanUmum
-                        )}
+                    <td class="${getScoreClass(item.pengetahuanUmum)}">
+                        ${displayValue(item.pengetahuanUmum)}
                     </td>
 
-                    <td class="${getFinalScoreClass(
-                        item.nilaiAkhir
-                    )}">
-                        ${displayValue(
-                            item.nilaiAkhir
-                        )}
+                    <td class="${getFinalScoreClass(item.nilaiAkhir)}">
+                        ${displayValue(item.nilaiAkhir)}
                     </td>
 
                 `;
 
 
-                resultsBody.appendChild(
-                    row
-                );
+                resultsBody.appendChild(row);
 
             }
         );
 
 
-        resultsSection.style.display =
-            "block";
+        resultsSection.style.display = "block";
 
-
-        message.className =
-            "message success";
+        message.className = "message success";
 
         message.textContent =
             "Data hasil berhasil ditemukan.";
 
-
-        /*
-        Scroll otomatis ke hasil.
-        */
 
         setTimeout(
             function(){
@@ -1049,74 +853,40 @@ async function checkResult(){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "PRC RESULT ERROR:",
+            error
+        );
 
-
-        message.className =
-            "message error";
-
+        message.className = "message error";
 
         message.textContent =
-            error.message ||
-            "Terjadi kesalahan saat mengambil data.";
+            error && error.message
+                ? error.message
+                : "Terjadi kesalahan saat mengambil data.";
 
     }finally{
 
-        button.disabled =
-            false;
-
-        button.textContent =
-            "LIHAT HASIL";
+        button.disabled = false;
+        button.textContent = "LIHAT HASIL";
 
     }
 
 }
 
 
-/*
-=====================================================
-DISPLAY VALUE
-=====================================================
-*/
-
-function displayValue(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-
-        return "-";
-
-    }
-
-
-    return escapeHtml(value);
-
-}
-
-
-/*
-=====================================================
-ENTER
-=====================================================
-*/
+/* =====================================================
+   ENTER
+===================================================== */
 
 document
-    .getElementById(
-        "studentName"
-    )
+    .getElementById("studentName")
     .addEventListener(
         "keydown",
         function(event){
 
-            if(
-                event.key === "Enter"
-            ){
-
+            if(event.key === "Enter"){
                 checkResult();
-
             }
 
         }
