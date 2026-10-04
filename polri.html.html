@@ -5,20 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POLRI — PERSONA CLASS</title>
 
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ==================================================
-            RESET & CORE STYLES
+            CORE SYSTEM & DESIGN TOKENS
             ================================================== */
+        :root {
+            --bg-main: #f8f9fa;
+            --bg-card: #0d1527;
+            --bg-card-hover: #131d33;
+            --border-card: #1e2a45;
+            
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #8b98a5;
+            --text-on-dark: #f8fafc;
+            --text-on-dark-muted: #94a3b8;
+            
+            --accent-gold: #c5a059;
+            --accent-gold-light: #e6c88b;
+            --accent-gold-bg: rgba(197, 160, 89, 0.08);
+
+            --status-done: #10b981;
+            
+            --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: var(--font-family);
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -26,12 +49,13 @@
         }
 
         body {
-            background-color: #f5f3ef;
-            color: #172033;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            line-height: 1.6;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
 
         a {
@@ -40,11 +64,11 @@
         }
 
         /* ==================================================
-            HEADER / NAVBAR
+            NAVBAR
             ================================================== */
         .navbar {
             background-color: #ffffff;
-            border-bottom: 1px solid #e5e0d8;
+            border-bottom: 1px solid #e2e8f0;
             padding: 16px 24px;
             position: sticky;
             top: 0;
@@ -52,7 +76,7 @@
         }
 
         .nav-container {
-            max-width: 1100px;
+            max-width: 1080px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -65,101 +89,184 @@
         }
 
         .brand-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #172033;
-            letter-spacing: 0.5px;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: 0.8px;
             line-height: 1.2;
         }
 
         .brand-subtitle {
-            font-size: 11px;
-            color: #666666;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            font-size: 10px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
+            margin-top: 2px;
         }
 
         .btn-back {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #f5f3ef;
-            color: #172033;
-            border: 1px solid #e5e0d8;
+            background-color: #ffffff;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
             padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .btn-back:hover {
-            background-color: #172033;
+            background-color: var(--text-primary);
             color: #ffffff;
-            border-color: #172033;
+            border-color: var(--text-primary);
         }
 
         /* ==================================================
-            MAIN CONTENT
+            MAIN LAYOUT
             ================================================== */
         .main-container {
-            max-width: 1100px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 40px 20px 60px;
+            padding: 36px 20px 60px;
             width: 100%;
             flex: 1;
         }
 
-        /* Page Header / Hero */
+        /* HERO HEADER */
         .page-header {
             background-color: #ffffff;
-            border: 1px solid #e5e0d8;
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(23, 32, 51, 0.02);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-lg);
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+        }
+
+        .header-content {
+            max-width: 640px;
         }
 
         .page-badge {
-            display: inline-block;
-            background-color: #f5f3ef;
-            color: #172033;
-            border: 1px solid #e5e0d8;
-            padding: 4px 12px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-gold-bg);
+            color: var(--accent-gold);
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 12px;
         }
 
         .page-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #172033;
-            margin-bottom: 8px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
         }
 
         .page-header p {
-            font-size: 14px;
-            color: #555555;
-            max-width: 700px;
+            font-size: 13px;
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
-        /* Section Layout */
+        .header-accent-line {
+            position: absolute;
+            bottom: -1px;
+            left: 36px;
+            right: 36px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, rgba(197, 160, 89, 0) 100%);
+        }
+
+        /* SEARCH & FILTER TOOLBAR */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            font-size: 13px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .filter-btn {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-secondary);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--text-primary);
+            color: #ffffff;
+            border-color: var(--text-primary);
+        }
+
+        /* SECTIONS */
         .section-group {
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
         .section-title {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
-            color: #172033;
-            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 16px;
             display: flex;
@@ -171,38 +278,51 @@
             content: '';
             flex: 1;
             height: 1px;
-            background-color: #e5e0d8;
+            background-color: #e2e8f0;
         }
 
+        /* CARD GRID */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 18px;
         }
 
-        /* Card Component */
+        /* CARD COMPONENT */
         .card {
-            background-color: #ffffff;
-            border: 1px solid #e5e0d8;
-            border-radius: 10px;
-            padding: 24px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-md);
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(23, 32, 51, 0.06);
-            border-color: #172033;
+            background-color: var(--bg-card-hover);
+            transform: translateY(-2px);
+            border-color: rgba(197, 160, 89, 0.5);
+            box-shadow: 0 12px 24px -8px rgba(10, 17, 30, 0.3);
+        }
+
+        /* FEATURED CARD STYLING */
+        .card.featured {
+            grid-column: span 3;
+            background: linear-gradient(135deg, #0d1527 0%, #17233d 100%);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+        }
+
+        .card.featured .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         .card-top {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .card-header {
@@ -213,163 +333,126 @@
         }
 
         .card-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #f5f3ef;
-            border: 1px solid #e5e0d8;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #172033;
+            color: var(--accent-gold);
         }
 
         .card-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             stroke-width: 2;
         }
 
         .card-tag {
             font-size: 10px;
             font-weight: 700;
-            color: #666666;
-            background-color: #f5f3ef;
-            border: 1px solid #e5e0d8;
-            padding: 2px 8px;
+            color: var(--accent-gold-light);
+            background-color: rgba(197, 160, 89, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 3px 8px;
             border-radius: 4px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
         .card-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            color: #172033;
+            color: var(--text-on-dark);
             margin-bottom: 6px;
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .card-desc {
-            font-size: 13px;
-            color: #666666;
+            font-size: 12px;
+            color: var(--text-on-dark-muted);
             line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* META INFO PILLS */
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--text-on-dark-muted);
+            margin-bottom: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .card-btn {
             width: 100%;
-            background-color: #f5f3ef;
-            color: #172033;
-            border: 1px solid #e5e0d8;
-            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-on-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 9px 0;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             transition: all 0.2s ease;
             text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .card:hover .card-btn {
-            background-color: #172033;
-            color: #ffffff;
-            border-color: #172033;
+            background-color: var(--accent-gold);
+            color: #0d1527;
+            border-color: var(--accent-gold);
         }
 
-        /* ==================================================
-            FOOTER
-            ================================================== */
+        .card.completed .card-btn {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* FOOTER */
         footer {
             background-color: #ffffff;
-            border-top: 1px solid #e5e0d8;
-            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            padding: 24px;
             text-align: center;
             font-size: 12px;
-            color: #777777;
+            color: var(--text-muted);
             margin-top: auto;
+            font-weight: 500;
         }
 
-        /* ==================================================
-            RESPONSIVE MEDIA QUERIES
-            ================================================== */
-        @media (max-width: 900px) {
+        /* RESPONSIVE */
+        @media (max-width: 868px) {
             .card-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .card.featured {
+                grid-column: span 2;
+            }
         }
 
-        @media (max-width: 600px) {
-            .navbar {
-                padding: 14px 16px;
-            }
-
-            .brand-title {
-                font-size: 16px;
-            }
-
-            .brand-subtitle {
-                font-size: 10px;
-            }
-
-            .main-container {
-                padding: 20px 16px 40px;
-            }
-
-            .page-header {
-                padding: 20px;
-                margin-bottom: 28px;
-            }
-
-            .page-header h1 {
-                font-size: 20px;
-            }
-
-            .card-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .card {
-                padding: 16px;
-            }
-
-            .card-top {
-                margin-bottom: 12px;
-            }
-
-            .card-header {
-                margin-bottom: 8px;
-            }
-
-            .card-icon {
-                width: 32px;
-                height: 32px;
-            }
-
-            .card-icon svg {
-                width: 16px;
-                height: 16px;
-            }
-
-            .card-tag {
-                font-size: 9px;
-                padding: 2px 6px;
-            }
-
-            .card-title {
-                font-size: 13px;
-                margin-bottom: 4px;
-            }
-
-            .card-desc {
-                font-size: 11px;
-            }
-
-            .card-btn {
-                padding: 8px 0;
-                font-size: 11px;
-            }
+        @media (max-width: 580px) {
+            .navbar { padding: 14px 16px; }
+            .main-container { padding: 20px 14px 40px; }
+            .page-header { padding: 20px; }
+            .card-grid { grid-template-columns: repeat(1, 1fr); }
+            .card.featured { grid-column: span 1; }
+            .toolbar { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -379,380 +462,247 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-
             <div class="brand-group">
                 <span class="brand-title">PERSONA CLASS</span>
-                <span class="brand-subtitle">Test Preparation & Selection</span>
+                <span class="brand-subtitle">Selection System</span>
             </div>
 
             <a href="index.html" class="btn-back">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
-                <span>← Kembali ke Persona Class</span>
+                <span>Kembali</span>
             </a>
-
         </div>
     </header>
-
 
     <!-- MAIN CONTENT -->
     <main class="main-container">
 
         <!-- HEADER SECTION -->
         <section class="page-header">
-            <span class="page-badge">POLRI</span>
-            <h1>POLRI — Test Preparation & Selection</h1>
-            <p>Latihan dan simulasi persiapan seleksi POLRI dalam satu akses.</p>
+            <div class="header-content">
+                <span class="page-badge">Program Seleksi POLRI</span>
+                <h1>Portal Latihan &amp; Simulasi CAT</h1>
+                <p>Modul evaluasi terstruktur untuk persiapan tahapan ujian akademik dan psikotes POLRI.</p>
+            </div>
+            <div class="header-accent-line"></div>
         </section>
 
+        <!-- TOOLBAR: SEARCH & FILTER -->
+        <div class="toolbar">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" placeholder="Cari materi atau modul tes..." onkeyup="filterCards()">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="setCategory('all', this)">Semua</button>
+                <button class="filter-btn" onclick="setCategory('tryout', this)">Tryout</button>
+                <button class="filter-btn" onclick="setCategory('kecerdasan', this)">Kecerdasan</button>
+                <button class="filter-btn" onclick="setCategory('tkp', this)">TKP</button>
+                <button class="filter-btn" onclick="setCategory('kecermatan', this)">Kecermatan</button>
+            </div>
+        </div>
 
         <!-- 1. TRYOUT LENGKAP -->
-        <section class="section-group">
-
-            <h2 class="section-title">TRYOUT LENGKAP</h2>
-
+        <section class="section-group" data-category="tryout">
+            <h2 class="section-title">Tryout Evaluasi Utama</h2>
             <div class="card-grid">
-
-                <a id="btn-tryout1" href="#" target="_blank" class="card">
-                    <div class="card-top">
+                <a id="btn-tryout_hub" href="#" target="_blank" class="card featured" onclick="markAsCompleted('tryout_hub')">
+                    <div>
                         <div class="card-header">
                             <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                     <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
                                 </svg>
                             </div>
-                            <span class="card-tag">SET 01</span>
+                            <span class="card-tag">Paket Utama Tryout 1–6</span>
                         </div>
-                        <div class="card-title">TRYOUT POLRI 1</div>
-                        <div class="card-desc">Simulasi Lengkap</div>
-                    </div>
-                    <div class="card-btn">MULAI CAT</div>
-                </a>
-
-                <a id="btn-tryout2" href="#" target="_blank" class="card">
-                    <div class="card-top">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 02</span>
+                        <div class="card-title" style="font-size: 18px;">Simulasi Lengkap POLRI</div>
+                        <div class="card-desc">Portal terpadu seluruh asesmen Tryout 1 hingga Tryout 6 secara terstruktur.</div>
+                        <div class="card-meta">
+                            <span class="meta-item">⏱ 6 Set Paket</span>
+                            <span class="meta-item">•</span>
+                            <span class="meta-item">📝 Simulasi CAT Real-Time</span>
                         </div>
-                        <div class="card-title">TRYOUT POLRI 2</div>
-                        <div class="card-desc">Simulasi Lengkap</div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-tryout_hub">Akses Paket Tryout</div>
                 </a>
-
-                <a id="btn-tryout3" href="#" target="_blank" class="card">
-                    <div class="card-top">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 03</span>
-                        </div>
-                        <div class="card-title">TRYOUT POLRI 3</div>
-                        <div class="card-desc">Simulasi Lengkap</div>
-                    </div>
-                    <div class="card-btn">MULAI CAT</div>
-                </a>
-
             </div>
         </section>
-
 
         <!-- 2. KECERDASAN -->
-        <section class="section-group">
-
-            <h2 class="section-title">KECERDASAN</h2>
-
+        <section class="section-group" data-category="kecerdasan">
+            <h2 class="section-title">Tes Kecerdasan Akademik</h2>
             <div class="card-grid">
 
-                <a id="btn-kecerdasan1" href="#" target="_blank" class="card">
+                <a id="btn-kecerdasan1" href="#" target="_blank" class="card" onclick="markAsCompleted('kecerdasan1')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 16v-4"></path>
-                                    <path d="M12 8h.01"></path>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 01</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div>
+                            <span class="card-tag">Set 01</span>
                         </div>
-                        <div class="card-title">KECERDASAN 1</div>
-                        <div class="card-desc">Latihan Tes Kecerdasan</div>
+                        <div class="card-title">Kecerdasan General</div>
+                        <div class="card-desc">Penalaran logis dan pemahaman pola spasial dasar.</div>
+                        <div class="card-meta"><span>⏱ 60 Min</span> • <span>📝 50 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecerdasan1">Mulai CAT</div>
                 </a>
 
-                <a id="btn-kecerdasan2" href="#" target="_blank" class="card">
+                <a id="btn-kecerdasan2" href="#" target="_blank" class="card" onclick="markAsCompleted('kecerdasan2')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 16v-4"></path>
-                                    <path d="M12 8h.01"></path>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 02</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div>
+                            <span class="card-tag">Set 02</span>
                         </div>
-                        <div class="card-title">KECERDASAN VERBAL MIX</div>
-                        <div class="card-desc">Latihan Tes Kecerdasan</div>
+                        <div class="card-title">Verbal Mix &amp; Analogi</div>
+                        <div class="card-desc">Latihan padanan kata dan hubungan makna konsep.</div>
+                        <div class="card-meta"><span>⏱ 60 Min</span> • <span>📝 50 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecerdasan2">Mulai CAT</div>
                 </a>
 
-                <a id="btn-kecerdasan3" href="#" target="_blank" class="card">
+                <a id="btn-kecerdasan3" href="#" target="_blank" class="card" onclick="markAsCompleted('kecerdasan3')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 16v-4"></path>
-                                    <path d="M12 8h.01"></path>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 03</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div>
+                            <span class="card-tag">Set 03</span>
                         </div>
-                        <div class="card-title">KECERDASAN UMUM</div>
-                        <div class="card-desc">Latihan Tes Kecerdasan</div>
+                        <div class="card-title">Kecerdasan Umum</div>
+                        <div class="card-desc">Kombinasi penalaran kuantitatif dan analisis angka.</div>
+                        <div class="card-meta"><span>⏱ 60 Min</span> • <span>📝 50 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecerdasan3">Mulai CAT</div>
                 </a>
 
-                <a id="btn-kecerdasan_verbal_all" href="#" target="_blank" class="card">
+                <a id="btn-kecerdasan_verbal_all" href="#" target="_blank" class="card" onclick="markAsCompleted('kecerdasan_verbal_all')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 16v-4"></path>
-                                    <path d="M12 8h.01"></path>
-                                </svg>
-                            </div>
-                            <span class="card-tag">ALL SET</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div>
+                            <span class="card-tag">Full Set</span>
                         </div>
-                        <div class="card-title">KECERDASAN VERBAL ALL</div>
-                        <div class="card-desc">Paket Lengkap Tes Verbal</div>
+                        <div class="card-title">Komprehensif Verbal</div>
+                        <div class="card-desc">Paket penguasaan menyeluruh materi kebahasaan.</div>
+                        <div class="card-meta"><span>⏱ 90 Min</span> • <span>📝 100 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecerdasan_verbal_all">Mulai CAT</div>
                 </a>
 
             </div>
         </section>
-
 
         <!-- 3. KEPRIBADIAN — TKP -->
-        <section class="section-group">
-
-            <h2 class="section-title">KEPRIBADIAN — TKP</h2>
-
+        <section class="section-group" data-category="tkp">
+            <h2 class="section-title">Tes Karakteristik Pribadi (TKP)</h2>
             <div class="card-grid">
 
-                <a id="btn-tkp1" href="#" target="_blank" class="card">
+                <a id="btn-tkp1" href="#" target="_blank" class="card" onclick="markAsCompleted('tkp1')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 01</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                            <span class="card-tag">Set 01</span>
                         </div>
-                        <div class="card-title">TKP 1</div>
-                        <div class="card-desc">Tes Karakteristik Pribadi</div>
+                        <div class="card-title">TKP Evaluasi 1</div>
+                        <div class="card-desc">Pengukuran aspek integritas dan kepemimpinan dasar.</div>
+                        <div class="card-meta"><span>⏱ 45 Min</span> • <span>📝 40 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-tkp1">Mulai CAT</div>
                 </a>
 
-                <a id="btn-tkp2" href="#" target="_blank" class="card">
+                <a id="btn-tkp2" href="#" target="_blank" class="card" onclick="markAsCompleted('tkp2')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 02</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                            <span class="card-tag">Set 02</span>
                         </div>
-                        <div class="card-title">TKP 2</div>
-                        <div class="card-desc">Tes Karakteristik Pribadi</div>
+                        <div class="card-title">TKP Evaluasi 2</div>
+                        <div class="card-desc">Penilaian orientasi kerja dan pemecahan masalah.</div>
+                        <div class="card-meta"><span>⏱ 45 Min</span> • <span>📝 40 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-tkp2">Mulai CAT</div>
                 </a>
 
-                <a id="btn-tkp3" href="#" target="_blank" class="card">
+                <a id="btn-tkp3" href="#" target="_blank" class="card" onclick="markAsCompleted('tkp3')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 03</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                            <span class="card-tag">Set 03</span>
                         </div>
-                        <div class="card-title">TKP 3</div>
-                        <div class="card-desc">Tes Karakteristik Pribadi</div>
+                        <div class="card-title">TKP Evaluasi 3</div>
+                        <div class="card-desc">Uji ketahanan mental dan kedisiplinan kerja.</div>
+                        <div class="card-meta"><span>⏱ 45 Min</span> • <span>📝 40 Soal</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-tkp3">Mulai CAT</div>
                 </a>
 
             </div>
         </section>
-
 
         <!-- 4. KEPRIBADIAN — SS/STS -->
-        <section class="section-group">
-
-            <h2 class="section-title">KEPRIBADIAN — SS/STS</h2>
-
+        <section class="section-group" data-category="tkp">
+            <h2 class="section-title">Tes Sikap &amp; Profiling (SS/STS)</h2>
             <div class="card-grid">
 
-                <a id="btn-sssts" href="#" target="_blank" class="card">
+                <a id="btn-sssts" href="#" target="_blank" class="card" onclick="markAsCompleted('sssts')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                                </svg>
-                            </div>
-                            <span class="card-tag">3 SET</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></div>
+                            <span class="card-tag">3 Paket Module</span>
                         </div>
-                        <div class="card-title">SS/STS</div>
-                        <div class="card-desc">
-                            Sangat Sesuai / Tidak Sesuai
-                        </div>
+                        <div class="card-title">Inventori SS / STS</div>
+                        <div class="card-desc">Skala kecenderungan respons Sangat Sesuai / Tidak Sesuai.</div>
+                        <div class="card-meta"><span>⏱ 60 Min</span> • <span>📝 Profiling</span></div>
                     </div>
-                    <div class="card-btn">PILIH SET</div>
+                    <div class="card-btn" id="btn-text-sssts">Pilih Modul Uji</div>
                 </a>
 
             </div>
         </section>
 
-
         <!-- 5. KECERMATAN -->
-        <section class="section-group">
-
-            <h2 class="section-title">KECERMATAN</h2>
-
+        <section class="section-group" data-category="kecermatan">
+            <h2 class="section-title">Tes Kecermatan &amp; Konsentrasi</h2>
             <div class="card-grid">
 
-                <a id="btn-kecermatan1" href="#" target="_blank" class="card">
+                <a id="btn-kecermatan1" href="#" target="_blank" class="card" onclick="markAsCompleted('kecermatan1')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 01</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                            <span class="card-tag">Set 01</span>
                         </div>
-                        <div class="card-title">KECERMATAN GAMBAR 1</div>
-                        <div class="card-desc">Tes Kecepatan & Ketelitian</div>
+                        <div class="card-title">Kecermatan Gambar A</div>
+                        <div class="card-desc">Latihan presisi visual dan kecepatan scanning simbol.</div>
+                        <div class="card-meta"><span>⏱ 10 Kolom</span> • <span>📝 Kecepatan</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecermatan1">Mulai CAT</div>
                 </a>
 
-                <a id="btn-kecermatan2" href="#" target="_blank" class="card">
+                <a id="btn-kecermatan2" href="#" target="_blank" class="card" onclick="markAsCompleted('kecermatan2')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 02</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                            <span class="card-tag">Set 02</span>
                         </div>
-                        <div class="card-title">KECERMATAN GAMBAR 2</div>
-                        <div class="card-desc">Tes Kecepatan & Ketelitian</div>
+                        <div class="card-title">Kecermatan Gambar B</div>
+                        <div class="card-desc">Latihan daya tahan konsentrasi terhadap variasi bentuk.</div>
+                        <div class="card-meta"><span>⏱ 10 Kolom</span> • <span>📝 Kecepatan</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecermatan2">Mulai CAT</div>
                 </a>
 
-                <a id="btn-kecermatan3" href="#" target="_blank" class="card">
+                <a id="btn-kecermatan3" href="#" target="_blank" class="card" onclick="markAsCompleted('kecermatan3')">
                     <div class="card-top">
                         <div class="card-header">
-                            <div class="card-icon">
-                                <svg viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                            </div>
-                            <span class="card-tag">SET 03</span>
+                            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                            <span class="card-tag">Set 03</span>
                         </div>
-                        <div class="card-title">KECERMATAN HURUF ANGKA</div>
-                        <div class="card-desc">Tes Kecepatan & Ketelitian</div>
+                        <div class="card-title">Huruf &amp; Angka Hilang</div>
+                        <div class="card-desc">Simulasi tes kecermatan kolom karakter standar seleksi.</div>
+                        <div class="card-meta"><span>⏱ 10 Kolom</span> • <span>📝 Kecepatan</span></div>
                     </div>
-                    <div class="card-btn">MULAI CAT</div>
+                    <div class="card-btn" id="btn-text-kecermatan3">Mulai CAT</div>
                 </a>
 
             </div>
@@ -760,86 +710,97 @@
 
     </main>
 
-
     <!-- FOOTER -->
     <footer>
-        © Persona Research & Consulting
+        &copy; Persona Research &amp; Consulting. All rights reserved.
     </footer>
 
-
-    <!-- LOGIC & CONFIGURATION SCRIPT -->
+    <!-- SCRIPT CONFIG & INTERACTION -->
     <script>
-
-        // =====================================
-        // LINK CAT POLRI — EDIT DI SINI
-        // =====================================
-
         const links = {
-
-            tryout1: "https://personaresearchconsulting-alt.github.io/TRYOUT-LENGKAP-1/",
-            tryout2: "https://personaresearchconsulting-alt.github.io/SIMULASI-LENGKAP-POLRI-1/",
-            tryout3: "https://personaresearchconsulting-alt.github.io/SIMULASI-LENGKAP-POLRI-2/",
-
+            tryout_hub: "https://personaresearchconsulting-alt.github.io/B2B-TRYOUT-LENGKAP-POLRI/",
             kecerdasan1: "https://personaresearchconsulting-alt.github.io/ARAH-MATA-ANGIN-II/",
             kecerdasan2: "https://personaresearchconsulting-alt.github.io/VERBAL-MIX-1/",
             kecerdasan3: "https://personaresearchconsulting-alt.github.io/KECERDASAN-UMUM/",
             kecerdasan_verbal_all: "https://personaresearchconsulting-alt.github.io/KECERDASAN-VERBAL-ALL/",
-
             tkp1: "https://personaresearchconsulting-alt.github.io/TES-KEPRIBADIAN-SELEKSI-POLRI-TKP-SERIES-1/",
             tkp2: "https://personaresearchconsulting-alt.github.io/TES-KEPRIBADIAN-SELEKSI-POLRI-TKP-SERIES-2/",
             tkp3: "https://personaresearchconsulting-alt.github.io/TES-KEPRIBADIAN-SELEKSI-POLRI-TKP-SERIES-3/",
-
-            // SS/STS HANYA 1 LINK
             sssts: "https://personaresearchconsulting-alt.github.io/KEPRIBADIAN-SS-STS/",
-
             kecermatan1: "https://personaresearchconsulting-alt.github.io/TYROUT-KECERMATAN-GAMBAR/",
-            kecermatan2: "https://personaresearchconsulting-alt.github.io/KECERMATAN-2/",
-            kecermatan3: "https://personaresearchconsulting-alt.github.io/KECERMATAN-HURUF-ANGKA-1/"
-
+            kecermatan2: "https://personaresearchconsulting-alt.github.io/KECERDASAN-2/",
+            kecermatan3: "https://personaresearchconsulting-alt.github.io/KECERDASAN-HURUF-ANGKA-1/"
         };
 
-
-        // Assign Link Config to Elements Automatically
+        let currentCategory = 'all';
 
         document.addEventListener('DOMContentLoaded', function() {
-
+            // Bind Links & Load Progress
             for (const key in links) {
-
                 const element = document.getElementById(`btn-${key}`);
-
                 if (element) {
                     element.href = links[key];
+                    checkCompleted(key);
                 }
-
             }
-
         });
 
+        // Track Click Progress
+        function markAsCompleted(id) {
+            localStorage.setItem(`completed_${id}`, 'true');
+            setTimeout(() => { checkCompleted(id); }, 500);
+        }
 
-        // Basic Security Protection
+        function checkCompleted(id) {
+            if (localStorage.getItem(`completed_${id}`) === 'true') {
+                const card = document.getElementById(`btn-${id}`);
+                const btnText = document.getElementById(`btn-text-${id}`);
+                if (card && btnText) {
+                    card.classList.add('completed');
+                    btnText.innerHTML = '✓ Lanjutkan CAT';
+                }
+            }
+        }
 
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
+        // Live Search
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
 
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
+        // Category Filter
+        function setCategory(category, btnElement) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const sections = document.querySelectorAll('.section-group');
+            sections.forEach(sec => {
+                if (category === 'all' || sec.dataset.category === category) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        // Context menu protection
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
-
-            if (
-                e.keyCode === 123 ||
-                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
-                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
-                (e.ctrlKey && e.shiftKey && e.keyCode === 67) ||
-                (e.ctrlKey && e.keyCode === 85)
-            ) {
-
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || (e.ctrlKey && e.keyCode === 85)) {
                 e.preventDefault();
-
             }
-
         });
-
     </script>
-
 </body>
 </html>
