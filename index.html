@@ -1,403 +1,394 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRC CLASS - Portal Pembelajaran & Evaluasi</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRC CLASS - Portal Pembelajaran & Evaluasi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-page: #F8FAFC;
-            --card-bg: #FFFFFF;
-            --navy-dark: #0B192C;
-            --navy-mid: #1E3E62;
-            --rose-accent: #D97757;
-            --border-color: #E2E8F0;
-            --border-hover: #CBD5E1;
-            --text-title: #0F172A;
-            --text-body: #334155;
-            --text-muted: #64748B;
-            --status-green-bg: #DCFCE7;
-            --status-green-text: #15803D;
-        }
+    <style>
+        :root {
+            --bg-page: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --navy-dark: #0B192C;
+            --navy-mid: #1E3E62;
+            --rose-accent: #D97757;
+            --border-color: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --text-title: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --status-green-bg: #DCFCE7;
+            --status-green-text: #15803D;
+        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-body);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
 
-        /* HEADER */
-        header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* HEADER */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .brand-logo {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: var(--navy-dark);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
+        .brand-logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--navy-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
 
-        .brand-logo span {
-            color: var(--rose-accent);
-        }
+        .brand-logo span {
+            color: var(--rose-accent);
+        }
 
-        .system-status {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--status-green-text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--status-green-bg);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
+        .system-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--status-green-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--status-green-bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #16A34A;
-            border-radius: 50%;
-        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #16A34A;
+            border-radius: 50%;
+        }
 
-        /* MAIN CONTAINER */
-        main {
-            flex: 1;
-            max-width: 880px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        /* MAIN CONTAINER */
+        main {
+            flex: 1;
+            max-width: 880px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-        .title-block {
-            text-align: center;
-            margin-bottom: 0.75rem;
-        }
+        .title-block {
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
 
-        .title-block h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-title);
-            letter-spacing: -0.5px;
-            margin-bottom: 0.4rem;
-        }
+        .title-block h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-title);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+        }
 
-        .title-block p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        .title-block p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
 
-        /* KARTU UTAMA: MASUK SISWA (DOMINAN) */
-        .portal-main-card {
-            background-color: var(--card-bg);
-            border: 2px solid var(--navy-dark);
-            border-radius: 12px;
-            padding: 2.25rem;
-            box-shadow: 0 4px 20px rgba(11, 25, 44, 0.06);
-            position: relative;
-        }
+        /* KARTU UTAMA: MASUK SISWA (DOMINAN) */
+        .portal-main-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--navy-dark);
+            border-radius: 12px;
+            padding: 2.25rem;
+            box-shadow: 0 4px 20px rgba(11, 25, 44, 0.06);
+            position: relative;
+        }
 
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
 
-        .tag-primary {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
+        .tag-primary {
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
 
-        .portal-main-card h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--navy-dark);
-            margin-bottom: 0.5rem;
-        }
+        .portal-main-card h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+        }
 
-        .portal-main-card p {
-            color: var(--text-body);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
+        .portal-main-card p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
 
-        .program-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 2rem;
-        }
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
 
-        .program-box {
-            background-color: #F1F5F9;
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--navy-mid);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            text-decoration: none;
-            display: block;
-            transition: all 0.2s ease;
-        }
+        .program-box {
+            background-color: #F1F5F9;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy-mid);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-        .program-box:hover {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            border-color: var(--navy-dark);
-        }
+        .btn-portal-main {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 1.1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease;
+        }
 
-        .btn-portal-main {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 1.05rem;
-            padding: 1.1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            transition: background-color 0.2s ease;
-        }
+        .btn-portal-main:hover {
+            background-color: var(--navy-mid);
+        }
 
-        .btn-portal-main:hover {
-            background-color: var(--navy-mid);
-        }
+        /* KARTU SEKUNDER: CEK HASIL (RINGKAS & DI BAWAH) */
+        .portal-sub-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            transition: border-color 0.2s ease;
+        }
 
-        /* KARTU SEKUNDER: CEK HASIL (RINGKAS & DI BAWAH) */
-        .portal-sub-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem 1.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-            transition: border-color 0.2s ease;
-        }
+        .portal-sub-card:hover {
+            border-color: var(--border-hover);
+        }
 
-        .portal-sub-card:hover {
-            border-color: var(--border-hover);
-        }
+        .sub-card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 0.25rem;
+        }
 
-        .sub-card-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-title);
-            margin-bottom: 0.25rem;
-        }
+        .sub-card-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
 
-        .sub-card-desc {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
+        .btn-portal-sub {
+            white-space: nowrap;
+            background-color: #FFFFFF;
+            color: var(--navy-dark);
+            border: 1.5px solid var(--navy-dark);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
 
-        .btn-portal-sub {
-            white-space: nowrap;
-            background-color: #FFFFFF;
-            color: var(--navy-dark);
-            border: 1.5px solid var(--navy-dark);
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 0.875rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
+        .btn-portal-sub:hover {
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+        }
 
-        .btn-portal-sub:hover {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-        }
+        /* ADMIN LINK */
+        .admin-section {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
 
-        /* ADMIN LINK */
-        .admin-section {
-            text-align: center;
-            margin-top: 0.5rem;
-        }
+        .admin-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
 
-        .admin-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.825rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
+        .admin-link:hover {
+            color: var(--navy-dark);
+            text-decoration: underline;
+        }
 
-        .admin-link:hover {
-            color: var(--navy-dark);
-            text-decoration: underline;
-        }
+        /* FOOTER */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
 
-        /* FOOTER */
-        footer {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 1.25rem;
-            text-align: center;
-            font-size: 0.825rem;
-            color: var(--text-muted);
-            margin-top: auto;
-        }
+        /* WA HELPDESK WIDGET */
+        .wa-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: #25D366;
+            color: #FFFFFF;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            z-index: 99;
+        }
 
-        /* WA HELPDESK WIDGET */
-        .wa-float {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: #25D366;
-            color: #FFFFFF;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 99;
-        }
+        @media (max-width: 640px) {
+            main {
+                padding: 1.5rem 1rem;
+            }
 
-        @media (max-width: 640px) {
-            main {
-                padding: 1.5rem 1rem;
-            }
+            .portal-sub-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-            .portal-sub-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .btn-portal-sub {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
+            .btn-portal-sub {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <a href="https://prcclass.web.id" class="brand-logo">
-            PRC <span>CLASS</span>
-        </a>
-        <div class="system-status">
-            <span class="status-dot"></span>
-            SISTEM AKTIF
-        </div>
-    </header>
+    <header>
+        <a href="https://prcclass.web.id" class="brand-logo">
+            PRC <span>CLASS</span>
+        </a>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SISTEM AKTIF
+        </div>
+    </header>
 
-    <main>
-        <div class="title-block">
-            <h1>PORTAL EVALUASI &amp; BELAJAR</h1>
-            <p>Persona Research & Consulting — Platform Terpadu</p>
-        </div>
+    <main>
+        <div class="title-block">
+            <h1>PORTAL EVALUASI &amp; BELAJAR</h1>
+            <p>Persona Research & Consulting — Platform Terpadu</p>
+        </div>
 
-        <!-- UTAMA (MASUK SISWA) -->
-        <section class="portal-main-card">
-            <div class="card-meta">
-                <span class="tag-primary">AKSES UTAMA</span>
-                <span>PRC-GATEWAY</span>
-            </div>
-            <h2>MASUK SISWA / PORTAL BELAJAR</h2>
-            <p>Akses utama peserta untuk mengikuti materi pembelajaran, persiapan seleksi, latihan soal, dan simulasi tes terstruktur.</p>
-            
-            <div class="program-grid">
-                <div class="program-box">POLRI</div>
-                <div class="program-box">TNI</div>
-                <div class="program-box">KEDINASAN</div>
-                <a href="https://personaresearchconsulting-alt.github.io/PROFILING-ASN-ProASN-/" class="program-box">ASN</a>
-                <div class="program-box">UJI KOMPUTER</div>
-            </div>
+        <!-- UTAMA (MASUK SISWA) -->
+        <section class="portal-main-card">
+            <div class="card-meta">
+                <span class="tag-primary">AKSES UTAMA</span>
+                <span>PRC-GATEWAY</span>
+            </div>
+            <h2>MASUK SISWA / PORTAL BELAJAR</h2>
+            <p>Akses utama peserta untuk mengikuti materi pembelajaran, persiapan seleksi, latihan soal, dan simulasi tes terstruktur.</p>
+            
+            <div class="program-grid">
+                <div class="program-box">POLRI</div>
+                <div class="program-box">TNI</div>
+                <div class="program-box">KEDINASAN</div>
+                <div class="program-box">ASN</div>
+                <div class="program-box">UJI KOMPUTER</div>
+            </div>
 
-            <a href="login.html" class="btn-portal-main">MASUK SISWA</a>
-        </section>
+            <a href="login.html" class="btn-portal-main">MASUK SISWA</a>
+        </section>
 
-        <!-- SEKUNDER (CEK HASIL SISWA - RINGKAS DI BAWAH) -->
-        <section class="portal-sub-card">
-            <div>
-                <div class="sub-card-title">CEK HASIL &amp; EVALUASI SISWA</div>
-                <div class="sub-card-desc">Akses khusus siswa dan orang tua untuk melihat rekapitulasi nilai dan grafik perkembangan.</div>
-            </div>
-            <a href="hasil_tryout.html" class="btn-portal-sub">LIHAT HASIL</a>
-        </section>
+        <!-- SEKUNDER (CEK HASIL SISWA - RINGKAS DI BAWAH) -->
+        <section class="portal-sub-card">
+            <div>
+                <div class="sub-card-title">CEK HASIL &amp; EVALUASI SISWA</div>
+                <div class="sub-card-desc">Akses khusus siswa dan orang tua untuk melihat rekapitulasi nilai dan grafik perkembangan.</div>
+            </div>
+            <a href="hasil_tryout.html" class="btn-portal-sub">LIHAT HASIL</a>
+        </section>
 
-        <!-- AREA ADMIN -->
-        <div class="admin-section">
-            <a href="admin_rekap.html" class="admin-link">[ 🔒 Area Pengelola / Rekap Admin ]</a>
-        </div>
-    </main>
+        <!-- AREA ADMIN -->
+        <div class="admin-section">
+            <a href="admin_rekap.html" class="admin-link">[ 🔒 Area Pengelola / Rekap Admin ]</a>
+        </div>
+    </main>
 
-    <footer>
-        &copy; 2026 PRC CLASS. Persona Research & Consulting.
-    </footer>
+    <footer>
+        &copy; 2026 PRC CLASS. Persona Research & Consulting.
+    </footer>
 
-    <!-- WHATSAPP HELPDESK -->
-    <a href="https://wa.me/628774255786?text=Halo%20Admin%20PRC%20CLASS,%20saya%20butuh%20bantuan." class="wa-float" target="_blank" title="Hubungi WhatsApp">
-        WA
-    </a>
+    <!-- WHATSAPP HELPDESK -->
+    <a href="https://wa.me/628774255786?text=Halo%20Admin%20PRC%20CLASS,%20saya%20butuh%20bantuan." class="wa-float" target="_blank" title="Hubungi WhatsApp">
+        WA
+    </a>
 
-    <!-- SECURITY PROTOCOLS -->
-    <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) e.preventDefault();
-            if (e.key === 'F12') e.preventDefault();
-        });
-    </script>
+    <!-- SECURITY PROTOCOLS -->
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) e.preventDefault();
+            if (e.key === 'F12') e.preventDefault();
+        });
+    </script>
 </body>
 </html>
