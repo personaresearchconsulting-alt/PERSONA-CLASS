@@ -1,394 +1,1046 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRC CLASS - Portal Pembelajaran & Evaluasi</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRC CLASS — Test Preparation & Selection</title>
 
-    <style>
-        :root {
-            --bg-page: #F8FAFC;
-            --card-bg: #FFFFFF;
-            --navy-dark: #0B192C;
-            --navy-mid: #1E3E62;
-            --rose-accent: #D97757;
-            --border-color: #E2E8F0;
-            --border-hover: #CBD5E1;
-            --text-title: #0F172A;
-            --text-body: #334155;
-            --text-muted: #64748B;
-            --status-green-bg: #DCFCE7;
-            --status-green-text: #15803D;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --brand-navy: #0f172a;
+            --brand-navy-light: #1e293b;
+            --brand-gold: #c59b27;
+            --brand-gold-hover: #b0881e;
+            --brand-gold-light: #fefce8;
+            --brand-gold-border: #fef08a;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+            --shadow-hover: 0 12px 24px rgba(15, 23, 42, 0.08);
+        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-body);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        /* HEADER */
-        header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        h1, h2, h3, h4, h5, .brand-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-        .brand-logo {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: var(--navy-dark);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-        .brand-logo span {
-            color: var(--rose-accent);
-        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-        .system-status {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--status-green-text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--status-green-bg);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
+        .top-brand-bar {
+            background: var(--brand-navy);
+            color: #ffffff;
+            padding: 10px 24px;
+            font-size: 13px;
+            border-bottom: 2px solid var(--brand-gold);
+        }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #16A34A;
-            border-radius: 50%;
-        }
+        .top-brand-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
 
-        /* MAIN CONTAINER */
-        main {
-            flex: 1;
-            max-width: 880px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .brand-identity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        .title-block {
-            text-align: center;
-            margin-bottom: 0.75rem;
-        }
+        .brand-name {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-        .title-block h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-title);
-            letter-spacing: -0.5px;
-            margin-bottom: 0.4rem;
-        }
+        .brand-tag {
+            background: rgba(197, 155, 39, 0.2);
+            color: #fde047;
+            border: 1px solid rgba(197, 155, 39, 0.4);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-        .title-block p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        .brand-wa-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #e2e8f0;
+            font-weight: 500;
+            font-size: 12px;
+            transition: color 0.2s;
+        }
 
-        /* KARTU UTAMA: MASUK SISWA (DOMINAN) */
-        .portal-main-card {
-            background-color: var(--card-bg);
-            border: 2px solid var(--navy-dark);
-            border-radius: 12px;
-            padding: 2.25rem;
-            box-shadow: 0 4px 20px rgba(11, 25, 44, 0.06);
-            position: relative;
-        }
+        .brand-wa-link:hover {
+            color: var(--brand-gold);
+        }
 
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
+        .brand-wa-link svg {
+            width: 15px;
+            height: 15px;
+            fill: #22c55e;
+        }
 
-        .tag-primary {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
+        #loginPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 32px 20px;
+        }
 
-        .portal-main-card h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--navy-dark);
-            margin-bottom: 0.5rem;
-        }
+        .login-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
 
-        .portal-main-card p {
-            color: var(--text-body);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
+        .brand-logo-login {
+            margin-bottom: 20px;
+        }
 
-        .program-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 2rem;
-        }
+        .brand-logo-login h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--brand-navy);
+        }
 
-        .program-box {
-            background-color: #F1F5F9;
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--navy-mid);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        .brand-logo-login p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
 
-        .btn-portal-main {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 1.05rem;
-            padding: 1.1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            transition: background-color 0.2s ease;
-        }
+        .login-notice-box {
+            background-color: var(--brand-gold-light);
+            border: 1px solid var(--brand-gold-border);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            font-size: 12.5px;
+            color: #713f12;
+            line-height: 1.5;
+        }
 
-        .btn-portal-main:hover {
-            background-color: var(--navy-mid);
-        }
+        .login-notice-box strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #854d0e;
+            font-weight: 700;
+            font-size: 13px;
+        }
 
-        /* KARTU SEKUNDER: CEK HASIL (RINGKAS & DI BAWAH) */
-        .portal-sub-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem 1.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-            transition: border-color 0.2s ease;
-        }
+        .login-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-navy);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-        .portal-sub-card:hover {
-            border-color: var(--border-hover);
-        }
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
 
-        .sub-card-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-title);
-            margin-bottom: 0.25rem;
-        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #f8fafc;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+        }
 
-        .sub-card-desc {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
+        .form-input:focus {
+            border-color: var(--brand-navy);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+        }
 
-        .btn-portal-sub {
-            white-space: nowrap;
-            background-color: #FFFFFF;
-            color: var(--navy-dark);
-            border: 1.5px solid var(--navy-dark);
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 0.875rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background-color: var(--brand-navy);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+        }
 
-        .btn-portal-sub:hover {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-        }
+        .btn-login:hover {
+            background-color: var(--brand-navy-light);
+            transform: translateY(-1px);
+        }
 
-        /* ADMIN LINK */
-        .admin-section {
-            text-align: center;
-            margin-top: 0.5rem;
-        }
+        .error-message {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 14px;
+            min-height: 20px;
+            display: none;
+            font-weight: 500;
+        }
 
-        .admin-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.825rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
+        .error-message.active {
+            display: block;
+        }
 
-        .admin-link:hover {
-            color: var(--navy-dark);
-            text-decoration: underline;
-        }
+        #dashboard {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        /* FOOTER */
-        footer {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 1.25rem;
-            text-align: center;
-            font-size: 0.825rem;
-            color: var(--text-muted);
-            margin-top: auto;
-        }
+        .header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
 
-        /* WA HELPDESK WIDGET */
-        .wa-float {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: #25D366;
-            color: #FFFFFF;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 99;
-        }
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        @media (max-width: 640px) {
-            main {
-                padding: 1.5rem 1rem;
-            }
+        .header-brand h1 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--brand-navy);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
 
-            .portal-sub-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        .header-brand p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
 
-            .btn-portal-sub {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
+        .btn-logout {
+            background-color: transparent;
+            color: var(--brand-navy);
+            border: 1.5px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: #f1f5f9;
+            border-color: var(--brand-navy);
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .notice-banner {
+            background: linear-gradient(135deg, #ffffff 0%, var(--brand-gold-light) 100%);
+            border: 1px solid var(--brand-gold-border);
+            border-left: 5px solid var(--brand-gold);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notice-banner h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brand-navy);
+            margin-bottom: 6px;
+        }
+
+        .notice-banner p {
+            font-size: 13.5px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: var(--brand-navy);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 14px;
+            background-color: var(--brand-gold);
+            border-radius: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 36px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* PERBAIKAN: pseudo-element harus memakai ::before, bukan ::top-line */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            transition: background 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: #cbd5e1;
+        }
+
+        .card:hover::before {
+            background: var(--brand-gold);
+        }
+
+        .card-header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            background-color: #f1f5f9;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-navy);
+            transition: all 0.25s ease;
+        }
+
+        .card:hover .card-icon {
+            background-color: var(--brand-navy);
+            color: #ffffff;
+        }
+
+        .card-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2;
+        }
+
+        .card-arrow {
+            color: #cbd5e1;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .card:hover .card-arrow {
+            color: var(--brand-gold);
+            transform: translateX(4px);
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-navy);
+            margin-bottom: 6px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .card-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 12px;
+            margin-bottom: 32px;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--brand-navy);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-card p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .footer {
+            background-color: #ffffff;
+            border-top: 1px solid var(--border-color);
+            padding: 24px;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .top-brand-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .grid-container {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 14px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .notice-banner {
+                padding: 16px;
+            }
+
+            .main-container {
+                padding: 20px 16px;
+            }
+
+            .login-card {
+                padding: 28px 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <header>
-        <a href="https://prcclass.web.id" class="brand-logo">
-            PRC <span>CLASS</span>
-        </a>
-        <div class="system-status">
-            <span class="status-dot"></span>
-            SISTEM AKTIF
-        </div>
-    </header>
+    <div class="top-brand-bar">
+        <div class="top-brand-container">
+            <div class="brand-identity">
+                <span class="brand-name">Persona Research & Consulting</span>
+                <span class="brand-tag">Official</span>
+            </div>
 
-    <main>
-        <div class="title-block">
-            <h1>PORTAL EVALUASI &amp; BELAJAR</h1>
-            <p>Persona Research & Consulting — Platform Terpadu</p>
-        </div>
+            <a href="https://wa.me/6287742515786"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="brand-wa-link"
+               title="Hubungi Admin WhatsApp">
 
-        <!-- UTAMA (MASUK SISWA) -->
-        <section class="portal-main-card">
-            <div class="card-meta">
-                <span class="tag-primary">AKSES UTAMA</span>
-                <span>PRC-GATEWAY</span>
-            </div>
-            <h2>MASUK SISWA / PORTAL BELAJAR</h2>
-            <p>Akses utama peserta untuk mengikuti materi pembelajaran, persiapan seleksi, latihan soal, dan simulasi tes terstruktur.</p>
-            
-            <div class="program-grid">
-                <div class="program-box">POLRI</div>
-                <div class="program-box">TNI</div>
-                <div class="program-box">KEDINASAN</div>
-                <div class="program-box">ASN</div>
-                <div class="program-box">UJI KOMPUTER</div>
-            </div>
+                <svg viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                </svg>
 
-            <a href="login.html" class="btn-portal-main">MASUK SISWA</a>
-        </section>
+                WhatsApp: 0877 4251 5786
+            </a>
+        </div>
+    </div>
 
-        <!-- SEKUNDER (CEK HASIL SISWA - RINGKAS DI BAWAH) -->
-        <section class="portal-sub-card">
-            <div>
-                <div class="sub-card-title">CEK HASIL &amp; EVALUASI SISWA</div>
-                <div class="sub-card-desc">Akses khusus siswa dan orang tua untuk melihat rekapitulasi nilai dan grafik perkembangan.</div>
-            </div>
-            <a href="hasil_tryout.html" class="btn-portal-sub">LIHAT HASIL</a>
-        </section>
+    <div id="loginPage">
+        <div class="login-card">
 
-        <!-- AREA ADMIN -->
-        <div class="admin-section">
-            <a href="admin_rekap.html" class="admin-link">[ 🔒 Area Pengelola / Rekap Admin ]</a>
-        </div>
-    </main>
+            <div class="brand-logo-login">
+                <h1>PRC CLASS</h1>
+                <p>Test Preparation & Selection</p>
+            </div>
 
-    <footer>
-        &copy; 2026 PRC CLASS. Persona Research & Consulting.
-    </footer>
+            <div class="login-notice-box">
+                <strong>Halo Peserta Kelas Bimbingan,</strong>
+                Website ini bertujuan sebagai sarana pembelajaran khusus kelas.
+                Dimohon untuk tidak menyebarluaskan dan tidak memberikan akses selain
+                kepada yang terdaftar sebagai member PRC CLASS. Terima kasih.
+            </div>
 
-    <!-- WHATSAPP HELPDESK -->
-    <a href="https://wa.me/628774255786?text=Halo%20Admin%20PRC%20CLASS,%20saya%20butuh%20bantuan." class="wa-float" target="_blank" title="Hubungi WhatsApp">
-        WA
-    </a>
+            <div class="login-title">Akses Member</div>
 
-    <!-- SECURITY PROTOCOLS -->
-    <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) e.preventDefault();
-            if (e.key === 'F12') e.preventDefault();
-        });
-    </script>
+            <div class="form-group">
+                <input
+                    type="password"
+                    id="passwordInput"
+                    class="form-input"
+                    placeholder="Masukkan Password Akses"
+                    autocomplete="off">
+            </div>
+
+            <button type="button" class="btn-login" id="btnLogin">
+                Masuk Kelas
+            </button>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <div id="dashboard">
+
+        <header class="header">
+            <div class="header-container">
+
+                <div class="header-brand">
+                    <h1>PRC CLASS</h1>
+                    <p>Test Preparation & Selection</p>
+                </div>
+
+                <button type="button" class="btn-logout" id="btnLogout">
+                    KELUAR
+                </button>
+
+            </div>
+        </header>
+
+        <main class="main-container">
+
+            <section class="notice-banner">
+                <h2>Selamat Datang di Portal Pembelajaran</h2>
+                <p>
+                    Halo Peserta Kelas Bimbingan! Silakan manfaatkan seluruh fasilitas
+                    simulasi dan materi yang tersedia. Mohon menjaga kerahasiaan akses
+                    akun Anda dan tidak menyebarluaskan materi bimbingan di luar member
+                    resmi Persona Class.
+                </p>
+            </section>
+
+            <h3 class="section-title">PROGRAM PERSIAPAN (TRYOUT CAT)</h3>
+
+            <div class="grid-container">
+
+                <a href="polri.html" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">POLRI</div>
+                        <div class="card-desc">Persiapan Tes & Seleksi POLRI</div>
+                    </div>
+                </a>
+
+                <a href="https://personaresearchconsulting-alt.github.io/TNI-CAT/"
+                   class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">TNI</div>
+                        <div class="card-desc">Persiapan Tes & Seleksi TNI</div>
+                    </div>
+                </a>
+
+                <a href="https://personaresearchconsulting-alt.github.io/SKD-1/"
+                   class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0h4m-4 0H9m4 0V7m0 0h2m-2 0H9"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">KEDINASAN</div>
+                        <div class="card-desc">Persiapan SKD & Seleksi Kedinasan</div>
+                    </div>
+                </a>
+
+                <a href="https://personaresearchconsulting-alt.github.io/TRYOUT-UJI-KOMPUTER/"
+                   class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">UJI KOMPUTER</div>
+                        <div class="card-desc">Word, Excel, PowerPoint & Komputer</div>
+                    </div>
+                </a>
+
+            </div>
+
+            <h3 class="section-title">LEARNING CENTER</h3>
+
+            <div class="grid-container">
+
+                <a href="materi.html" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">MATERI PEMBELAJARAN</div>
+                        <div class="card-desc">Materi dan panduan belajar</div>
+                    </div>
+                </a>
+
+                <a href="tryout.html" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">TRYOUT & CAT</div>
+                        <div class="card-desc">Simulasi tes berbasis komputer</div>
+                    </div>
+                </a>
+
+                <a href="latihan.html" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">LATIHAN SOAL</div>
+                        <div class="card-desc">Latihan berdasarkan jenis tes</div>
+                    </div>
+                </a>
+
+                <a href="pembahasan.html" class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">PEMBAHASAN</div>
+                        <div class="card-desc">Pembahasan dan evaluasi hasil</div>
+                    </div>
+                </a>
+
+                <a href="https://personaresearchconsulting-alt.github.io/ALTES-PSIKOLOGI-1/"
+                   class="card">
+                    <div>
+                        <div class="card-header-flex">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+
+                            <svg class="card-arrow" width="16" height="16"
+                                 viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+
+                        <div class="card-title">PSYMETRIC ASSESSMENT</div>
+                        <div class="card-desc">Asesmen dan evaluasi psikometri</div>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <h4>BELAJAR TERARAH</h4>
+                    <p>
+                        Materi disusun secara sistematis berdasarkan standar kisi-kisi
+                        tes dan kebutuhan persiapan seleksi terkini.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h4>SIMULASI TES</h4>
+                    <p>
+                        Berlatih dengan format sistem CAT yang dibuat menyerupai
+                        kondisi dan batas waktu seleksi sebenarnya.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h4>EVALUASI AKURAT</h4>
+                    <p>
+                        Manfaatkan hasil evaluasi latihan untuk mengukur kelemahan
+                        dan meningkatkan performa sebelum tes resmi.
+                    </p>
+                </div>
+
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            &copy; Persona Research & Consulting. All Rights Reserved.
+        </footer>
+
+    </div>
+
+    <script>
+
+        /* =====================================================
+           PASSWORD MEMBER
+        ===================================================== */
+
+        const VALID_PASSWORDS = [
+            'PRC00', 'BAGAS11', 'ILHAM0801', 'CANDRA17', 'EGA12',
+            'AGUS25', 'YANDHETA1', 'DIKA2408', 'dika24', 'zihan2008',
+            'PRC10', 'rendy2005', 'FATHIR06', 'GALUH23', 'DOMI22',
+            'FITRA07122007', 'JUAN020708@', 'DIDIT010908', 'GALANGADR',
+            '0901', '710211',
+            'PRC21', 'PRC22', 'PRC23', 'PRC24', 'PRC25', 'PRC26',
+            'PRC27', 'PRC28', 'PRC29', 'PRC30', 'PRC31', 'PRC32',
+            'PRC33', 'PRC34', 'PRC35', 'PRC36', 'PRC37', 'PRC38',
+            'PRC39', 'PRC40', 'PRC41', 'PRC42', 'PRC43', 'PRC44',
+            'PRC45', 'PRC46', 'PRC47', 'PRC48', 'PRC49', 'PRC50',
+            'PRC51', 'PRC52', 'PRC53', 'PRC54', 'PRC55', 'PRC56',
+            'PRC57', 'PRC58', 'PRC59', 'PRC60', 'PRC61', 'PRC62',
+            'PRC63', 'PRC64', 'PRC65', 'PRC66', 'PRC67', 'PRC68',
+            'PRC69', 'PRC70', 'PRC71', 'PRC72', 'PRC73', 'PRC74',
+            'PRC75', 'PRC76', 'PRC77', 'PRC78', 'PRC79', 'PRC80',
+            'PRC81', 'PRC82', 'PRC83', 'PRC84', 'PRC85', 'PRC86',
+            'PRC87', 'PRC88', 'PRC89', 'PRC90', 'PRC91', 'PRC92',
+            'PRC93', 'PRC94', 'PRC95', 'PRC96', 'PRC97', 'PRC98',
+            'PRC99', 'PRC100', 'PRC101'
+        ];
+
+
+        /* =====================================================
+           DOM
+        ===================================================== */
+
+        const loginPage = document.getElementById('loginPage');
+        const dashboard = document.getElementById('dashboard');
+        const passwordInput = document.getElementById('passwordInput');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnLogout = document.getElementById('btnLogout');
+        const errorMessage = document.getElementById('errorMessage');
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        function handleLogin() {
+
+            const inputVal = passwordInput.value.trim();
+
+            errorMessage.textContent = '';
+            errorMessage.classList.remove('active');
+
+            if (!inputVal) {
+                showError('Masukkan password terlebih dahulu.');
+                return;
+            }
+
+            const isValid = VALID_PASSWORDS.some(
+                pass => pass.toLowerCase() === inputVal.toLowerCase()
+            );
+
+            if (isValid) {
+
+                loginPage.style.display = 'none';
+                dashboard.style.display = 'flex';
+
+                passwordInput.value = '';
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'instant'
+                });
+
+            } else {
+
+                showError('Password tidak ditemukan.');
+
+            }
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        function handleLogout() {
+
+            dashboard.style.display = 'none';
+            loginPage.style.display = 'flex';
+
+            passwordInput.value = '';
+
+            errorMessage.textContent = '';
+            errorMessage.classList.remove('active');
+
+            setTimeout(() => {
+                passwordInput.focus();
+            }, 100);
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        function showError(msg) {
+
+            errorMessage.textContent = msg;
+            errorMessage.classList.add('active');
+
+        }
+
+
+        /* =====================================================
+           EVENTS
+        ===================================================== */
+
+        btnLogin.addEventListener('click', handleLogin);
+
+        btnLogout.addEventListener('click', handleLogout);
+
+        passwordInput.addEventListener('keydown', function(event) {
+
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                handleLogin();
+            }
+
+        });
+
+
+        /* =====================================================
+           BASIC PROTECTION
+        ===================================================== */
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return;
+            }
+
+            if (
+                e.ctrlKey &&
+                e.shiftKey &&
+                ['I', 'J', 'C', 'i', 'j', 'c'].includes(e.key)
+            ) {
+                e.preventDefault();
+                return;
+            }
+
+            if (e.ctrlKey && ['u', 'U'].includes(e.key)) {
+                e.preventDefault();
+                return;
+            }
+
+        });
+
+    </script>
+
 </body>
 </html>
+```
