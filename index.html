@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -240,6 +239,35 @@
             transform: translateY(-1px);
         }
 
+        .login-external-links {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 14px;
+        }
+
+        .btn-external-link {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            background-color: #f1f5f9;
+            color: var(--brand-navy);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-external-link:hover {
+            background-color: var(--brand-navy);
+            color: #ffffff;
+            border-color: var(--brand-navy);
+        }
+
         .error-message {
             color: #dc2626;
             font-size: 13px;
@@ -385,7 +413,6 @@
             overflow: hidden;
         }
 
-        /* Perbaikan pseudo-element */
         .card::before {
             content: '';
             position: absolute;
@@ -610,6 +637,22 @@
             <button type="button" class="btn-login" id="btnLogin">
                 Masuk Kelas
             </button>
+
+            <!-- Tombol Tambahan di Bawah Tombol Masuk Kelas -->
+            <div class="login-external-links">
+                <a href="https://personaresearchconsulting-alt.github.io/BIODATA-SISWA-BIMBEL-CERDAS-NTB---PRC-CLASS/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn-external-link">
+                    BIODATA PESERTA
+                </a>
+                <a href="hasil.html" class="btn-external-link">
+                    CEK HASIL TRYOUT
+                </a>
+                <a href="admin.html" class="btn-external-link">
+                    AKSES ADMIN
+                </a>
+            </div>
 
             <div id="errorMessage" class="error-message"></div>
 
@@ -854,7 +897,7 @@
                 </a>
 
 
-                <!-- ASN — DITAMBAHKAN -->
+                <!-- ASN -->
                 <a href="https://personaresearchconsulting-alt.github.io/PROFILING-ASN-ProASN-/"
                    class="card">
 
@@ -1492,4 +1535,3 @@
 
 </body>
 </html>
-```
