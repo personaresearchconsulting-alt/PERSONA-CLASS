@@ -327,7 +327,7 @@ tbody tr:hover{
     display:flex;
     gap:10px;
     flex-wrap:wrap;
-    margin-bottom:20px;
+    margin-bottom:10px;
 }
 
 .biodata-search input{
@@ -347,9 +347,60 @@ tbody tr:hover{
 .biodata-message{
     color:var(--muted);
     font-size:13px;
-    margin:10px 0 20px;
+    margin:10px 0 12px;
     min-height:18px;
 }
+
+/* SEARCH RESULTS */
+
+#biodataSearchResults{
+    display:none;
+    margin-bottom:20px;
+}
+
+.search-result-title{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:8px;
+}
+
+.search-result-list{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.search-result-item{
+    width:100%;
+    border:1px solid #e5e1dc;
+    background:#faf8f5;
+    border-radius:11px;
+    padding:12px 14px;
+    cursor:pointer;
+    text-align:left;
+    transition:.15s;
+}
+
+.search-result-item:hover{
+    border-color:var(--rose);
+    background:#f7f1ee;
+}
+
+.search-result-name{
+    display:block;
+    color:var(--navy);
+    font-weight:bold;
+    font-size:14px;
+}
+
+.search-result-target{
+    display:block;
+    margin-top:4px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* BIODATA DETAIL */
 
 .biodata-profile{
     display:grid;
@@ -489,817 +540,662 @@ tbody tr:hover{
 
 <div class="container">
 
-    <!-- LOGIN ADMIN -->
+<!-- =====================================================
+     LOGIN ADMIN
+===================================================== -->
 
-    <div id="adminLogin" class="admin-login">
+<div id="adminLogin" class="admin-login">
 
-        <div class="login-card">
+    <div class="login-card">
 
-            <h1>Area Pengelola</h1>
+        <h1>Area Pengelola</h1>
+
+        <p>
+            Masukkan PIN admin untuk melihat
+            rekap hasil Persona Class.
+        </p>
+
+        <input
+            type="password"
+            id="pinInput"
+            class="pin-input"
+            placeholder="PIN Admin"
+            maxlength="20"
+            inputmode="numeric"
+            autocomplete="off"
+        >
+
+        <button
+            class="btn btn-primary"
+            onclick="loginAdmin()"
+        >
+            MASUK REKAP
+        </button>
+
+        <div
+            id="loginError"
+            class="login-error"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMIN CONTENT
+===================================================== -->
+
+<div id="adminContent">
+
+    <div class="header">
+
+        <div>
+
+            <h1>Rekap Persona Class</h1>
 
             <p>
-                Masukkan PIN admin untuk melihat
-                rekap hasil Persona Class.
+                Data hasil latihan dan tryout siswa.
             </p>
 
-            <input
-                type="password"
-                id="pinInput"
-                class="pin-input"
-                placeholder="PIN Admin"
-                maxlength="20"
-                inputmode="numeric"
-                autocomplete="off"
-            >
+        </div>
+
+        <div class="header-actions">
 
             <button
-                class="btn btn-primary"
-                onclick="loginAdmin()"
+                class="btn btn-biodata"
+                onclick="toggleBiodata()"
             >
-                MASUK REKAP
+                👤 Biodata Peserta
             </button>
 
-            <div
-                id="loginError"
-                class="login-error"
-            ></div>
+            <button
+                class="btn btn-download"
+                onclick="downloadCSV()"
+            >
+                ↓ Download Rekap
+            </button>
+
+            <button
+                class="btn btn-small"
+                onclick="loadData()"
+            >
+                ↻ Refresh
+            </button>
+
+            <button
+                class="btn btn-logout"
+                onclick="logoutAdmin()"
+            >
+                Keluar
+            </button>
 
         </div>
 
     </div>
 
 
-    <!-- ADMIN CONTENT -->
+<!-- =====================================================
+     BIODATA PANEL
+===================================================== -->
 
-    <div id="adminContent">
+<div id="biodataPanel">
 
-        <div class="header">
+    <div class="biodata-card">
 
-            <div>
+        <div class="biodata-header">
 
-                <h1>Rekap Persona Class</h1>
+            <h2>Biodata Peserta</h2>
 
-                <p>
-                    Data hasil latihan dan tryout siswa.
-                </p>
-
-            </div>
-
-            <div class="header-actions">
-
-                <button
-                    class="btn btn-biodata"
-                    onclick="toggleBiodata()"
-                >
-                    👤 Biodata Peserta
-                </button>
-
-                <button
-                    class="btn btn-download"
-                    onclick="downloadCSV()"
-                >
-                    ↓ Download Rekap
-                </button>
-
-                <button
-                    class="btn btn-small"
-                    onclick="loadData()"
-                >
-                    ↻ Refresh
-                </button>
-
-                <button
-                    class="btn btn-logout"
-                    onclick="logoutAdmin()"
-                >
-                    Keluar
-                </button>
-
-            </div>
+            <button
+                class="btn btn-logout"
+                onclick="toggleBiodata()"
+            >
+                Tutup
+            </button>
 
         </div>
 
 
-        <!-- BIODATA PESERTA -->
+        <!-- SEARCH -->
 
-        <div id="biodataPanel">
-
-            <div class="biodata-card">
-
-                <div class="biodata-header">
-
-                    <h2>Biodata Peserta</h2>
-
-                    <button
-                        class="btn btn-logout"
-                        onclick="toggleBiodata()"
-                    >
-                        Tutup
-                    </button>
-
-                </div>
-
-
-                <div class="biodata-search">
-
-                    <input
-                        type="text"
-                        id="biodataSearch"
-                        placeholder="Ketik sebagian nama peserta..."
-                        autocomplete="off"
-                    >
-
-                    <button
-                        class="btn btn-small"
-                        onclick="searchBiodata()"
-                    >
-                        Cari Biodata
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="biodataMessage"
-                    class="biodata-message"
-                >
-                    Masukkan sebagian atau seluruh nama peserta.
-                </div>
-
-
-                <div
-                    id="biodataResult"
-                    style="display:none;"
-                >
-
-                    <div class="biodata-profile">
-
-                        <div class="biodata-photo-box">
-
-                            <div
-                                id="biodataPhotoContainer"
-                            ></div>
-
-                        </div>
-
-
-                        <div>
-
-                            <h2
-                                class="biodata-name"
-                                id="biodataNama"
-                            >
-                            </h2>
-
-                            <div
-                                class="biodata-target"
-                                id="biodataTarget"
-                            >
-                            </div>
-
-
-                            <div class="biodata-grid">
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Nama Panggilan
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataNamaPanggilan"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Jenis Kelamin
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataJenisKelamin"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Tempat Lahir
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataTempatLahir"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Tanggal Lahir
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataTanggalLahir"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Agama
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataAgama"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        WhatsApp
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataWhatsApp"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Email
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataEmail"
-                                    ></div>
-                                </div>
-
-                                <div class="biodata-item">
-                                    <div class="biodata-label">
-                                        Tinggi / Berat
-                                    </div>
-                                    <div
-                                        class="biodata-value"
-                                        id="biodataTinggiBerat"
-                                    ></div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="biodata-section">
-
-                        <h3 class="biodata-section-title">
-                            Pendidikan
-                        </h3>
-
-                        <div class="biodata-grid">
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Sekolah
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataSekolah"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Jurusan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataJurusan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Tahun Lulus
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataTahunLulus"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pendidikan Terakhir
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPendidikan"
-                                ></div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="biodata-section">
-
-                        <h3 class="biodata-section-title">
-                            Alamat
-                        </h3>
-
-                        <div class="biodata-item">
-
-                            <div class="biodata-label">
-                                Alamat Lengkap
-                            </div>
-
-                            <div
-                                class="biodata-value"
-                                id="biodataAlamat"
-                            ></div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="biodata-section">
-
-                        <h3 class="biodata-section-title">
-                            Data Orang Tua
-                        </h3>
-
-                        <div class="biodata-grid">
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Nama Ayah
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataNamaAyah"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pekerjaan Ayah
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPekerjaanAyah"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pendidikan Ayah
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPendidikanAyah"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    HP Ayah
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataHpAyah"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Nama Ibu
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataNamaIbu"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pekerjaan Ibu
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPekerjaanIbu"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pendidikan Ibu
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPendidikanIbu"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    HP Ibu
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataHpIbu"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Jumlah Saudara
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataJumlahSaudara"
-                                ></div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="biodata-section">
-
-                        <h3 class="biodata-section-title">
-                            Profil dan Pengalaman
-                        </h3>
-
-                        <div class="biodata-grid">
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Organisasi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataOrganisasi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Prestasi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPrestasi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Kepemimpinan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataKepemimpinan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Kelebihan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataKelebihan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Kekurangan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataKekurangan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Perbaikan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPerbaikan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Hobi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataHobi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Keterampilan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataKeterampilan"
-                                ></div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="biodata-section">
-
-                        <h3 class="biodata-section-title">
-                            Seleksi dan Target
-                        </h3>
-
-                        <div class="biodata-grid">
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Alasan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataAlasan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Persiapan
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPersiapan"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Target
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataTargetSeleksi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pernah Seleksi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPernahSeleksi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Tahun Seleksi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataTahunSeleksi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pengalaman Seleksi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPengalamanSeleksi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Pengalaman Sulit
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataPengalamanSulit"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Cara Mengatasi
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataCaraMengatasi"
-                                ></div>
-                            </div>
-
-                            <div class="biodata-item">
-                                <div class="biodata-label">
-                                    Kerja Sama
-                                </div>
-                                <div
-                                    class="biodata-value"
-                                    id="biodataKerjaSama"
-                                ></div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- SUMMARY -->
-
-        <div class="summary">
-
-            <div class="summary-card">
-
-                <div class="summary-label">
-                    Total Data
-                </div>
-
-                <div
-                    class="summary-value"
-                    id="totalData"
-                >
-                    0
-                </div>
-
-            </div>
-
-            <div class="summary-card">
-
-                <div class="summary-label">
-                    Jumlah Siswa
-                </div>
-
-                <div
-                    class="summary-value"
-                    id="totalStudents"
-                >
-                    0
-                </div>
-
-            </div>
-
-            <div class="summary-card">
-
-                <div class="summary-label">
-                    Rata-rata Nilai Akhir
-                </div>
-
-                <div
-                    class="summary-value"
-                    id="averageScore"
-                >
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- FILTER -->
-
-        <div class="toolbar">
+        <div class="biodata-search">
 
             <input
                 type="text"
-                id="searchInput"
-                placeholder="Cari nama, program, nama tes, atau session..."
-                oninput="renderTable()"
+                id="biodataSearch"
+                placeholder="Ketik sebagian nama peserta..."
+                autocomplete="off"
             >
-
-            <select
-                id="activityFilter"
-                onchange="renderTable()"
-            >
-
-                <option value="">
-                    Semua Aktivitas
-                </option>
-
-                <option value="TRYOUT">
-                    TRYOUT
-                </option>
-
-            </select>
-
-
-            <select
-                id="groupFilter"
-                onchange="renderTable()"
-            >
-
-                <option value="">
-                    Semua Program
-                </option>
-
-                <option value="POLRI">
-                    POLRI
-                </option>
-
-                <option value="TNI">
-                    TNI
-                </option>
-
-                <option value="KEDINASAN">
-                    KEDINASAN
-                </option>
-
-                <option value="LAINNYA">
-                    LAINNYA
-                </option>
-
-            </select>
-
 
             <button
                 class="btn btn-small"
-                onclick="resetFilter()"
+                onclick="searchBiodata()"
             >
-                Reset Filter
+                Cari Biodata
             </button>
 
         </div>
 
 
         <div
-            class="status"
-            id="statusText"
+            id="biodataMessage"
+            class="biodata-message"
         >
-            Memuat data...
+            Masukkan sebagian atau seluruh nama peserta.
         </div>
 
 
-        <!-- TABLE -->
+        <!-- HASIL PENCARIAN -->
+        <!-- TERPISAH DARI BIODATA DETAIL -->
 
-        <div class="table-wrap">
+        <div
+            id="biodataSearchResults"
+        ></div>
 
-            <table>
 
-                <thead>
+        <!-- DETAIL BIODATA -->
 
-                    <tr>
+        <div
+            id="biodataResult"
+            style="display:none;"
+        >
 
-                        <th>No</th>
-                        <th>Timestamp</th>
-                        <th>Nama</th>
-                        <th>Session ID</th>
-                        <th>Aktivitas</th>
-                        <th>Program</th>
-                        <th>Nama Tryout</th>
-                        <th>Tanggal</th>
-                        <th>Kecerdasan</th>
-                        <th>Kepribadian</th>
-                        <th>Kecermatan</th>
-                        <th>TIU</th>
-                        <th>TWK</th>
-                        <th>TKP</th>
-                        <th>Pengetahuan Umum</th>
-                        <th>Nilai Akhir</th>
+            <div class="biodata-profile">
 
-                    </tr>
+                <div class="biodata-photo-box">
 
-                </thead>
+                    <div
+                        id="biodataPhotoContainer"
+                    ></div>
 
-                <tbody id="tableBody">
+                </div>
 
-                    <tr>
 
-                        <td
-                            colspan="16"
-                            class="empty"
-                        >
-                            Memuat data...
+                <div>
 
-                        </td>
+                    <h2
+                        class="biodata-name"
+                        id="biodataNama"
+                    ></h2>
 
-                    </tr>
+                    <div
+                        class="biodata-target"
+                        id="biodataTarget"
+                    ></div>
 
-                </tbody>
 
-            </table>
+                    <div class="biodata-grid">
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Nama Panggilan
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataNamaPanggilan"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Jenis Kelamin
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataJenisKelamin"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Tempat Lahir
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataTempatLahir"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Tanggal Lahir
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataTanggalLahir"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Agama
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataAgama"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                WhatsApp
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataWhatsApp"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Email
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataEmail"
+                            ></div>
+                        </div>
+
+                        <div class="biodata-item">
+                            <div class="biodata-label">
+                                Tinggi / Berat
+                            </div>
+                            <div
+                                class="biodata-value"
+                                id="biodataTinggiBerat"
+                            ></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENDIDIKAN -->
+
+            <div class="biodata-section">
+
+                <h3 class="biodata-section-title">
+                    Pendidikan
+                </h3>
+
+                <div class="biodata-grid">
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Sekolah
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataSekolah"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Jurusan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataJurusan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Tahun Lulus
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataTahunLulus"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pendidikan Terakhir
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPendidikan"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ALAMAT -->
+
+            <div class="biodata-section">
+
+                <h3 class="biodata-section-title">
+                    Alamat
+                </h3>
+
+                <div class="biodata-item">
+
+                    <div class="biodata-label">
+                        Alamat Lengkap
+                    </div>
+
+                    <div
+                        class="biodata-value"
+                        id="biodataAlamat"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORANG TUA -->
+
+            <div class="biodata-section">
+
+                <h3 class="biodata-section-title">
+                    Data Orang Tua
+                </h3>
+
+                <div class="biodata-grid">
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Nama Ayah
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataNamaAyah"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pekerjaan Ayah
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPekerjaanAyah"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pendidikan Ayah
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPendidikanAyah"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            HP Ayah
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataHpAyah"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Nama Ibu
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataNamaIbu"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pekerjaan Ibu
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPekerjaanIbu"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pendidikan Ibu
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPendidikanIbu"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            HP Ibu
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataHpIbu"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Jumlah Saudara
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataJumlahSaudara"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROFIL -->
+
+            <div class="biodata-section">
+
+                <h3 class="biodata-section-title">
+                    Profil dan Pengalaman
+                </h3>
+
+                <div class="biodata-grid">
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Organisasi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataOrganisasi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Prestasi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPrestasi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Kepemimpinan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataKepemimpinan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Kelebihan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataKelebihan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Kekurangan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataKekurangan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Perbaikan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPerbaikan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Hobi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataHobi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Keterampilan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataKeterampilan"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SELEKSI -->
+
+            <div class="biodata-section">
+
+                <h3 class="biodata-section-title">
+                    Seleksi dan Target
+                </h3>
+
+                <div class="biodata-grid">
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Alasan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataAlasan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Persiapan
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPersiapan"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Target
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataTargetSeleksi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pernah Seleksi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPernahSeleksi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Tahun Seleksi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataTahunSeleksi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pengalaman Seleksi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPengalamanSeleksi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Pengalaman Sulit
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataPengalamanSulit"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Cara Mengatasi
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataCaraMengatasi"
+                        ></div>
+                    </div>
+
+                    <div class="biodata-item">
+                        <div class="biodata-label">
+                            Kerja Sama
+                        </div>
+                        <div
+                            class="biodata-value"
+                            id="biodataKerjaSama"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -1308,7 +1204,198 @@ tbody tr:hover{
 </div>
 
 
+<!-- =====================================================
+     SUMMARY
+===================================================== -->
+
+<div class="summary">
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Total Data
+        </div>
+
+        <div
+            class="summary-value"
+            id="totalData"
+        >
+            0
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Jumlah Siswa
+        </div>
+
+        <div
+            class="summary-value"
+            id="totalStudents"
+        >
+            0
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <div class="summary-label">
+            Rata-rata Nilai Akhir
+        </div>
+
+        <div
+            class="summary-value"
+            id="averageScore"
+        >
+            0
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FILTER
+===================================================== -->
+
+<div class="toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari nama, program, nama tes, atau session..."
+        oninput="renderTable()"
+    >
+
+    <select
+        id="activityFilter"
+        onchange="renderTable()"
+    >
+
+        <option value="">
+            Semua Aktivitas
+        </option>
+
+        <option value="TRYOUT">
+            TRYOUT
+        </option>
+
+    </select>
+
+
+    <select
+        id="groupFilter"
+        onchange="renderTable()"
+    >
+
+        <option value="">
+            Semua Program
+        </option>
+
+        <option value="POLRI">
+            POLRI
+        </option>
+
+        <option value="TNI">
+            TNI
+        </option>
+
+        <option value="KEDINASAN">
+            KEDINASAN
+        </option>
+
+        <option value="LAINNYA">
+            LAINNYA
+        </option>
+
+    </select>
+
+
+    <button
+        class="btn btn-small"
+        onclick="resetFilter()"
+    >
+        Reset Filter
+    </button>
+
+</div>
+
+
+<div
+    class="status"
+    id="statusText"
+>
+    Memuat data...
+</div>
+
+
+<!-- =====================================================
+     TABLE
+===================================================== -->
+
+<div class="table-wrap">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>No</th>
+                <th>Timestamp</th>
+                <th>Nama</th>
+                <th>Session ID</th>
+                <th>Aktivitas</th>
+                <th>Program</th>
+                <th>Nama Tryout</th>
+                <th>Tanggal</th>
+                <th>Kecerdasan</th>
+                <th>Kepribadian</th>
+                <th>Kecermatan</th>
+                <th>TIU</th>
+                <th>TWK</th>
+                <th>TKP</th>
+                <th>Pengetahuan Umum</th>
+                <th>Nilai Akhir</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tableBody">
+
+            <tr>
+
+                <td
+                    colspan="16"
+                    class="empty"
+                >
+                    Memuat data...
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
+
+/* =====================================================
+   SCRIPT URL
+===================================================== */
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
@@ -1354,7 +1441,9 @@ async function loginAdmin(){
         const url =
             SCRIPT_URL +
             "?mode=admin&adminPin=" +
-            encodeURIComponent(pin);
+            encodeURIComponent(pin) +
+            "&_=" +
+            Date.now();
 
 
         const response =
@@ -1480,7 +1569,9 @@ async function loadData(){
         const url =
             SCRIPT_URL +
             "?mode=admin&adminPin=" +
-            encodeURIComponent(adminPin);
+            encodeURIComponent(adminPin) +
+            "&_=" +
+            Date.now();
 
 
         const response =
@@ -1544,7 +1635,7 @@ async function loadData(){
 
 
 /* =====================================================
-   BIODATA PANEL
+   TOGGLE BIODATA
 ===================================================== */
 
 function toggleBiodata(){
@@ -1579,7 +1670,7 @@ function toggleBiodata(){
 
 
 /* =====================================================
-   ENTER = SEARCH BIODATA
+   ENTER SEARCH BIODATA
 ===================================================== */
 
 document
@@ -1600,6 +1691,7 @@ document
 
 /* =====================================================
    SEARCH BIODATA
+   KHUSUS ADMIN
 ===================================================== */
 
 async function searchBiodata(){
@@ -1619,12 +1711,21 @@ async function searchBiodata(){
             "biodataResult"
         );
 
+    const searchResults =
+        document.getElementById(
+            "biodataSearchResults"
+        );
+
 
     const nama =
         input.value.trim();
 
 
     result.style.display = "none";
+
+    searchResults.style.display = "none";
+
+    searchResults.innerHTML = "";
 
 
     if(!nama){
@@ -1637,16 +1738,262 @@ async function searchBiodata(){
     }
 
 
+    if(!adminPin){
+
+        message.textContent =
+            "Sesi admin sudah berakhir. Silakan login kembali.";
+
+        return;
+
+    }
+
+
     message.textContent =
         "Mencari biodata...";
 
 
     try{
 
+        /* ---------------------------------------------
+           STEP 1 — CARI NAMA
+        --------------------------------------------- */
+
         const url =
             SCRIPT_URL +
-            "?mode=getbiodata&namaLengkap=" +
+            "?mode=adminbiodata" +
+            "&adminPin=" +
+            encodeURIComponent(adminPin) +
+            "&keyword=" +
             encodeURIComponent(nama) +
+            "&_=" +
+            Date.now();
+
+
+        const response =
+            await fetch(url,{
+                method:"GET",
+                cache:"no-store"
+            });
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " + response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !data ||
+            data.status !== "success" ||
+            !Array.isArray(data.results)
+        ){
+
+            message.textContent =
+                data &&
+                data.message
+                    ? data.message
+                    : "Peserta tidak ditemukan.";
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           STEP 2 — TAMPILKAN DAFTAR NAMA
+        --------------------------------------------- */
+
+        showBiodataSearchResults(
+            data.results
+        );
+
+
+        message.textContent =
+            "Ditemukan " +
+            data.results.length +
+            " peserta. Pilih nama untuk melihat biodata.";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        message.textContent =
+            "Gagal mencari biodata dari server.";
+
+    }
+
+}
+
+
+/* =====================================================
+   TAMPILKAN HASIL SEARCH
+===================================================== */
+
+function showBiodataSearchResults(
+    results
+){
+
+    const container =
+        document.getElementById(
+            "biodataSearchResults"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    if(
+        !Array.isArray(results) ||
+        results.length === 0
+    ){
+
+        container.style.display = "none";
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <div class="search-result-title">
+            Pilih peserta:
+        </div>
+
+        <div class="search-result-list">
+
+    `;
+
+
+    results.forEach(
+        function(item){
+
+            const nama =
+                String(
+                    item.namaLengkap || ""
+                );
+
+
+            const target =
+                String(
+                    item.targetSeleksi || ""
+                );
+
+
+            html += `
+
+                <button
+                    type="button"
+                    class="search-result-item"
+                    onclick="loadBiodataByName(${JSON.stringify(nama)})"
+                >
+
+                    <span class="search-result-name">
+                        ${escapeHtml(nama)}
+                    </span>
+
+                    ${
+                        target
+                            ? `
+                                <span class="search-result-target">
+                                    Target: ${escapeHtml(target)}
+                                </span>
+                              `
+                            : ""
+                    }
+
+                </button>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+        </div>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+    container.style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   LOAD BIODATA DETAIL
+   KHUSUS ADMIN
+===================================================== */
+
+async function loadBiodataByName(
+    namaLengkap
+){
+
+    const message =
+        document.getElementById(
+            "biodataMessage"
+        );
+
+    const result =
+        document.getElementById(
+            "biodataResult"
+        );
+
+    const searchResults =
+        document.getElementById(
+            "biodataSearchResults"
+        );
+
+
+    if(!adminPin){
+
+        message.textContent =
+            "Sesi admin sudah berakhir. Silakan login kembali.";
+
+        return;
+
+    }
+
+
+    message.textContent =
+        "Memuat biodata " +
+        namaLengkap +
+        "...";
+
+
+    result.style.display =
+        "none";
+
+
+    try{
+
+        const url =
+            SCRIPT_URL +
+            "?mode=admingetbiodata" +
+            "&adminPin=" +
+            encodeURIComponent(adminPin) +
+            "&namaLengkap=" +
+            encodeURIComponent(namaLengkap) +
             "&_=" +
             Date.now();
 
@@ -1695,11 +2042,32 @@ async function searchBiodata(){
         showBiodata(b);
 
 
+        if(searchResults){
+
+            searchResults.style.display =
+                "none";
+
+        }
+
+
+        result.style.display =
+            "block";
+
+
         message.textContent =
-            "Biodata ditemukan.";
+            "Biodata ditemukan: " +
+            (
+                b.namaLengkap ||
+                namaLengkap
+            );
 
 
-        result.style.display = "block";
+        /* scroll sedikit ke biodata */
+
+        result.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
 
 
     }catch(error){
@@ -1943,7 +2311,10 @@ function showBiodata(b){
    SAFE TEXT
 ===================================================== */
 
-function setText(id,value){
+function setText(
+    id,
+    value
+){
 
     const element =
         document.getElementById(id);
@@ -1962,7 +2333,8 @@ function setText(id,value){
         String(value).trim() === ""
     ){
 
-        element.textContent = "-";
+        element.textContent =
+            "-";
 
         return;
 
@@ -1976,7 +2348,7 @@ function setText(id,value){
 
 
 /* =====================================================
-   FORMAT TINGGI BERAT
+   FORMAT TINGGI / BERAT
 ===================================================== */
 
 function formatTinggiBerat(
@@ -2008,10 +2380,12 @@ function formatTinggiBerat(
 
     if(t && b){
 
-        return t +
+        return (
+            t +
             " cm / " +
             b +
-            " kg";
+            " kg"
+        );
 
     }
 
@@ -2029,7 +2403,7 @@ function formatTinggiBerat(
 
 
 /* =====================================================
-   FOTO BIODATA
+   FOTO
 ===================================================== */
 
 function showPhoto(url){
@@ -2058,9 +2432,11 @@ function showPhoto(url){
     if(!foto){
 
         container.innerHTML = `
+
             <div class="biodata-photo-placeholder">
                 Foto tidak tersedia
             </div>
+
         `;
 
         return;
@@ -2074,7 +2450,10 @@ function showPhoto(url){
             class="biodata-photo"
             src="${escapeHtml(foto)}"
             alt="Foto peserta"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            onerror="
+                this.style.display='none';
+                this.nextElementSibling.style.display='flex';
+            "
         >
 
         <div
@@ -2110,37 +2489,39 @@ function updateSummary(){
     let scoreCount = 0;
 
 
-    allData.forEach(function(row){
+    allData.forEach(
+        function(row){
 
-        if(
-            row.name &&
-            String(row.name).trim()
-        ){
-
-            students.add(
+            if(
+                row.name &&
                 String(row.name).trim()
-            );
+            ){
+
+                students.add(
+                    String(row.name).trim()
+                );
+
+            }
+
+
+            const score =
+                parseFloat(
+                    String(
+                        row.value || ""
+                    ).replace(",", ".")
+                );
+
+
+            if(!isNaN(score)){
+
+                totalScore += score;
+
+                scoreCount++;
+
+            }
 
         }
-
-
-        const score =
-            parseFloat(
-                String(
-                    row.value || ""
-                ).replace(",", ".")
-            );
-
-
-        if(!isNaN(score)){
-
-            totalScore += score;
-
-            scoreCount++;
-
-        }
-
-    });
+    );
 
 
     document
@@ -2173,11 +2554,26 @@ function escapeHtml(value){
             ? ""
             : value
     )
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -2227,9 +2623,11 @@ function activityBadge(value){
 
 
     return `
+
         <span class="badge">
             ${escapeHtml(value)}
         </span>
+
     `;
 
 }
@@ -2817,6 +3215,16 @@ function logoutAdmin(){
     document
     .getElementById("biodataResult")
     .style.display = "none";
+
+
+    document
+    .getElementById("biodataSearchResults")
+    .style.display = "none";
+
+
+    document
+    .getElementById("biodataSearchResults")
+    .innerHTML = "";
 
 
     document
