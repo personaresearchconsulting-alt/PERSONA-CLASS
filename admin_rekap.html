@@ -82,7 +82,6 @@ header{
     color:#D8DCE4;
 }
 
-
 /* =========================
    MAIN
 ========================= */
@@ -109,7 +108,6 @@ main{
     color:var(--muted);
     font-size:14px;
 }
-
 
 /* =========================
    LOGIN
@@ -199,7 +197,6 @@ main{
     font-size:12px;
 }
 
-
 /* =========================
    ADMIN
 ========================= */
@@ -244,7 +241,6 @@ main{
     opacity:.9;
 }
 
-
 /* =========================
    SUMMARY
 ========================= */
@@ -278,7 +274,6 @@ main{
     font-weight:800;
     color:var(--navy);
 }
-
 
 /* =========================
    FILTER
@@ -316,7 +311,6 @@ main{
     color:var(--text);
     outline:none;
 }
-
 
 /* =========================
    TABLE
@@ -412,7 +406,6 @@ tbody tr:hover{
     font-size:13px;
 }
 
-
 /* =========================
    MESSAGE
 ========================= */
@@ -436,7 +429,6 @@ tbody tr:hover{
     background:var(--greenbg);
     color:var(--green);
 }
-
 
 /* =========================================================
    BIODATA MODAL
@@ -516,7 +508,6 @@ tbody tr:hover{
     padding:22px;
 }
 
-
 /* =========================
    SEARCH
 ========================= */
@@ -594,7 +585,6 @@ tbody tr:hover{
     padding:5px 8px;
     border-radius:6px;
 }
-
 
 /* =========================
    BIODATA DETAIL
@@ -694,7 +684,6 @@ tbody tr:hover{
 .bio-full{
     grid-column:1 / -1;
 }
-
 
 /* =========================
    RESPONSIVE
@@ -799,9 +788,7 @@ tbody tr:hover{
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      HEADER
@@ -818,7 +805,6 @@ tbody tr:hover{
     </div>
 
 </header>
-
 
 <!-- =====================================================
      LOGIN
@@ -840,7 +826,6 @@ tbody tr:hover{
 
         </div>
 
-
         <label for="adminPin">
             PIN ADMIN
         </label>
@@ -853,14 +838,12 @@ tbody tr:hover{
             maxlength="20"
         >
 
-
         <button
             class="btn-login"
             onclick="loginAdmin()"
         >
             MASUK KE AREA ADMIN
         </button>
-
 
         <div
             id="loginError"
@@ -873,7 +856,6 @@ tbody tr:hover{
 
 </section>
 
-
 <!-- =====================================================
      ADMIN PANEL
 ===================================================== -->
@@ -881,7 +863,6 @@ tbody tr:hover{
 <section id="adminPanel">
 
 <main>
-
 
     <div class="page-title">
 
@@ -895,12 +876,9 @@ tbody tr:hover{
 
     </div>
 
-
     <!-- TOP ACTIONS -->
 
     <div class="top-actions">
-
-        <!-- NEW BIODATA BUTTON -->
 
         <button
             class="btn btn-rose"
@@ -909,14 +887,12 @@ tbody tr:hover{
             👤 CEK BIODATA
         </button>
 
-
         <button
             class="btn btn-light"
             onclick="loadAdminData()"
         >
             ↻ REFRESH DATA
         </button>
-
 
         <button
             class="btn btn-dark"
@@ -927,12 +903,10 @@ tbody tr:hover{
 
     </div>
 
-
     <div
         id="adminMessage"
         class="message"
     ></div>
-
 
     <!-- =================================================
          SUMMARY
@@ -955,7 +929,6 @@ tbody tr:hover{
 
         </div>
 
-
         <div class="summary-card">
 
             <div class="summary-label">
@@ -971,7 +944,6 @@ tbody tr:hover{
 
         </div>
 
-
         <div class="summary-card">
 
             <div class="summary-label">
@@ -986,7 +958,6 @@ tbody tr:hover{
             </div>
 
         </div>
-
 
         <div class="summary-card">
 
@@ -1005,7 +976,6 @@ tbody tr:hover{
 
     </div>
 
-
     <!-- =================================================
          FILTER
     ================================================= -->
@@ -1016,7 +986,6 @@ tbody tr:hover{
             FILTER HASIL TRYOUT
         </div>
 
-
         <div class="filter-grid">
 
             <input
@@ -1025,7 +994,6 @@ tbody tr:hover{
                 placeholder="Cari nama peserta..."
                 oninput="applyFilters()"
             >
-
 
             <select
                 id="filterProgram"
@@ -1058,14 +1026,12 @@ tbody tr:hover{
 
             </select>
 
-
             <input
                 type="text"
                 id="filterTryout"
                 placeholder="Nama tryout..."
                 oninput="applyFilters()"
             >
-
 
             <button
                 class="btn btn-light"
@@ -1077,7 +1043,6 @@ tbody tr:hover{
         </div>
 
     </div>
-
 
     <!-- =================================================
          TABLE
@@ -1099,7 +1064,6 @@ tbody tr:hover{
             </div>
 
         </div>
-
 
         <div class="table-wrap">
 
@@ -1126,7 +1090,6 @@ tbody tr:hover{
 
                 </thead>
 
-
                 <tbody id="resultTableBody">
 
                     <tr>
@@ -1136,7 +1099,6 @@ tbody tr:hover{
                             class="loading"
                         >
                             Memuat data...
-
                         </td>
 
                     </tr>
@@ -1149,11 +1111,9 @@ tbody tr:hover{
 
     </div>
 
-
 </main>
 
 </section>
-
 
 <!-- =====================================================
      BIODATA MODAL
@@ -1165,7 +1125,6 @@ tbody tr:hover{
 >
 
     <div class="biodata-modal">
-
 
         <!-- HEADER MODAL -->
 
@@ -1183,7 +1142,6 @@ tbody tr:hover{
 
             </div>
 
-
             <div class="biodata-head-actions">
 
                 <button
@@ -1194,7 +1152,6 @@ tbody tr:hover{
                 >
                     ⬇ DOWNLOAD BIODATA
                 </button>
-
 
                 <button
                     class="btn-close"
@@ -1207,11 +1164,9 @@ tbody tr:hover{
 
         </div>
 
-
         <!-- BODY -->
 
         <div class="biodata-body">
-
 
             <!-- SEARCH -->
 
@@ -1225,7 +1180,6 @@ tbody tr:hover{
                     onkeydown="if(event.key==='Enter'){searchBiodata();}"
                 >
 
-
                 <button
                     class="btn-search"
                     onclick="searchBiodata()"
@@ -1235,14 +1189,12 @@ tbody tr:hover{
 
             </div>
 
-
             <!-- SEARCH RESULT -->
 
             <div
                 id="biodataSearchResults"
                 class="biodata-search-results"
             ></div>
-
 
             <!-- DETAIL -->
 
@@ -1251,7 +1203,6 @@ tbody tr:hover{
             >
 
                 <div class="biodata-detail">
-
 
                     <!-- FOTO -->
 
@@ -1270,7 +1221,6 @@ tbody tr:hover{
                                 belum tersedia
                             </div>
 
-
                             <img
                                 id="biodataPhoto"
                                 src=""
@@ -1279,7 +1229,6 @@ tbody tr:hover{
                             >
 
                         </div>
-
 
                         <a
                             id="photoLink"
@@ -1293,7 +1242,6 @@ tbody tr:hover{
 
                     </div>
 
-
                     <!-- INFO -->
 
                     <div class="biodata-info">
@@ -1302,9 +1250,7 @@ tbody tr:hover{
                             -
                         </h3>
 
-
                         <div class="biodata-grid">
-
 
                             <div class="bio-field">
 
@@ -1321,7 +1267,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1336,7 +1281,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1353,7 +1297,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1368,7 +1311,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1385,7 +1327,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1400,7 +1341,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1417,7 +1357,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1432,7 +1371,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1449,7 +1387,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1464,7 +1401,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1481,7 +1417,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1496,7 +1431,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1513,7 +1447,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1528,7 +1461,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1545,7 +1477,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1560,7 +1491,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1577,7 +1507,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1592,7 +1521,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1609,7 +1537,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1624,7 +1551,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1641,7 +1567,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1656,7 +1581,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1673,7 +1597,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1688,7 +1611,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1705,7 +1627,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1720,7 +1641,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1737,7 +1657,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1752,7 +1671,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1769,7 +1687,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1784,7 +1701,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1801,7 +1717,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1816,7 +1731,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1833,7 +1747,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field">
 
                                 <div class="bio-label">
@@ -1848,7 +1761,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field">
 
@@ -1865,7 +1777,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1880,7 +1791,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1897,7 +1807,6 @@ tbody tr:hover{
 
                             </div>
 
-
                             <div class="bio-field bio-full">
 
                                 <div class="bio-label">
@@ -1912,7 +1821,6 @@ tbody tr:hover{
                                 </div>
 
                             </div>
-
 
                             <div class="bio-field bio-full">
 
@@ -1929,7 +1837,6 @@ tbody tr:hover{
 
                             </div>
 
-
                         </div>
 
                     </div>
@@ -1944,7 +1851,6 @@ tbody tr:hover{
 
 </div>
 
-
 <script>
 
 /* =========================================================
@@ -1956,7 +1862,6 @@ const SCRIPT_URL =
 
 const ADMIN_PIN = "0501";
 
-
 /* =========================================================
    STATE
 ========================================================= */
@@ -1964,7 +1869,6 @@ const ADMIN_PIN = "0501";
 let adminData = [];
 let filteredData = [];
 let currentBiodata = null;
-
 
 /* =========================================================
    HELPERS
@@ -1984,7 +1888,6 @@ function escapeHtml(value){
         .replace(/'/g,"&#039;");
 }
 
-
 function valueOrDash(value){
 
     if(
@@ -1997,7 +1900,6 @@ function valueOrDash(value){
 
     return escapeHtml(value);
 }
-
 
 function getValue(obj,keys){
 
@@ -2020,7 +1922,6 @@ function getValue(obj,keys){
     return "";
 }
 
-
 function showMessage(message,type="success"){
 
     const box =
@@ -2039,7 +1940,6 @@ function showMessage(message,type="success"){
     },4000);
 }
 
-
 /* =========================================================
    LOGIN
 ========================================================= */
@@ -2055,7 +1955,6 @@ function loginAdmin(){
     const error =
         document.getElementById("loginError");
 
-
     if(pin !== ADMIN_PIN){
 
         error.style.display = "block";
@@ -2063,23 +1962,18 @@ function loginAdmin(){
         return;
     }
 
-
     error.style.display = "none";
-
 
     document.getElementById(
         "loginPanel"
     ).style.display = "none";
 
-
     document.getElementById(
         "adminPanel"
     ).style.display = "block";
 
-
     loadAdminData();
 }
-
 
 document.getElementById(
     "adminPin"
@@ -2094,7 +1988,6 @@ document.getElementById(
     }
 );
 
-
 /* =========================================================
    LOGOUT
 ========================================================= */
@@ -2107,17 +2000,14 @@ function logoutAdmin(){
         "adminPanel"
     ).style.display = "none";
 
-
     document.getElementById(
         "loginPanel"
     ).style.display = "flex";
-
 
     document.getElementById(
         "adminPin"
     ).value = "";
 }
-
 
 /* =========================================================
    LOAD ADMIN DATA
@@ -2135,7 +2025,6 @@ async function loadAdminData(){
             "tableStatus"
         );
 
-
     body.innerHTML =
         `<tr>
             <td colspan="12" class="loading">
@@ -2143,10 +2032,8 @@ async function loadAdminData(){
             </td>
         </tr>`;
 
-
     status.textContent =
         "Memuat data...";
-
 
     try{
 
@@ -2155,7 +2042,6 @@ async function loadAdminData(){
             "?mode=admin" +
             "&adminPin=" +
             encodeURIComponent(ADMIN_PIN);
-
 
         const response =
             await fetch(
@@ -2166,10 +2052,8 @@ async function loadAdminData(){
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if(data.status !== "success"){
 
@@ -2178,7 +2062,6 @@ async function loadAdminData(){
                 "Data admin tidak dapat dimuat."
             );
         }
-
 
         adminData =
             Array.isArray(data.results)
@@ -2189,20 +2072,15 @@ async function loadAdminData(){
                         : []
                 );
 
-
         filteredData =
             [...adminData];
 
-
         updateSummary();
-
         renderTable();
-
 
     }catch(error){
 
         console.error(error);
-
 
         body.innerHTML =
             `<tr>
@@ -2212,20 +2090,16 @@ async function loadAdminData(){
                 </td>
             </tr>`;
 
-
         status.textContent =
             "Gagal memuat";
-
 
         showMessage(
             "Gagal memuat data admin: " +
             error.message,
             "error"
         );
-
     }
 }
-
 
 /* =========================================================
    SUMMARY
@@ -2235,7 +2109,6 @@ function updateSummary(){
 
     const total =
         adminData.length;
-
 
     const names =
         new Set(
@@ -2255,7 +2128,6 @@ function updateSummary(){
                 .filter(Boolean)
         );
 
-
     const polri =
         adminData.filter(row =>
             String(
@@ -2266,28 +2138,23 @@ function updateSummary(){
             ).toUpperCase() === "POLRI"
         ).length;
 
-
     document.getElementById(
         "summaryTotal"
     ).textContent = total;
-
 
     document.getElementById(
         "summaryStudents"
     ).textContent = names.size;
 
-
     document.getElementById(
         "summaryPolri"
     ).textContent = polri;
-
 
     document.getElementById(
         "summaryOther"
     ).textContent =
         total - polri;
 }
-
 
 /* =========================================================
    FILTER
@@ -2302,7 +2169,6 @@ function applyFilters(){
             .trim()
             .toLowerCase();
 
-
     const program =
         document
             .getElementById("filterProgram")
@@ -2310,14 +2176,12 @@ function applyFilters(){
             .trim()
             .toLowerCase();
 
-
     const tryout =
         document
             .getElementById("filterTryout")
             .value
             .trim()
             .toLowerCase();
-
 
     filteredData =
         adminData.filter(row => {
@@ -2332,7 +2196,6 @@ function applyFilters(){
                     ])
                 ).toLowerCase();
 
-
             const rowProgram =
                 String(
                     getValue(row,[
@@ -2340,7 +2203,6 @@ function applyFilters(){
                         "program"
                     ])
                 ).toLowerCase();
-
 
             const rowTryout =
                 String(
@@ -2351,7 +2213,6 @@ function applyFilters(){
                     ])
                 ).toLowerCase();
 
-
             return (
                 (!name || rowName.includes(name)) &&
                 (!program || rowProgram === program) &&
@@ -2360,10 +2221,8 @@ function applyFilters(){
 
         });
 
-
     renderTable();
 }
-
 
 /* =========================================================
    RESET FILTER
@@ -2375,24 +2234,19 @@ function resetFilters(){
         "filterName"
     ).value = "";
 
-
     document.getElementById(
         "filterProgram"
     ).value = "";
-
 
     document.getElementById(
         "filterTryout"
     ).value = "";
 
-
     filteredData =
         [...adminData];
 
-
     renderTable();
 }
-
 
 /* =========================================================
    SCORE
@@ -2406,20 +2260,16 @@ function scoreClass(value){
                 .replace(",",".")
         );
 
-
     if(isNaN(number)){
         return "";
     }
-
 
     if(number < 60){
         return "score score-low";
     }
 
-
     return "score score-normal";
 }
-
 
 /* =========================================================
    RENDER TABLE
@@ -2432,12 +2282,10 @@ function renderTable(){
             "resultTableBody"
         );
 
-
     const status =
         document.getElementById(
             "tableStatus"
         );
-
 
     if(!filteredData.length){
 
@@ -2448,21 +2296,16 @@ function renderTable(){
                 </td>
             </tr>`;
 
-
         status.textContent =
             "0 data";
-
 
         return;
     }
 
-
     let html = "";
-
 
     filteredData.forEach(
         (row,index) => {
-
 
         const nama =
             getValue(row,[
@@ -2472,13 +2315,11 @@ function renderTable(){
                 "namaLengkap"
             ]);
 
-
         const program =
             getValue(row,[
                 "Program",
                 "program"
             ]);
-
 
         const tryout =
             getValue(row,[
@@ -2487,13 +2328,11 @@ function renderTable(){
                 "Tryout"
             ]);
 
-
         const tanggal =
             getValue(row,[
                 "Tanggal",
                 "tanggal"
             ]);
-
 
         const kecerdasan =
             getValue(row,[
@@ -2501,13 +2340,11 @@ function renderTable(){
                 "kecerdasan"
             ]);
 
-
         const kepribadian =
             getValue(row,[
                 "Kepribadian",
                 "kepribadian"
             ]);
-
 
         const kecermatan =
             getValue(row,[
@@ -2515,13 +2352,11 @@ function renderTable(){
                 "kecermatan"
             ]);
 
-
         const tiu =
             getValue(row,[
                 "TIU",
                 "tiu"
             ]);
-
 
         const twk =
             getValue(row,[
@@ -2529,13 +2364,11 @@ function renderTable(){
                 "twk"
             ]);
 
-
         const tkp =
             getValue(row,[
                 "TKP",
                 "tkp"
             ]);
-
 
         const nilaiAkhir =
             getValue(row,[
@@ -2544,7 +2377,6 @@ function renderTable(){
                 "Total",
                 "total"
             ]);
-
 
         html += `
             <tr>
@@ -2604,16 +2436,13 @@ function renderTable(){
 
     });
 
-
     body.innerHTML =
         html;
-
 
     status.textContent =
         filteredData.length +
         " data ditampilkan";
 }
-
 
 /* =========================================================
    OPEN BIODATA
@@ -2626,16 +2455,12 @@ function openBiodata(){
             "biodataOverlay"
         );
 
-
     overlay.classList.add("show");
-
 
     document.getElementById(
         "biodataKeyword"
     ).focus();
-
 }
-
 
 /* =========================================================
    CLOSE BIODATA
@@ -2646,9 +2471,7 @@ function closeBiodata(){
     document
         .getElementById("biodataOverlay")
         .classList.remove("show");
-
 }
-
 
 /* =========================================================
    SEARCH BIODATA
@@ -2664,28 +2487,25 @@ async function searchBiodata(){
             .value
             .trim();
 
-
     const resultBox =
         document.getElementById(
             "biodataSearchResults"
         );
-
 
     const detail =
         document.getElementById(
             "biodataResult"
         );
 
-
     detail.style.display =
         "none";
-
 
     document.getElementById(
         "downloadBiodataBtn"
     ).style.display =
         "none";
 
+    currentBiodata = null;
 
     if(!keyword){
 
@@ -2695,16 +2515,13 @@ async function searchBiodata(){
         return;
     }
 
-
     resultBox.style.display =
         "block";
-
 
     resultBox.innerHTML =
         `<div class="loading">
             Mencari biodata...
         </div>`;
-
 
     try{
 
@@ -2716,7 +2533,6 @@ async function searchBiodata(){
             "&keyword=" +
             encodeURIComponent(keyword);
 
-
         const response =
             await fetch(
                 url,
@@ -2726,10 +2542,8 @@ async function searchBiodata(){
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if(data.status !== "success"){
 
@@ -2739,71 +2553,57 @@ async function searchBiodata(){
             );
         }
 
-
         const results =
             Array.isArray(data.results)
                 ? data.results
                 : [];
 
-
         showBiodataSearchResults(
             results
         );
 
-
     }catch(error){
 
         console.error(error);
-
 
         resultBox.innerHTML =
             `<div class="empty">
                 Gagal mencari biodata.<br>
                 ${escapeHtml(error.message)}
             </div>`;
-
     }
 }
-
 
 /* =========================================================
    SEARCH RESULTS
 ========================================================= */
 
-function showBiodataSearchResults(
-    results
-){
+function showBiodataSearchResults(results){
 
     const box =
         document.getElementById(
             "biodataSearchResults"
         );
 
-
     document.getElementById(
         "biodataResult"
     ).style.display =
         "none";
-
 
     if(!results.length){
 
         box.style.display =
             "block";
 
-
         box.innerHTML =
             `<div class="empty">
                 Biodata tidak ditemukan.
             </div>`;
 
-
         return;
     }
 
-
     let html = "";
-
 
     results.forEach(item => {
 
@@ -2815,7 +2615,6 @@ function showBiodataSearchResults(
                 "namaSiswa"
             ]);
 
-
         const target =
             getValue(item,[
                 "targetSeleksi",
@@ -2823,12 +2622,10 @@ function showBiodataSearchResults(
                 "Target"
             ]);
 
-
         const safeName =
             JSON.stringify(
                 String(nama)
             );
-
 
         html += `
             <button
@@ -2850,55 +2647,44 @@ function showBiodataSearchResults(
 
     });
 
-
     box.innerHTML =
         html;
-
 
     box.style.display =
         "block";
 }
 
-
 /* =========================================================
    LOAD BIODATA
 ========================================================= */
 
-async function loadBiodataByName(
-    namaLengkap
-){
+async function loadBiodataByName(namaLengkap){
 
     const detail =
         document.getElementById(
             "biodataResult"
         );
 
-
     const searchResults =
         document.getElementById(
             "biodataSearchResults"
         );
 
-
     detail.style.display =
         "block";
 
-
     searchResults.style.display =
         "none";
-
 
     document.getElementById(
         "downloadBiodataBtn"
     ).style.display =
         "none";
 
-
     document.getElementById(
         "bioNama"
     ).textContent =
         "Memuat biodata...";
-
 
     try{
 
@@ -2910,7 +2696,6 @@ async function loadBiodataByName(
             "&namaLengkap=" +
             encodeURIComponent(namaLengkap);
 
-
         const response =
             await fetch(
                 url,
@@ -2920,10 +2705,8 @@ async function loadBiodataByName(
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if(data.status !== "success"){
 
@@ -2933,51 +2716,41 @@ async function loadBiodataByName(
             );
         }
 
-
         const biodata =
             data.biodata ||
             data.data ||
             {};
 
-
         currentBiodata =
             biodata;
-
 
         showBiodata(
             biodata
         );
-
 
         document.getElementById(
             "downloadBiodataBtn"
         ).style.display =
             "inline-block";
 
-
     }catch(error){
 
         console.error(error);
 
-
         detail.style.display =
             "block";
-
 
         document.getElementById(
             "bioNama"
         ).textContent =
             "Biodata tidak ditemukan";
 
-
         showMessage(
             error.message,
             "error"
         );
-
     }
 }
-
 
 /* =========================================================
    SHOW BIODATA
@@ -2993,7 +2766,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioTarget",
         getValue(b,[
@@ -3001,7 +2773,6 @@ function showBiodata(b){
             "TargetSeleksi"
         ])
     );
-
 
     setBio(
         "bioPanggilan",
@@ -3011,7 +2782,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioJenisKelamin",
         getValue(b,[
@@ -3020,13 +2790,11 @@ function showBiodata(b){
         ])
     );
 
-
     const tempat =
         getValue(b,[
             "tempatLahir",
             "TempatLahir"
         ]);
-
 
     const tanggal =
         getValue(b,[
@@ -3034,9 +2802,7 @@ function showBiodata(b){
             "TanggalLahir"
         ]);
 
-
     let lahir = "";
-
 
     if(tempat && tanggal){
 
@@ -3053,12 +2819,10 @@ function showBiodata(b){
             "";
     }
 
-
     setBio(
         "bioLahir",
         lahir
     );
-
 
     setBio(
         "bioAgama",
@@ -3068,7 +2832,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioWhatsapp",
         getValue(b,[
@@ -3076,7 +2839,6 @@ function showBiodata(b){
             "WhatsApp"
         ])
     );
-
 
     setBio(
         "bioEmail",
@@ -3086,13 +2848,11 @@ function showBiodata(b){
         ])
     );
 
-
     const tinggi =
         getValue(b,[
             "tinggi",
             "Tinggi"
         ]);
-
 
     const berat =
         getValue(b,[
@@ -3100,9 +2860,7 @@ function showBiodata(b){
             "Berat"
         ]);
 
-
     let tinggiBerat = "";
-
 
     if(tinggi && berat){
 
@@ -3119,12 +2877,10 @@ function showBiodata(b){
             "";
     }
 
-
     setBio(
         "bioTinggiBerat",
         tinggiBerat
     );
-
 
     setBio(
         "bioAlamat",
@@ -3134,7 +2890,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioSekolah",
         getValue(b,[
@@ -3142,7 +2897,6 @@ function showBiodata(b){
             "Sekolah"
         ])
     );
-
 
     setBio(
         "bioJurusan",
@@ -3152,7 +2906,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioTahunLulus",
         getValue(b,[
@@ -3161,7 +2914,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioPendidikan",
         getValue(b,[
@@ -3169,7 +2921,6 @@ function showBiodata(b){
             "PendidikanTerakhir"
         ])
     );
-
 
     /* AYAH */
 
@@ -3181,7 +2932,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioPekerjaanAyah",
         getValue(b,[
@@ -3189,7 +2939,6 @@ function showBiodata(b){
             "PekerjaanAyah"
         ])
     );
-
 
     setBio(
         "bioPendidikanAyah",
@@ -3199,7 +2948,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioHpAyah",
         getValue(b,[
@@ -3207,7 +2955,6 @@ function showBiodata(b){
             "HpAyah"
         ])
     );
-
 
     /* IBU */
 
@@ -3219,7 +2966,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioPekerjaanIbu",
         getValue(b,[
@@ -3227,7 +2973,6 @@ function showBiodata(b){
             "PekerjaanIbu"
         ])
     );
-
 
     setBio(
         "bioPendidikanIbu",
@@ -3237,7 +2982,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioHpIbu",
         getValue(b,[
@@ -3245,7 +2989,6 @@ function showBiodata(b){
             "HpIbu"
         ])
     );
-
 
     setBio(
         "bioJumlahSaudara",
@@ -3255,7 +2998,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioOrganisasi",
         getValue(b,[
@@ -3263,7 +3005,6 @@ function showBiodata(b){
             "Organisasi"
         ])
     );
-
 
     setBio(
         "bioPrestasi",
@@ -3273,7 +3014,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioKepemimpinan",
         getValue(b,[
@@ -3281,7 +3021,6 @@ function showBiodata(b){
             "Kepemimpinan"
         ])
     );
-
 
     setBio(
         "bioKelebihan",
@@ -3291,7 +3030,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioKekurangan",
         getValue(b,[
@@ -3299,7 +3037,6 @@ function showBiodata(b){
             "Kekurangan"
         ])
     );
-
 
     setBio(
         "bioPerbaikan",
@@ -3309,7 +3046,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioHobi",
         getValue(b,[
@@ -3317,7 +3053,6 @@ function showBiodata(b){
             "Hobi"
         ])
     );
-
 
     setBio(
         "bioKeterampilan",
@@ -3327,7 +3062,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioAlasan",
         getValue(b,[
@@ -3335,7 +3069,6 @@ function showBiodata(b){
             "Alasan"
         ])
     );
-
 
     setBio(
         "bioPersiapan",
@@ -3345,7 +3078,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioTargetPribadi",
         getValue(b,[
@@ -3353,7 +3085,6 @@ function showBiodata(b){
             "Target"
         ])
     );
-
 
     setBio(
         "bioPernahSeleksi",
@@ -3363,7 +3094,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioTahunSeleksi",
         getValue(b,[
@@ -3371,7 +3101,6 @@ function showBiodata(b){
             "TahunSeleksi"
         ])
     );
-
 
     setBio(
         "bioPengalamanSeleksi",
@@ -3381,7 +3110,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioPengalamanSulit",
         getValue(b,[
@@ -3389,7 +3117,6 @@ function showBiodata(b){
             "PengalamanSulit"
         ])
     );
-
 
     setBio(
         "bioCaraMengatasi",
@@ -3399,7 +3126,6 @@ function showBiodata(b){
         ])
     );
 
-
     setBio(
         "bioKerjaSama",
         getValue(b,[
@@ -3407,7 +3133,6 @@ function showBiodata(b){
             "KerjaSama"
         ])
     );
-
 
     /* FOTO */
 
@@ -3419,7 +3144,6 @@ function showBiodata(b){
     );
 }
 
-
 /* =========================================================
    SET FIELD
 ========================================================= */
@@ -3429,11 +3153,9 @@ function setBio(id,value){
     const element =
         document.getElementById(id);
 
-
     if(!element){
         return;
     }
-
 
     element.textContent =
         (
@@ -3445,9 +3167,8 @@ function setBio(id,value){
             : "-";
 }
 
-
 /* =========================================================
-   GOOGLE DRIVE PHOTO
+   GOOGLE DRIVE PHOTO — MULTI FALLBACK
 ========================================================= */
 
 function showPhoto(url){
@@ -3457,36 +3178,30 @@ function showPhoto(url){
             "biodataPhoto"
         );
 
-
     const placeholder =
         document.getElementById(
             "photoPlaceholder"
         );
-
 
     const link =
         document.getElementById(
             "photoLink"
         );
 
+    /* RESET */
 
-    img.style.display =
-        "none";
-
-
-    placeholder.style.display =
-        "block";
-
-
-    link.style.display =
-        "none";
-
-
+    img.style.display = "none";
     img.removeAttribute("src");
 
+    placeholder.style.display = "block";
+    placeholder.innerHTML =
+        "Memuat foto peserta...";
 
+    link.style.display = "none";
     link.removeAttribute("href");
 
+
+    /* TIDAK ADA FOTO */
 
     if(!url){
 
@@ -3497,22 +3212,68 @@ function showPhoto(url){
     }
 
 
+    const originalURL =
+        String(url).trim();
+
+
     /*
-     * Ambil FILE ID dari URL Google Drive.
+     * Link foto asli tetap tersedia.
      */
 
-    const match =
-        String(url).match(
-            /\/file\/d\/([^/]+)/
+    link.href =
+        originalURL;
+
+    link.style.display =
+        "inline-block";
+
+
+    /*
+     * Ambil FILE ID Google Drive.
+     *
+     * Format utama:
+     * /file/d/FILE_ID/view
+     *
+     * Format alternatif:
+     * ?id=FILE_ID
+     */
+
+    let fileId = "";
+
+
+    const match1 =
+        originalURL.match(
+            /\/file\/d\/([^/?#]+)/
         );
 
 
-    if(!match || !match[1]){
+    if(match1 && match1[1]){
 
-        /*
-         * Kalau bukan format /file/d/ID,
-         * coba langsung gunakan URL tersebut.
-         */
+        fileId =
+            match1[1];
+
+    }else{
+
+        const match2 =
+            originalURL.match(
+                /[?&]id=([^&#]+)/
+            );
+
+        if(match2 && match2[1]){
+
+            fileId =
+                match2[1];
+
+        }
+
+    }
+
+
+    /*
+     * Kalau bukan URL Drive yang bisa
+     * diambil ID-nya, coba URL asli.
+     */
+
+    if(!fileId){
 
         img.onload = function(){
 
@@ -3524,44 +3285,93 @@ function showPhoto(url){
 
         };
 
-
         img.onerror = function(){
+
+            img.style.display =
+                "none";
+
+            placeholder.style.display =
+                "block";
 
             placeholder.innerHTML =
                 "Foto tidak dapat ditampilkan.<br>" +
-                "Klik Buka foto asli.";
+                "Klik <b>Buka foto asli</b> di bawah.";
 
         };
 
-
         img.src =
-            url;
+            originalURL;
 
-    }else{
+        return;
+    }
 
-        const fileId =
-            match[1];
+
+    /*
+     * 3 SUMBER FOTO GOOGLE DRIVE
+     */
+
+    const photoSources = [
+
+        /*
+         * PRIORITAS 1
+         * Google Drive thumbnail
+         */
+
+        "https://drive.google.com/thumbnail?id=" +
+        encodeURIComponent(fileId) +
+        "&sz=w1000",
 
 
         /*
-         * Metode utama:
-         * Google Drive thumbnail.
+         * PRIORITAS 2
+         * Googleusercontent
          */
 
-        const thumbnailURL =
-            "https://drive.google.com/thumbnail?id=" +
-            encodeURIComponent(fileId) +
-            "&sz=w1000";
+        "https://lh3.googleusercontent.com/d/" +
+        encodeURIComponent(fileId) +
+        "=w1000",
 
 
         /*
-         * Fallback:
-         * Google Drive UC.
+         * PRIORITAS 3
+         * Drive UC
          */
 
-        const fallbackURL =
-            "https://drive.google.com/uc?export=view&id=" +
-            encodeURIComponent(fileId);
+        "https://drive.google.com/uc?export=view&id=" +
+        encodeURIComponent(fileId)
+
+    ];
+
+
+    let sourceIndex = 0;
+
+
+    function tryNextPhoto(){
+
+        if(
+            sourceIndex >=
+            photoSources.length
+        ){
+
+            img.style.display =
+                "none";
+
+            placeholder.style.display =
+                "block";
+
+            placeholder.innerHTML =
+                "Foto tersimpan di Google Drive,<br>" +
+                "tetapi tidak dapat dimuat di halaman ini.<br>" +
+                "<b>Klik Buka foto asli</b> di bawah.";
+
+            return;
+        }
+
+
+        const source =
+            photoSources[sourceIndex];
+
+        sourceIndex++;
 
 
         img.onload = function(){
@@ -3578,49 +3388,28 @@ function showPhoto(url){
         img.onerror = function(){
 
             /*
-             * Jika thumbnail gagal,
-             * coba URL kedua.
+             * Sumber pertama gagal.
+             * Coba sumber berikutnya.
              */
 
-            img.onerror = function(){
-
-                img.style.display =
-                    "none";
-
-                placeholder.style.display =
-                    "block";
-
-                placeholder.innerHTML =
-                    "Foto tersimpan di Google Drive.<br>" +
-                    "Klik <b>Buka foto asli</b> di bawah.";
-
-            };
-
-
-            img.src =
-                fallbackURL;
+            tryNextPhoto();
 
         };
 
 
         img.src =
-            thumbnailURL;
+            source;
+
     }
 
 
     /*
-     * Link tetap menggunakan URL asli
-     * yang dikirim Apps Script.
+     * Mulai percobaan foto.
      */
 
-    link.href =
-        url;
+    tryNextPhoto();
 
-
-    link.style.display =
-        "inline-block";
 }
-
 
 /* =========================================================
    DOWNLOAD BIODATA
@@ -3654,99 +3443,53 @@ function downloadBiodata(){
     const rows = [
 
         ["Target Seleksi",getValue(b,["targetSeleksi","TargetSeleksi"])],
-
         ["Nama Lengkap",getValue(b,["namaLengkap","NamaLengkap"])],
-
         ["Nama Panggilan",getValue(b,["namaPanggilan","NamaPanggilan"])],
-
         ["Jenis Kelamin",getValue(b,["jenisKelamin","JenisKelamin"])],
-
         ["Tempat Lahir",getValue(b,["tempatLahir","TempatLahir"])],
-
         ["Tanggal Lahir",getValue(b,["tanggalLahir","TanggalLahir"])],
-
         ["Agama",getValue(b,["agama","Agama"])],
-
         ["WhatsApp",getValue(b,["whatsapp","WhatsApp"])],
-
         ["Email",getValue(b,["email","Email"])],
-
         ["Tinggi",getValue(b,["tinggi","Tinggi"])],
-
         ["Berat",getValue(b,["berat","Berat"])],
-
         ["Alamat",getValue(b,["alamat","Alamat"])],
-
         ["Sekolah",getValue(b,["sekolah","Sekolah"])],
-
         ["Jurusan",getValue(b,["jurusan","Jurusan"])],
-
         ["Tahun Lulus",getValue(b,["tahunLulus","TahunLulus"])],
-
         ["Pendidikan Terakhir",getValue(b,["pendidikanTerakhir","PendidikanTerakhir"])],
 
         ["Nama Ayah",getValue(b,["namaAyah","NamaAyah"])],
-
         ["Pekerjaan Ayah",getValue(b,["pekerjaanAyah","PekerjaanAyah"])],
-
         ["Pendidikan Ayah",getValue(b,["pendidikanAyah","PendidikanAyah"])],
-
         ["HP Ayah",getValue(b,["hpAyah","HpAyah"])],
 
         ["Nama Ibu",getValue(b,["namaIbu","NamaIbu"])],
-
         ["Pekerjaan Ibu",getValue(b,["pekerjaanIbu","PekerjaanIbu"])],
-
         ["Pendidikan Ibu",getValue(b,["pendidikanIbu","PendidikanIbu"])],
-
         ["HP Ibu",getValue(b,["hpIbu","HpIbu"])],
 
         ["Jumlah Saudara",getValue(b,["jumlahSaudara","JumlahSaudara"])],
-
         ["Organisasi",getValue(b,["organisasi","Organisasi"])],
-
         ["Prestasi",getValue(b,["prestasi","Prestasi"])],
-
         ["Kepemimpinan",getValue(b,["kepemimpinan","Kepemimpinan"])],
-
         ["Kelebihan",getValue(b,["kelebihan","Kelebihan"])],
-
         ["Kekurangan",getValue(b,["kekurangan","Kekurangan"])],
-
         ["Perbaikan",getValue(b,["perbaikan","Perbaikan"])],
-
         ["Hobi",getValue(b,["hobi","Hobi"])],
-
         ["Keterampilan",getValue(b,["keterampilan","Keterampilan"])],
-
         ["Alasan",getValue(b,["alasan","Alasan"])],
-
         ["Persiapan",getValue(b,["persiapan","Persiapan"])],
-
         ["Target",getValue(b,["target","Target"])],
-
         ["Pernah Seleksi",getValue(b,["pernahSeleksi","PernahSeleksi"])],
-
         ["Tahun Seleksi",getValue(b,["tahunSeleksi","TahunSeleksi"])],
-
         ["Pengalaman Seleksi",getValue(b,["pengalamanSeleksi","PengalamanSeleksi"])],
-
         ["Pengalaman Sulit",getValue(b,["pengalamanSulit","PengalamanSulit"])],
-
         ["Cara Mengatasi",getValue(b,["caraMengatasi","CaraMengatasi"])],
-
-        ["Kerja Sama",getValue(b,["kerjaSama","KerjaSama"])],
-
-        ["Foto",getValue(b,["fotoURL","FotoURL"])]
+        ["Kerja Sama",getValue(b,["kerjaSama","KerjaSama"])]
 
     ];
 
-
-    /*
-     * Membuat file HTML biodata.
-     * File bisa dibuka di browser dan
-     * dicetak menjadi PDF melalui Print > Save as PDF.
-     */
 
     let rowsHTML = "";
 
@@ -3755,13 +3498,22 @@ function downloadBiodata(){
 
         rowsHTML += `
             <tr>
-                <td>${escapeHtml(row[0])}</td>
-                <td>${escapeHtml(row[1] || "-")}</td>
+                <td>
+                    ${escapeHtml(row[0])}
+                </td>
+
+                <td>
+                    ${escapeHtml(row[1] || "-")}
+                </td>
             </tr>
         `;
 
     });
 
+
+    /*
+     * FOTO
+     */
 
     const fotoURL =
         getValue(b,[
@@ -3777,29 +3529,74 @@ function downloadBiodata(){
 
         const match =
             String(fotoURL).match(
-                /\/file\/d\/([^/]+)/
+                /\/file\/d\/([^/?#]+)/
             );
+
+
+        let fileId = "";
 
 
         if(match && match[1]){
 
+            fileId =
+                match[1];
+
+        }else{
+
+            const idMatch =
+                String(fotoURL).match(
+                    /[?&]id=([^&#]+)/
+                );
+
+            if(idMatch && idMatch[1]){
+
+                fileId =
+                    idMatch[1];
+
+            }
+
+        }
+
+
+        if(fileId){
+
             const photo =
                 "https://drive.google.com/thumbnail?id=" +
-                encodeURIComponent(match[1]) +
+                encodeURIComponent(fileId) +
                 "&sz=w600";
 
 
+            const photoAlt =
+                "https://lh3.googleusercontent.com/d/" +
+                encodeURIComponent(fileId) +
+                "=w600";
+
+
             fotoHTML = `
-                <img
-                    src="${photo}"
+                <div
                     style="
-                        width:160px;
-                        height:200px;
-                        object-fit:cover;
-                        border-radius:10px;
-                        border:1px solid #ddd;
+                        text-align:center;
+                        margin-bottom:20px;
                     "
                 >
+
+                    <img
+                        src="${photo}"
+                        onerror="
+                            this.onerror=null;
+                            this.src='${photoAlt}';
+                        "
+                        style="
+                            width:160px;
+                            height:200px;
+                            object-fit:cover;
+                            border-radius:10px;
+                            border:1px solid #ddd;
+                        "
+                        alt="Foto ${escapeHtml(nama)}"
+                    >
+
+                </div>
             `;
 
         }
@@ -3807,15 +3604,25 @@ function downloadBiodata(){
     }
 
 
+    /*
+     * HTML DOWNLOAD
+     */
+
     const documentHTML = `
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>Biodata - ${escapeHtml(nama)}</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<title>
+    Biodata - ${escapeHtml(nama)}
+</title>
 
 <style>
 
@@ -3834,6 +3641,10 @@ body{
 h1{
     margin:0;
     font-size:25px;
+}
+
+h2{
+    margin-top:0;
 }
 
 .subtitle{
@@ -3873,6 +3684,14 @@ td:first-child{
     border-top:1px solid #ddd;
     color:#777;
     font-size:10px;
+}
+
+@media print{
+
+    body{
+        margin:20px;
+    }
+
 }
 
 </style>
@@ -3944,7 +3763,8 @@ td:first-child{
         new Blob(
             [documentHTML],
             {
-                type:"text/html;charset=utf-8"
+                type:
+                    "text/html;charset=utf-8"
             }
         );
 
@@ -3982,7 +3802,6 @@ td:first-child{
 
 }
 
-
 /* =========================================================
    SAFE FILE NAME
 ========================================================= */
@@ -3994,7 +3813,6 @@ function sanitizeFileName(name){
         .replace(/\s+/g,"_")
         .substring(0,100);
 }
-
 
 /* =========================================================
    CLOSE MODAL WHEN CLICK OUTSIDE
@@ -4014,7 +3832,6 @@ document.getElementById(
 
     }
 );
-
 
 /* =========================================================
    ESC TO CLOSE
@@ -4038,7 +3855,6 @@ document.addEventListener(
     }
 );
 
-
 /* =========================================================
    INITIAL
 ========================================================= */
@@ -4050,7 +3866,6 @@ document.addEventListener(
         document.getElementById(
             "loginPanel"
         ).style.display = "flex";
-
 
         document.getElementById(
             "adminPanel"
