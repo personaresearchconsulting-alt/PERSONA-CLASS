@@ -3,820 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Admin Rekap — Persona Class</title>
-
 <style>
-
-:root{
-    --cream:#FAF9F6;
-    --cream2:#F4EEE6;
-    --rose:#C9A6A6;
-    --lavender:#B8B1C8;
-    --navy:#172033;
-    --white:#ffffff;
-    --red:#b42318;
-    --green:#157347;
-    --border:#ddd7d0;
-}
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--cream);
-    color:var(--navy);
-}
-
-header{
-    background:var(--navy);
-    color:white;
-    padding:22px 30px;
-}
-
-header h1{
-    margin:0;
-    font-size:22px;
-    letter-spacing:.3px;
-}
-
-header p{
-    margin:6px 0 0;
-    opacity:.75;
-    font-size:13px;
-}
-
-.container{
-    max-width:1500px;
-    margin:0 auto;
-    padding:25px;
-}
-
-/* LOGIN */
-
-#loginPage{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.login-box{
-    width:100%;
-    max-width:420px;
-    background:white;
-    padding:35px;
-    border-radius:16px;
-    box-shadow:0 8px 30px rgba(0,0,0,.08);
-    text-align:center;
-}
-
-.login-box h2{
-    margin:0 0 8px;
-}
-
-.login-box p{
-    color:#777;
-    font-size:14px;
-}
-
-input,
-select{
-    width:100%;
-    padding:12px 14px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    font-size:14px;
-    background:white;
-}
-
-button{
-    border:0;
-    border-radius:9px;
-    padding:11px 16px;
-    cursor:pointer;
-    font-weight:600;
-    font-size:13px;
-}
-
-.btn-primary{
-    background:var(--navy);
-    color:white;
-}
-
-.btn-secondary{
-    background:var(--cream2);
-    color:var(--navy);
-}
-
-.btn-danger{
-    background:#f8d7da;
-    color:#842029;
-}
-
-.login-box button{
-    width:100%;
-    margin-top:12px;
-}
-
-#errorMsg{
-    color:var(--red);
-    font-size:13px;
-    margin-top:12px;
-    display:none;
-}
-
-/* ADMIN */
-
-#adminPage{
-    display:none;
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-}
-
-.topbar-title h2{
-    margin:0;
-    font-size:20px;
-}
-
-.topbar-title p{
-    margin:5px 0 0;
-    color:#777;
-    font-size:13px;
-}
-
-.actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-/* SUMMARY */
-
-.summary{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:13px;
-    padding:18px;
-}
-
-.card-title{
-    color:#777;
-    font-size:12px;
-    margin-bottom:8px;
-}
-
-.card-value{
-    font-size:25px;
-    font-weight:700;
-}
-
-/* FILTER */
-
-.filter-box{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:13px;
-    padding:18px;
-    margin-bottom:20px;
-}
-
-.filter-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.filter-label{
-    font-size:12px;
-    font-weight:600;
-    margin-bottom:6px;
-    display:block;
-}
-
-/* TABLE */
-
-.table-box{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:13px;
-    overflow:hidden;
-}
-
-.table-wrap{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:1450px;
-}
-
-th{
-    background:var(--navy);
-    color:white;
-    padding:12px 9px;
-    font-size:11px;
-    text-align:left;
-    white-space:nowrap;
-}
-
-td{
-    padding:10px 9px;
-    border-bottom:1px solid #eee;
-    font-size:11px;
-    white-space:nowrap;
-}
-
-tr:hover td{
-    background:#faf7f5;
-}
-
-.score-low{
-    color:var(--red);
-    font-weight:700;
-}
-
-.score-normal{
-    color:#2364aa;
-    font-weight:700;
-}
-
-.score-total{
-    color:var(--green);
-    font-weight:700;
-}
-
-.empty{
-    text-align:center;
-    padding:30px;
-    color:#777;
-}
-
-/* BIODATA */
-
-.biodata-panel{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:13px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.biodata-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-bottom:15px;
-}
-
-.biodata-title h3{
-    margin:0;
-    font-size:17px;
-}
-
-.biodata-title p{
-    margin:4px 0 0;
-    color:#777;
-    font-size:12px;
-}
-
-.bio-search{
-    display:flex;
-    gap:8px;
-    max-width:650px;
-}
-
-.bio-search input{
-    flex:1;
-}
-
-.bio-results{
-    margin-top:14px;
-    display:grid;
-    gap:8px;
-}
-
-.bio-result{
-    border:1px solid var(--border);
-    border-radius:9px;
-    padding:12px 14px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    cursor:pointer;
-    background:#fff;
-}
-
-.bio-result:hover{
-    background:var(--cream2);
-}
-
-.bio-result-name{
-    font-weight:700;
-}
-
-.bio-result-target{
-    color:#777;
-    font-size:11px;
-    margin-top:3px;
-}
-
-/* MODAL */
-
-.bio-modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:9999;
-    padding:20px;
-    overflow-y:auto;
-}
-
-.bio-box{
-    width:100%;
-    max-width:1050px;
-    margin:30px auto;
-    background:white;
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 15px 50px rgba(0,0,0,.2);
-}
-
-.bio-head{
-    background:var(--navy);
-    color:white;
-    padding:18px 22px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.bio-head h3{
-    margin:0;
-    font-size:18px;
-}
-
-.bio-close{
-    background:transparent;
-    color:white;
-    font-size:22px;
-    padding:0 5px;
-}
-
-.bio-content{
-    padding:22px;
-}
-
-.bio-layout{
-    display:grid;
-    grid-template-columns:230px 1fr;
-    gap:25px;
-}
-
-.bio-photo-wrap{
-    text-align:center;
-}
-
-.bio-photo{
-    width:200px;
-    height:250px;
-    object-fit:cover;
-    border-radius:10px;
-    border:1px solid var(--border);
-    display:none;
-    margin:auto;
-}
-
-.bio-no-photo{
-    width:200px;
-    height:250px;
-    border:1px dashed #bbb;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:20px;
-    margin:auto;
-    color:#888;
-    font-size:13px;
-}
-
-.bio-photo-actions{
-    margin-top:12px;
-    display:flex;
-    gap:7px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.bio-fields{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.bio-field{
-    border-bottom:1px solid #eee;
-    padding-bottom:8px;
-}
-
-.bio-field.full{
-    grid-column:1/-1;
-}
-
-.bio-label{
-    font-size:10px;
-    color:#888;
-    text-transform:uppercase;
-    letter-spacing:.4px;
-    margin-bottom:4px;
-}
-
-.bio-value{
-    font-size:13px;
-    line-height:1.4;
-    word-break:break-word;
-}
-
-.bio-footer{
-    padding:15px 22px;
-    border-top:1px solid #eee;
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:900px){
-    .summary{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .filter-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .bio-layout{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:600px){
-    .container{
-        padding:15px;
-    }
-
-    .summary{
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-    }
-
-    .filter-grid{
-        grid-template-columns:1fr;
-    }
-
-    .bio-search{
-        flex-direction:column;
-    }
-
-    .bio-fields{
-        grid-template-columns:1fr;
-    }
-
-    .bio-field.full{
-        grid-column:auto;
-    }
-}
-
+:root{--cream:#FAF9F6;--cream2:#F4EEE6;--rose:#C9A6A6;--lavender:#B8B1C8;--navy:#172033;--white:#ffffff;--red:#b42318;--green:#157347;--border:#ddd7d0;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--navy);}
+header{background:var(--navy);color:white;padding:22px 30px;}
+header h1{margin:0;font-size:22px;letter-spacing:.3px;}
+header p{margin:6px 0 0;opacity:.75;font-size:13px;}
+.container{max-width:1500px;margin:0 auto;padding:25px;}
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-box{width:100%;max-width:420px;background:white;padding:35px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.08);text-align:center;}
+.login-box h2{margin:0 0 8px;}
+.login-box p{color:#777;font-size:14px;}
+input,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:9px;font-size:14px;background:white;}
+button{border:0;border-radius:9px;padding:11px 16px;cursor:pointer;font-weight:600;font-size:13px;}
+.btn-primary{background:var(--navy);color:white;}
+.btn-secondary{background:var(--cream2);color:var(--navy);}
+.btn-danger{background:#f8d7da;color:#842029;}
+.login-box button{width:100%;margin-top:12px;}
+#errorMsg{color:var(--red);font-size:13px;margin-top:12px;display:none;}
+#adminPage{display:none;}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:20px;}
+.topbar-title h2{margin:0;font-size:20px;}
+.topbar-title p{margin:5px 0 0;color:#777;font-size:13px;}
+.actions{display:flex;gap:8px;flex-wrap:wrap;}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px;}
+.card{background:white;border:1px solid var(--border);border-radius:13px;padding:18px;}
+.card-title{color:#777;font-size:12px;margin-bottom:8px;}
+.card-value{font-size:25px;font-weight:700;}
+.filter-box{background:white;border:1px solid var(--border);border-radius:13px;padding:18px;margin-bottom:20px;}
+.filter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.filter-label{font-size:12px;font-weight:600;margin-bottom:6px;display:block;}
+.table-box{background:white;border:1px solid var(--border);border-radius:13px;overflow:hidden;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:1450px;}
+th{background:var(--navy);color:white;padding:12px 9px;font-size:11px;text-align:left;white-space:nowrap;}
+td{padding:10px 9px;border-bottom:1px solid #eee;font-size:11px;white-space:nowrap;}
+tr:hover td{background:#faf7f5;}
+.score-low{color:var(--red);font-weight:700;}
+.score-normal{color:#2364aa;font-weight:700;}
+.score-total{color:#157347;font-weight:700;}
+.empty{text-align:center;padding:30px;color:#777;}
+.biodata-panel{background:white;border:1px solid var(--border);border-radius:13px;padding:20px;margin-bottom:20px;}
+.biodata-title{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:15px;}
+.biodata-title h3{margin:0;font-size:17px;}
+.biodata-title p{margin:4px 0 0;color:#777;font-size:12px;}
+.bio-search{display:flex;gap:8px;max-width:650px;}
+.bio-search input{flex:1;}
+.bio-results{margin-top:14px;display:grid;gap:8px;}
+.bio-result{border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;background:#fff;}
+.bio-result:hover{background:var(--cream2);}
+.bio-result-name{font-weight:700;}
+.bio-result-target{color:#777;font-size:11px;margin-top:3px;}
+.bio-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;padding:20px;overflow-y:auto;}
+.bio-box{width:100%;max-width:1050px;margin:30px auto;background:white;border-radius:16px;overflow:hidden;box-shadow:0 15px 50px rgba(0,0,0,.2);}
+.bio-head{background:var(--navy);color:white;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:15px;}
+.bio-head h3{margin:0;font-size:18px;}
+.bio-close{background:transparent;color:white;font-size:22px;padding:0 5px;}
+.bio-content{padding:22px;}
+.bio-layout{display:grid;grid-template-columns:230px 1fr;gap:25px;}
+.bio-photo-wrap{text-align:center;}
+.bio-photo{width:200px;height:250px;object-fit:cover;border-radius:10px;border:1px solid var(--border);display:none;margin:auto;}
+.bio-no-photo{width:200px;height:250px;border:1px dashed #bbb;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;margin:auto;color:#888;font-size:13px;}
+.bio-photo-actions{margin-top:12px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap;}
+.bio-fields{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.bio-field{border-bottom:1px solid #eee;padding-bottom:8px;}
+.bio-field.full{grid-column:1/-1;}
+.bio-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;}
+.bio-value{font-size:13px;line-height:1.4;word-break:break-word;}
+.bio-footer{padding:15px 22px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:8px;}
+@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr);}.filter-grid{grid-template-columns:repeat(2,1fr);}.bio-layout{grid-template-columns:1fr;}}
+@media(max-width:600px){.container{padding:15px;}.summary{grid-template-columns:1fr 1fr;gap:8px;}.filter-grid{grid-template-columns:1fr;}.bio-search{flex-direction:column;}.bio-fields{grid-template-columns:1fr;}.bio-field.full{grid-column:auto;}}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-
 <div id="loginPage">
-
     <div class="login-box">
-
         <h2>Admin Rekap</h2>
-
-        <p>
-            Persona Class — Results & Biodata Management
-        </p>
-
-        <input
-            type="password"
-            id="adminPin"
-            placeholder="Masukkan PIN Admin"
-            autocomplete="off"
-        >
-
-        <button
-            class="btn-primary"
-            onclick="loginAdmin()"
-        >
-            MASUK
-        </button>
-
+        <p>Persona Class — Results & Biodata Management</p>
+        <input type="password" id="adminPin" placeholder="Masukkan PIN Admin" autocomplete="off">
+        <button class="btn-primary" onclick="loginAdmin()">MASUK</button>
         <div id="errorMsg"></div>
-
     </div>
-
 </div>
 
-
-<!-- ADMIN -->
-
 <div id="adminPage">
-
 <header>
-
     <h1>PERSONA CLASS</h1>
-
-    <p>
-        Admin Rekap — Results & Participant Biodata
-    </p>
-
+    <p>Admin Rekap — Results & Participant Biodata</p>
 </header>
-
-
 <div class="container">
-
     <div class="topbar">
-
         <div class="topbar-title">
-
             <h2>Rekap Hasil Tryout</h2>
-
-            <p id="lastUpdate">
-                Memuat data...
-            </p>
-
+            <p id="lastUpdate">Memuat data...</p>
         </div>
-
         <div class="actions">
-
-            <button
-                class="btn-secondary"
-                onclick="loadAdminData()"
-            >
-                ↻ Refresh
-            </button>
-
-            <button
-                class="btn-secondary"
-                onclick="downloadCSV()"
-            >
-                ↓ CSV
-            </button>
-
-            <button
-                class="btn-danger"
-                onclick="logoutAdmin()"
-            >
-                Logout
-            </button>
-
+            <button class="btn-secondary" onclick="loadAdminData()">↻ Refresh</button>
+            <button class="btn-secondary" onclick="downloadCSV()">↓ CSV</button>
+            <button class="btn-danger" onclick="logoutAdmin()">Logout</button>
         </div>
-
     </div>
-
-
-    <!-- SUMMARY -->
 
     <div class="summary">
-
-        <div class="card">
-
-            <div class="card-title">
-                TOTAL DATA
-            </div>
-
-            <div
-                class="card-value"
-                id="totalData"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                KECERDASAN
-            </div>
-
-            <div
-                class="card-value"
-                id="totalKecerdasan"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                KEPRIBADIAN
-            </div>
-
-            <div
-                class="card-value"
-                id="totalKepribadian"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                KECERMATAN
-            </div>
-
-            <div
-                class="card-value"
-                id="totalKecermatan"
-            >
-                0
-            </div>
-
-        </div>
-
+        <div class="card"><div class="card-title">TOTAL DATA</div><div class="card-value" id="totalData">0</div></div>
+        <div class="card"><div class="card-title">KECERDASAN</div><div class="card-value" id="totalKecerdasan">0</div></div>
+        <div class="card"><div class="card-title">KEPRIBADIAN</div><div class="card-value" id="totalKepribadian">0</div></div>
+        <div class="card"><div class="card-title">KECERMATAN</div><div class="card-value" id="totalKecermatan">0</div></div>
     </div>
-
-
-    <!-- BIODATA -->
 
     <div class="biodata-panel">
-
         <div class="biodata-title">
-
             <div>
-
-                <h3>
-                    Biodata Peserta
-                </h3>
-
-                <p>
-                    Cari berdasarkan nama. Ketik sebagian nama untuk menampilkan nama lengkap.
-                </p>
-
+                <h3>Biodata Peserta</h3>
+                <p>Cari berdasarkan nama. Ketik sebagian nama untuk menampilkan nama lengkap.</p>
             </div>
-
         </div>
-
-
         <div class="bio-search">
-
-            <input
-                type="text"
-                id="bioSearchInput"
-                placeholder="Contoh: Atra"
-                autocomplete="off"
-            >
-
-            <button
-                class="btn-primary"
-                onclick="searchBiodataAdmin()"
-            >
-                Cari Biodata
-            </button>
-
+            <input type="text" id="bioSearchInput" placeholder="Contoh: Atra" autocomplete="off">
+            <button class="btn-primary" onclick="searchBiodataAdmin()">Cari Biodata</button>
         </div>
-
-
-        <div
-            id="bioResults"
-            class="bio-results"
-        ></div>
-
+        <div id="bioResults" class="bio-results"></div>
     </div>
-
-
-    <!-- FILTER -->
 
     <div class="filter-box">
-
         <div class="filter-grid">
-
             <div>
-
-                <label class="filter-label">
-                    Nama Siswa
-                </label>
-
-                <input
-                    type="text"
-                    id="filterNama"
-                    placeholder="Cari nama..."
-                    oninput="applyFilters()"
-                >
-
+                <label class="filter-label">Nama Siswa</label>
+                <input type="text" id="filterNama" placeholder="Cari nama..." oninput="applyFilters()">
             </div>
-
-
             <div>
-
-                <label class="filter-label">
-                    Program
-                </label>
-
-                <select
-                    id="filterProgram"
-                    onchange="applyFilters()"
-                >
-
-                    <option value="">
-                        Semua Program
-                    </option>
-
+                <label class="filter-label">Program</label>
+                <select id="filterProgram" onchange="applyFilters()">
+                    <option value="">Semua Program</option>
                 </select>
-
             </div>
-
-
             <div>
-
-                <label class="filter-label">
-                    Tryout
-                </label>
-
-                <input
-                    type="text"
-                    id="filterTryout"
-                    placeholder="Nama tryout..."
-                    oninput="applyFilters()"
-                >
-
+                <label class="filter-label">Tryout</label>
+                <input type="text" id="filterTryout" placeholder="Nama tryout..." oninput="applyFilters()">
             </div>
-
-
             <div>
-
-                <label class="filter-label">
-                    Tanggal
-                </label>
-
-                <input
-                    type="date"
-                    id="filterTanggal"
-                    onchange="applyFilters()"
-                >
-
+                <label class="filter-label">Tanggal</label>
+                <input type="date" id="filterTanggal" onchange="applyFilters()">
             </div>
-
         </div>
-
     </div>
 
-
-    <!-- TABLE -->
-
     <div class="table-box">
-
         <div class="table-wrap">
-
             <table>
-
                 <thead>
-
                     <tr>
-
                         <th>Timestamp</th>
                         <th>Session ID</th>
                         <th>Nama Siswa</th>
@@ -834,2169 +173,494 @@ tr:hover td{
                         <th>TKP</th>
                         <th>Pengetahuan Umum</th>
                         <th>Nilai Akhir</th>
-
                     </tr>
-
                 </thead>
-
-
                 <tbody id="resultsBody">
-
-                    <tr>
-
-                        <td
-                            colspan="17"
-                            class="empty"
-                        >
-                            Memuat data...
-
-                        </td>
-
-                    </tr>
-
+                    <tr><td colspan="17" class="empty">Memuat data...</td></tr>
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
-
+</div>
 </div>
 
-</div>
-
-
-<!-- BIODATA MODAL -->
-
-<div
-    id="bioModal"
-    class="bio-modal"
->
-
+<div id="bioModal" class="bio-modal">
     <div class="bio-box">
-
         <div class="bio-head">
-
-            <h3 id="bioModalTitle">
-                Biodata Peserta
-            </h3>
-
-            <button
-                class="bio-close"
-                onclick="closeBiodata()"
-            >
-                ×
-            </button>
-
+            <h3 id="bioModalTitle">Biodata Peserta</h3>
+            <button class="bio-close" onclick="closeBiodata()">×</button>
         </div>
-
-
         <div class="bio-content">
-
             <div class="bio-layout">
-
-
-                <!-- PHOTO -->
-
                 <div class="bio-photo-wrap">
-
-                    <img
-                        id="bioPhoto"
-                        class="bio-photo"
-                        alt="Foto Peserta"
-                    >
-
-                    <div
-                        id="bioNoPhoto"
-                        class="bio-no-photo"
-                    >
-                        Memuat foto...
-                    </div>
-
-
+                    <img id="bioPhoto" class="bio-photo" alt="Foto Peserta">
+                    <div id="bioNoPhoto" class="bio-no-photo">Memuat foto...</div>
                     <div class="bio-photo-actions">
-
-                        <button
-                            id="downloadPhotoBtn"
-                            class="btn-secondary"
-                            onclick="downloadPhoto()"
-                            style="display:none"
-                        >
-                            ↓ Download Foto
-                        </button>
-
+                        <button id="downloadPhotoBtn" class="btn-secondary" onclick="downloadPhoto()" style="display:none">↓ Download Foto</button>
                     </div>
-
                 </div>
-
-
-                <!-- FIELDS -->
-
-                <div
-                    id="bioFields"
-                    class="bio-fields"
-                ></div>
-
-
+                <div id="bioFields" class="bio-fields"></div>
             </div>
-
         </div>
-
-
         <div class="bio-footer">
-
-            <button
-                class="btn-secondary"
-                onclick="downloadBiodata()"
-            >
-                ↓ Download Biodata
-            </button>
-
-            <button
-                class="btn-primary"
-                onclick="printBiodata()"
-            >
-                Print
-            </button>
-
-            <button
-                class="btn-danger"
-                onclick="closeBiodata()"
-            >
-                Tutup
-            </button>
-
+            <button class="btn-secondary" onclick="downloadBiodata()">↓ Download Biodata</button>
+            <button class="btn-primary" onclick="printBiodata()">Print</button>
+            <button class="btn-danger" onclick="closeBiodata()">Tutup</button>
         </div>
-
     </div>
-
 </div>
-
 
 <script>
-
-/* =========================================================
-   CONFIG
-========================================================= */
-
-const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
-
-
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 let adminPin = "";
-
 let allResults = [];
-
 let filteredResults = [];
-
 let currentBiodata = null;
-
 let currentPhotoData = null;
 
-
-/* =========================================================
-   JSONP
-========================================================= */
-
 function jsonp(url){
-
     return new Promise(function(resolve,reject){
-
-        const callbackName =
-            "jsonp_" +
-            Date.now() +
-            "_" +
-            Math.floor(Math.random()*100000);
-
-        const script =
-            document.createElement("script");
-
-        const timer =
-            setTimeout(function(){
-
-                cleanup();
-
-                reject(
-                    new Error("Request timeout")
-                );
-
-            },20000);
-
-
+        const callbackName = "jsonp_" + Date.now() + "_" + Math.floor(Math.random()*100000);
+        const script = document.createElement("script");
+        const timer = setTimeout(function(){ cleanup(); reject(new Error("Request timeout")); },20000);
         function cleanup(){
-
             clearTimeout(timer);
-
-            if(script.parentNode){
-                script.parentNode.removeChild(script);
-            }
-
-            try{
-                delete window[callbackName];
-            }catch(e){
-                window[callbackName] = undefined;
-            }
-
+            if(script.parentNode){ script.parentNode.removeChild(script); }
+            try{ delete window[callbackName]; }catch(e){ window[callbackName] = undefined; }
         }
-
-
-        window[callbackName] = function(data){
-
-            cleanup();
-
-            resolve(data);
-
-        };
-
-
-        script.onerror = function(){
-
-            cleanup();
-
-            reject(
-                new Error("Request gagal")
-            );
-
-        };
-
-
-        script.src =
-            url +
-            "&callback=" +
-            encodeURIComponent(callbackName);
-
+        window[callbackName] = function(data){ cleanup(); resolve(data); };
+        script.onerror = function(){ cleanup(); reject(new Error("Request gagal")); };
+        script.src = url + "&callback=" + encodeURIComponent(callbackName);
         document.body.appendChild(script);
-
     });
-
 }
-
-
-/* =========================================================
-   LOGIN ADMIN
-========================================================= */
 
 async function loginAdmin(){
-
-    const pin =
-        document
-        .getElementById("adminPin")
-        .value
-        .trim();
-
-
-    const error =
-        document.getElementById("errorMsg");
-
-
+    const pin = document.getElementById("adminPin").value.trim();
+    const error = document.getElementById("errorMsg");
     error.style.display = "none";
-
-
     if(!pin){
-
-        error.textContent =
-            "PIN admin wajib diisi.";
-
-        error.style.display =
-            "block";
-
+        error.textContent = "PIN admin wajib diisi.";
+        error.style.display = "block";
         return;
-
     }
-
-
     try{
-
-        const data =
-            await jsonp(
-                SCRIPT_URL +
-                "?mode=admin" +
-                "&adminPin=" +
-                encodeURIComponent(pin)
-            );
-
-
-        if(
-            data &&
-            data.status === "success"
-        ){
-
+        const data = await jsonp(SCRIPT_URL + "?mode=admin&adminPin=" + encodeURIComponent(pin));
+        if(data && data.status === "success"){
             adminPin = pin;
-
-            sessionStorage.setItem(
-                "prcAdminPin",
-                pin
-            );
-
-            document
-                .getElementById("loginPage")
-                .style.display = "none";
-
-            document
-                .getElementById("adminPage")
-                .style.display = "block";
-
-
-            processAdminData(
-                data.results || []
-            );
-
-
-            document
-                .getElementById("lastUpdate")
-                .textContent =
-                "Data berhasil dimuat • " +
-                new Date().toLocaleString("id-ID");
-
+            sessionStorage.setItem("prcAdminPin", pin);
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("adminPage").style.display = "block";
+            processAdminData(data.results || []);
+            document.getElementById("lastUpdate").textContent = "Data berhasil dimuat • " + new Date().toLocaleString("id-ID");
         }else{
-
-            error.textContent =
-                data && data.message
-                ? data.message
-                : "PIN admin salah.";
-
-            error.style.display =
-                "block";
-
+            error.textContent = data && data.message ? data.message : "PIN admin salah.";
+            error.style.display = "block";
         }
-
     }catch(err){
-
-        error.textContent =
-            "Tidak dapat terhubung ke database.";
-
-        error.style.display =
-            "block";
-
+        error.textContent = "Tidak dapat terhubung ke database.";
+        error.style.display = "block";
         console.error(err);
-
     }
-
 }
 
-
-/* =========================================================
-   AUTO LOGIN
-========================================================= */
-
-window.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        const savedPin =
-            sessionStorage.getItem(
-                "prcAdminPin"
-            );
-
-        if(savedPin){
-
-            document
-                .getElementById("adminPin")
-                .value = savedPin;
-
-            loginAdmin();
-
-        }
-
-        document
-            .getElementById("bioSearchInput")
-            .addEventListener(
-                "keydown",
-                function(e){
-
-                    if(e.key === "Enter"){
-
-                        searchBiodataAdmin();
-
-                    }
-
-                }
-            );
-
+window.addEventListener("DOMContentLoaded", function(){
+    const savedPin = sessionStorage.getItem("prcAdminPin");
+    if(savedPin){
+        document.getElementById("adminPin").value = savedPin;
+        loginAdmin();
     }
-);
-
-
-/* =========================================================
-   LOAD ADMIN DATA
-========================================================= */
+    document.getElementById("bioSearchInput").addEventListener("keydown", function(e){
+        if(e.key === "Enter"){ searchBiodataAdmin(); }
+    });
+});
 
 async function loadAdminData(){
-
-    if(!adminPin){
-
-        return;
-
-    }
-
-
-    const body =
-        document.getElementById(
-            "resultsBody"
-        );
-
-
-    body.innerHTML = `
-        <tr>
-            <td colspan="17" class="empty">
-                Memuat data...
-            </td>
-        </tr>
-    `;
-
-
+    if(!adminPin){ return; }
+    const body = document.getElementById("resultsBody");
+    body.innerHTML = `<tr><td colspan="17" class="empty">Memuat data...</td></tr>`;
     try{
-
-        const data =
-            await jsonp(
-                SCRIPT_URL +
-                "?mode=admin" +
-                "&adminPin=" +
-                encodeURIComponent(adminPin)
-            );
-
-
-        if(
-            data &&
-            data.status === "success"
-        ){
-
-            processAdminData(
-                data.results || []
-            );
-
-
-            document
-                .getElementById("lastUpdate")
-                .textContent =
-                "Data diperbarui • " +
-                new Date().toLocaleString("id-ID");
-
+        const data = await jsonp(SCRIPT_URL + "?mode=admin&adminPin=" + encodeURIComponent(adminPin));
+        if(data && data.status === "success"){
+            processAdminData(data.results || []);
+            document.getElementById("lastUpdate").textContent = "Data diperbarui • " + new Date().toLocaleString("id-ID");
         }else{
-
-            body.innerHTML = `
-                <tr>
-                    <td colspan="17" class="empty">
-                        ${escapeHTML(
-                            data && data.message
-                            ? data.message
-                            : "Data gagal dimuat."
-                        )}
-                    </td>
-                </tr>
-            `;
-
+            body.innerHTML = `<tr><td colspan="17" class="empty">${escapeHTML(data && data.message ? data.message : "Data gagal dimuat.")}</td></tr>`;
         }
-
     }catch(err){
-
         console.error(err);
-
-        body.innerHTML = `
-            <tr>
-                <td colspan="17" class="empty">
-                    Gagal memuat data.
-                </td>
-            </tr>
-        `;
-
+        body.innerHTML = `<tr><td colspan="17" class="empty">Gagal memuat data.</td></tr>`;
     }
-
 }
-
-
-/* =========================================================
-   PROCESS ADMIN DATA
-========================================================= */
 
 function processAdminData(results){
-
-    allResults =
-        Array.isArray(results)
-        ? results
-        : [];
-
-
-    filteredResults =
-        [...allResults];
-
-
-    document
-        .getElementById("totalData")
-        .textContent =
-        allResults.length;
-
-
-    let kc = 0;
-    let kp = 0;
-    let kr = 0;
-
-
+    allResults = Array.isArray(results) ? results : [];
+    filteredResults = [...allResults];
+    document.getElementById("totalData").textContent = allResults.length;
+    let kc = 0, kp = 0, kr = 0;
     allResults.forEach(function(r){
-
-        kc += numericValue(
-            r.Kecerdasan
-        );
-
-        kp += numericValue(
-            r.Kepribadian
-        );
-
-        kr += numericValue(
-            r.Kecermatan
-        );
-
+        kc += numericValue(r.Kecerdasan);
+        kp += numericValue(r.Kepribadian);
+        kr += numericValue(r.Kecermatan);
     });
-
-
-    document
-        .getElementById("totalKecerdasan")
-        .textContent =
-        formatNumber(kc);
-
-
-    document
-        .getElementById("totalKepribadian")
-        .textContent =
-        formatNumber(kp);
-
-
-    document
-        .getElementById("totalKecermatan")
-        .textContent =
-        formatNumber(kr);
-
-
+    document.getElementById("totalKecerdasan").textContent = formatNumber(kc);
+    document.getElementById("totalKepribadian").textContent = formatNumber(kp);
+    document.getElementById("totalKecermatan").textContent = formatNumber(kr);
     populateProgramFilter();
-
     renderResults();
-
 }
-
-
-/* =========================================================
-   PROGRAM FILTER
-========================================================= */
 
 function populateProgramFilter(){
-
-    const select =
-        document.getElementById(
-            "filterProgram"
-        );
-
-
-    const programs =
-        [...new Set(
-            allResults
-                .map(function(r){
-                    return String(
-                        r.Program || ""
-                    ).trim();
-                })
-                .filter(Boolean)
-        )]
-        .sort();
-
-
-    select.innerHTML =
-        `<option value="">Semua Program</option>`;
-
-
+    const select = document.getElementById("filterProgram");
+    const programs = [...new Set(allResults.map(function(r){ return String(r.Program || "").trim(); }).filter(Boolean))].sort();
+    select.innerHTML = `<option value="">Semua Program</option>`;
     programs.forEach(function(program){
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            program;
-
-        option.textContent =
-            program;
-
+        const option = document.createElement("option");
+        option.value = program;
+        option.textContent = program;
         select.appendChild(option);
-
     });
-
 }
-
-
-/* =========================================================
-   FILTER
-========================================================= */
 
 function applyFilters(){
+    const nama = document.getElementById("filterNama").value.trim().toLowerCase();
+    const program = document.getElementById("filterProgram").value.trim().toLowerCase();
+    const tryout = document.getElementById("filterTryout").value.trim().toLowerCase();
+    const tanggal = document.getElementById("filterTanggal").value.trim();
 
-    const nama =
-        document
-        .getElementById("filterNama")
-        .value
-        .trim()
-        .toLowerCase();
+    filteredResults = allResults.filter(function(r){
+        const rNama = String(r.NamaSiswa || "").toLowerCase();
+        const rProgram = String(r.Program || "").toLowerCase();
+        const rTryout = String(r.NamaTryout || "").toLowerCase();
+        const rTanggal = normalizeDate(r.Tanggal);
 
-
-    const program =
-        document
-        .getElementById("filterProgram")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const tryout =
-        document
-        .getElementById("filterTryout")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const tanggal =
-        document
-        .getElementById("filterTanggal")
-        .value
-        .trim();
-
-
-    filteredResults =
-        allResults.filter(function(r){
-
-            const rNama =
-                String(
-                    r.NamaSiswa || ""
-                )
-                .toLowerCase();
-
-
-            const rProgram =
-                String(
-                    r.Program || ""
-                )
-                .toLowerCase();
-
-
-            const rTryout =
-                String(
-                    r.NamaTryout || ""
-                )
-                .toLowerCase();
-
-
-            const rTanggal =
-                normalizeDate(
-                    r.Tanggal
-                );
-
-
-            return (
-
-                (!nama ||
-                    rNama.includes(nama))
-
-                &&
-
-                (!program ||
-                    rProgram === program)
-
-                &&
-
-                (!tryout ||
-                    rTryout.includes(tryout))
-
-                &&
-
-                (!tanggal ||
-                    rTanggal === tanggal)
-
-            );
-
-        });
-
-
+        return (!nama || rNama.includes(nama)) &&
+               (!program || rProgram === program) &&
+               (!tryout || rTryout.includes(tryout)) &&
+               (!tanggal || rTanggal === tanggal);
+    });
     renderResults();
-
 }
-
-
-/* =========================================================
-   RENDER RESULTS
-========================================================= */
 
 function renderResults(){
-
-    const body =
-        document.getElementById(
-            "resultsBody"
-        );
-
-
+    const body = document.getElementById("resultsBody");
     if(!filteredResults.length){
-
-        body.innerHTML = `
+        body.innerHTML = `<tr><td colspan="17" class="empty">Tidak ada data yang sesuai.</td></tr>`;
+        return;
+    }
+    body.innerHTML = filteredResults.map(function(r){
+        return `
             <tr>
-                <td colspan="17" class="empty">
-                    Tidak ada data yang sesuai.
-                </td>
+                <td>${escapeHTML(r.Timestamp)}</td>
+                <td>${escapeHTML(r.SessionID)}</td>
+                <td><strong>${escapeHTML(r.NamaSiswa)}</strong></td>
+                <td>${escapeHTML(r.Program)}</td>
+                <td>${escapeHTML(r.NamaTryout)}</td>
+                <td>${escapeHTML(r.Tanggal)}</td>
+                <td>${escapeHTML(r.WaktuMulai)}</td>
+                <td>${escapeHTML(r.WaktuSelesai)}</td>
+                <td>${escapeHTML(r.Durasi)}</td>
+                <td class="${scoreClass(r.Kecerdasan)}">${escapeHTML(r.Kecerdasan)}</td>
+                <td class="${scoreClass(r.Kepribadian)}">${escapeHTML(r.Kepribadian)}</td>
+                <td class="${scoreClass(r.Kecermatan)}">${escapeHTML(r.Kecermatan)}</td>
+                <td class="${scoreClass(r.TIU)}">${escapeHTML(r.TIU)}</td>
+                <td class="${scoreClass(r.TWK)}">${escapeHTML(r.TWK)}</td>
+                <td class="${scoreClass(r.TKP)}">${escapeHTML(r.TKP)}</td>
+                <td class="${scoreClass(r.PengetahuanUmum)}">${escapeHTML(r.PengetahuanUmum)}</td>
+                <td class="score-total">${escapeHTML(r.NilaiAkhir)}</td>
             </tr>
         `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        filteredResults.map(function(r){
-
-            return `
-
-                <tr>
-
-                    <td>${escapeHTML(
-                        r.Timestamp
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.SessionID
-                    )}</td>
-
-                    <td>
-                        <strong>
-                            ${escapeHTML(
-                                r.NamaSiswa
-                            )}
-                        </strong>
-                    </td>
-
-                    <td>${escapeHTML(
-                        r.Program
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.NamaTryout
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.Tanggal
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.WaktuMulai
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.WaktuSelesai
-                    )}</td>
-
-                    <td>${escapeHTML(
-                        r.Durasi
-                    )}</td>
-
-                    <td class="${scoreClass(
-                        r.Kecerdasan
-                    )}">
-                        ${escapeHTML(
-                            r.Kecerdasan
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.Kepribadian
-                    )}">
-                        ${escapeHTML(
-                            r.Kepribadian
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.Kecermatan
-                    )}">
-                        ${escapeHTML(
-                            r.Kecermatan
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.TIU
-                    )}">
-                        ${escapeHTML(
-                            r.TIU
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.TWK
-                    )}">
-                        ${escapeHTML(
-                            r.TWK
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.TKP
-                    )}">
-                        ${escapeHTML(
-                            r.TKP
-                        )}
-                    </td>
-
-                    <td class="${scoreClass(
-                        r.PengetahuanUmum
-                    )}">
-                        ${escapeHTML(
-                            r.PengetahuanUmum
-                        )}
-                    </td>
-
-                    <td class="score-total">
-                        ${escapeHTML(
-                            r.NilaiAkhir
-                        )}
-                    </td>
-
-                </tr>
-
-            `;
-
-        }).join("");
-
+    }).join("");
 }
-
-
-/* =========================================================
-   BIODATA SEARCH
-========================================================= */
 
 async function searchBiodataAdmin(){
-
-    const input =
-        document.getElementById(
-            "bioSearchInput"
-        );
-
-
-    const resultsBox =
-        document.getElementById(
-            "bioResults"
-        );
-
-
-    const keyword =
-        input.value.trim();
-
-
+    const input = document.getElementById("bioSearchInput");
+    const resultsBox = document.getElementById("bioResults");
+    const keyword = input.value.trim();
     if(!keyword){
-
-        resultsBox.innerHTML = `
-            <div class="empty">
-                Masukkan nama peserta terlebih dahulu.
-            </div>
-        `;
-
+        resultsBox.innerHTML = `<div class="empty">Masukkan nama peserta terlebih dahulu.</div>`;
         return;
-
     }
-
-
-    resultsBox.innerHTML = `
-        <div class="empty">
-            Mencari biodata...
-        </div>
-    `;
-
-
+    resultsBox.innerHTML = `<div class="empty">Mencari biodata...</div>`;
     try{
-
-        const data =
-            await jsonp(
-                SCRIPT_URL +
-                "?mode=adminbiodata" +
-                "&adminPin=" +
-                encodeURIComponent(adminPin) +
-                "&keyword=" +
-                encodeURIComponent(keyword)
-            );
-
-
-        if(
-            !data ||
-            data.status !== "success"
-        ){
-
-            resultsBox.innerHTML = `
-                <div class="empty">
-                    ${escapeHTML(
-                        data && data.message
-                        ? data.message
-                        : "Biodata tidak ditemukan."
-                    )}
-                </div>
-            `;
-
+        const data = await jsonp(SCRIPT_URL + "?mode=adminbiodata&adminPin=" + encodeURIComponent(adminPin) + "&keyword=" + encodeURIComponent(keyword));
+        if(!data || data.status !== "success"){
+            resultsBox.innerHTML = `<div class="empty">${escapeHTML(data && data.message ? data.message : "Biodata tidak ditemukan.")}</div>`;
             return;
-
         }
-
-
-        const rows =
-            Array.isArray(data.results)
-            ? data.results
-            : [];
-
-
+        const rows = Array.isArray(data.results) ? data.results : [];
         if(!rows.length){
-
-            resultsBox.innerHTML = `
-                <div class="empty">
-                    Biodata tidak ditemukan.
+            resultsBox.innerHTML = `<div class="empty">Biodata tidak ditemukan.</div>`;
+            return;
+        }
+        resultsBox.innerHTML = rows.map(function(row){
+            const nama = row.NamaLengkap || row.namaLengkap || row.NamaSiswa || "";
+            const target = row.TargetSeleksi || row.targetSeleksi || "";
+            return `
+                <div class="bio-result" onclick='openBiodata(${JSON.stringify(nama)})'>
+                    <div>
+                        <div class="bio-result-name">${escapeHTML(nama)}</div>
+                        <div class="bio-result-target">${escapeHTML(target)}</div>
+                    </div>
+                    <button class="btn-secondary" onclick='event.stopPropagation();openBiodata(${JSON.stringify(nama)})'>Lihat Biodata</button>
                 </div>
             `;
-
-            return;
-
-        }
-
-
-        resultsBox.innerHTML =
-            rows.map(function(row){
-
-                const nama =
-                    row.NamaLengkap ||
-                    row.namaLengkap ||
-                    row.NamaSiswa ||
-                    "";
-
-
-                const target =
-                    row.TargetSeleksi ||
-                    row.targetSeleksi ||
-                    "";
-
-
-                return `
-
-                    <div
-                        class="bio-result"
-                        onclick='openBiodata(${JSON.stringify(
-                            nama
-                        )})'
-                    >
-
-                        <div>
-
-                            <div class="bio-result-name">
-                                ${escapeHTML(nama)}
-                            </div>
-
-                            <div class="bio-result-target">
-                                ${escapeHTML(target)}
-                            </div>
-
-                        </div>
-
-                        <button
-                            class="btn-secondary"
-                            onclick='event.stopPropagation();openBiodata(${JSON.stringify(
-                                nama
-                            )})'
-                        >
-                            Lihat Biodata
-                        </button>
-
-                    </div>
-
-                `;
-
-            }).join("");
-
-
+        }).join("");
     }catch(err){
-
         console.error(err);
-
-        resultsBox.innerHTML = `
-            <div class="empty">
-                Gagal mencari biodata.
-            </div>
-        `;
-
+        resultsBox.innerHTML = `<div class="empty">Gagal mencari biodata.</div>`;
     }
-
 }
-
-
-/* =========================================================
-   OPEN BIODATA
-========================================================= */
 
 async function openBiodata(nama){
-
-    if(!nama){
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("bioModal")
-        .style.display = "block";
-
-
-    document
-        .getElementById("bioModalTitle")
-        .textContent =
-        "Biodata — " + nama;
-
-
-    document
-        .getElementById("bioFields")
-        .innerHTML = `
-            <div class="empty">
-                Memuat biodata...
-            </div>
-        `;
-
-
+    if(!nama){ return; }
+    document.getElementById("bioModal").style.display = "block";
+    document.getElementById("bioModalTitle").textContent = "Biodata — " + nama;
+    document.getElementById("bioFields").innerHTML = `<div class="empty">Memuat biodata...</div>`;
     resetBioPhoto();
-
-
     try{
-
-        const data =
-            await jsonp(
-                SCRIPT_URL +
-                "?mode=admingetbiodata" +
-                "&adminPin=" +
-                encodeURIComponent(adminPin) +
-                "&namaLengkap=" +
-                encodeURIComponent(nama)
-            );
-
-
-        if(
-            !data ||
-            data.status !== "success"
-        ){
-
-            document
-                .getElementById("bioFields")
-                .innerHTML = `
-                    <div class="empty">
-                        ${escapeHTML(
-                            data && data.message
-                            ? data.message
-                            : "Biodata tidak ditemukan."
-                        )}
-                    </div>
-                `;
-
+        const data = await jsonp(SCRIPT_URL + "?mode=admingetbiodata&adminPin=" + encodeURIComponent(adminPin) + "&namaLengkap=" + encodeURIComponent(nama));
+        if(!data || data.status !== "success"){
+            document.getElementById("bioFields").innerHTML = `<div class="empty">${escapeHTML(data && data.message ? data.message : "Biodata tidak ditemukan.")}</div>`;
             return;
-
         }
-
-
-        currentBiodata =
-            data.biodata ||
-            data.data ||
-            data;
-
-
-        renderBiodataFields(
-            currentBiodata
-        );
-
-
-        const fotoURL =
-            currentBiodata.FotoURL ||
-            currentBiodata.fotoURL ||
-            currentBiodata.FotoUrl ||
-            currentBiodata.fotoUrl ||
-            "";
-
-
+        currentBiodata = data.biodata || data.data || data;
+        renderBiodataFields(currentBiodata);
+        const fotoURL = currentBiodata.FotoURL || currentBiodata.fotoURL || currentBiodata.FotoUrl || currentBiodata.fotourl || "";
         if(fotoURL){
-
-            loadAdminPhoto(
-                fotoURL
-            );
-
+            loadAdminPhoto(fotoURL);
         }else{
-
-            showNoPhoto(
-                "Peserta belum memiliki foto."
-            );
-
+            showNoPhoto("Peserta belum memiliki foto.");
         }
-
-
     }catch(err){
-
         console.error(err);
-
-        document
-            .getElementById("bioFields")
-            .innerHTML = `
-                <div class="empty">
-                    Gagal memuat biodata.
-                </div>
-            `;
-
-        showNoPhoto(
-            "Foto tidak dapat dimuat."
-        );
-
+        document.getElementById("bioFields").innerHTML = `<div class="empty">Gagal memuat biodata.</div>`;
+        showNoPhoto("Foto tidak dapat dimuat.");
     }
-
 }
-
-
-/* =========================================================
-   RENDER BIODATA
-========================================================= */
 
 function renderBiodataFields(d){
-
     const fields = [
-
-        ["Target Seleksi","TargetSeleksi"],
-
-        ["Nama Lengkap","NamaLengkap"],
-
-        ["Nama Panggilan","NamaPanggilan"],
-
-        ["Jenis Kelamin","JenisKelamin"],
-
-        ["Tempat Lahir","TempatLahir"],
-
-        ["Tanggal Lahir","TanggalLahir"],
-
-        ["Agama","Agama"],
-
-        ["WhatsApp","WhatsApp"],
-
-        ["Email","Email"],
-
-        ["Tinggi","Tinggi"],
-
-        ["Berat","Berat"],
-
-        ["Alamat","Alamat","full"],
-
-        ["Sekolah","Sekolah"],
-
-        ["Jurusan","Jurusan"],
-
-        ["Tahun Lulus","TahunLulus"],
-
-        ["Pendidikan Terakhir","PendidikanTerakhir"],
-
-        ["Nama Ayah","NamaAyah"],
-
-        ["Pekerjaan Ayah","PekerjaanAyah"],
-
-        ["Pendidikan Ayah","PendidikanAyah"],
-
-        ["HP Ayah","HpAyah"],
-
-        ["Nama Ibu","NamaIbu"],
-
-        ["Pekerjaan Ibu","PekerjaanIbu"],
-
-        ["Pendidikan Ibu","PendidikanIbu"],
-
-        ["HP Ibu","HpIbu"],
-
-        ["Jumlah Saudara","JumlahSaudara"],
-
-        ["Organisasi","Organisasi","full"],
-
-        ["Prestasi","Prestasi","full"],
-
-        ["Kepemimpinan","Kepemimpinan","full"],
-
-        ["Kelebihan","Kelebihan","full"],
-
-        ["Kekurangan","Kekurangan","full"],
-
-        ["Perbaikan","Perbaikan","full"],
-
-        ["Hobi","Hobi","full"],
-
-        ["Keterampilan","Keterampilan","full"],
-
-        ["Alasan","Alasan","full"],
-
-        ["Persiapan","Persiapan","full"],
-
-        ["Target","Target","full"],
-
-        ["Pernah Seleksi","PernahSeleksi"],
-
-        ["Tahun Seleksi","TahunSeleksi"],
-
-        ["Pengalaman Seleksi","PengalamanSeleksi","full"],
-
-        ["Pengalaman Sulit","PengalamanSulit","full"],
-
-        ["Cara Mengatasi","CaraMengatasi","full"],
-
-        ["Kerja Sama","KerjaSama","full"]
-
+        ["Target Seleksi","TargetSeleksi"], ["Nama Lengkap","NamaLengkap"], ["Nama Panggilan","NamaPanggilan"],
+        ["Jenis Kelamin","JenisKelamin"], ["Tempat Lahir","TempatLahir"], ["Tanggal Lahir","TanggalLahir"],
+        ["Agama","Agama"], ["WhatsApp","WhatsApp"], ["Email","Email"], ["Tinggi","Tinggi"], ["Berat","Berat"],
+        ["Alamat","Alamat","full"], ["Sekolah","Sekolah"], ["Jurusan","Jurusan"], ["Tahun Lulus","TahunLulus"],
+        ["Pendidikan Terakhir","PendidikanTerakhir"], ["Nama Ayah","NamaAyah"], ["Pekerjaan Ayah","PekerjaanAyah"],
+        ["Pendidikan Ayah","PendidikanAyah"], ["HP Ayah","HpAyah"], ["Nama Ibu","NamaIbu"], ["Pekerjaan Ibu","PekerjaanIbu"],
+        ["Pendidikan Ibu","PendidikanIbu"], ["HP Ibu","HpIbu"], ["Jumlah Saudara","JumlahSaudara"],
+        ["Organisasi","Organisasi","full"], ["Prestasi","Prestasi","full"], ["Kepemimpinan","Kepemimpinan","full"],
+        ["Kelebihan","Kelebihan","full"], ["Kekurangan","Kekurangan","full"], ["Perbaikan","Perbaikan","full"],
+        ["Hobi","Hobi","full"], ["Keterampilan","Keterampilan","full"], ["Alasan","Alasan","full"],
+        ["Persiapan","Persiapan","full"], ["Target","Target","full"], ["Pernah Seleksi","PernahSeleksi"],
+        ["Tahun Seleksi","TahunSeleksi"], ["Pengalaman Seleksi","PengalamanSeleksi","full"],
+        ["Pengalaman Sulit","PengalamanSulit","full"], ["Cara Mengatasi","CaraMengatasi","full"], ["Kerja Sama","KerjaSama","full"]
     ];
 
-
-    const html =
-        fields.map(function(item){
-
-            const label = item[0];
-
-            const key = item[1];
-
-            const cls =
-                item[2] || "";
-
-
-            const value =
-                d[key] ??
-                d[key.toLowerCase()] ??
-                "";
-
-
-            return `
-
-                <div class="bio-field ${cls}">
-
-                    <div class="bio-label">
-                        ${escapeHTML(label)}
-                    </div>
-
-                    <div class="bio-value">
-                        ${escapeHTML(
-                            String(value)
-                        ) || "—"}
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-
-    document
-        .getElementById("bioFields")
-        .innerHTML = html;
-
+    const html = fields.map(function(item){
+        const label = item[0];
+        const key = item[1];
+        const cls = item[2] || "";
+        const value = d[key] ?? d[key.toLowerCase()] ?? "";
+        return `
+            <div class="bio-field ${cls}">
+                <div class="bio-label">${escapeHTML(label)}</div>
+                <div class="bio-value">${escapeHTML(String(value)) || "—"}</div>
+            </div>
+        `;
+    }).join("");
+    document.getElementById("bioFields").innerHTML = html;
 }
-
-
-/* =========================================================
-   PHOTO
-========================================================= */
 
 function resetBioPhoto(){
-
-    const img =
-        document.getElementById(
-            "bioPhoto"
-        );
-
-
-    const noPhoto =
-        document.getElementById(
-            "bioNoPhoto"
-        );
-
-
-    const downloadBtn =
-        document.getElementById(
-            "downloadPhotoBtn"
-        );
-
-
+    const img = document.getElementById("bioPhoto");
+    const noPhoto = document.getElementById("bioNoPhoto");
+    const downloadBtn = document.getElementById("downloadPhotoBtn");
     img.style.display = "none";
-
     img.removeAttribute("src");
-
-
-    noPhoto.style.display =
-        "flex";
-
-    noPhoto.textContent =
-        "Memuat foto...";
-
-
-    downloadBtn.style.display =
-        "none";
-
-
+    noPhoto.style.display = "flex";
+    noPhoto.textContent = "Memuat foto...";
+    downloadBtn.style.display = "none";
     currentPhotoData = null;
-
 }
-
 
 function extractDriveId(url){
-
-    if(!url){
-
-        return "";
-
-    }
-
-
-    const value =
-        String(url).trim();
-
-
-    let match =
-        value.match(
-            /\/d\/([a-zA-Z0-9_-]+)/
-        );
-
-
-    if(match){
-
-        return match[1];
-
-    }
-
-
-    match =
-        value.match(
-            /[?&]id=([a-zA-Z0-9_-]+)/
-        );
-
-
-    if(match){
-
-        return match[1];
-
-    }
-
-
+    if(!url){ return ""; }
+    const value = String(url).trim();
+    let match = value.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if(match){ return match[1]; }
+    match = value.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if(match){ return match[1]; }
     return "";
-
 }
-
 
 async function loadAdminPhoto(url){
-
-    const fileId =
-        extractDriveId(url);
-
-
+    const fileId = extractDriveId(url);
     if(!fileId){
-
-        showNoPhoto(
-            "URL foto tidak valid."
-        );
-
+        showNoPhoto("URL foto tidak valid.");
         return;
-
     }
-
-
-    const noPhoto =
-        document.getElementById(
-            "bioNoPhoto"
-        );
-
-
-    noPhoto.style.display =
-        "flex";
-
-    noPhoto.textContent =
-        "Memuat foto...";
-
-
+    const noPhoto = document.getElementById("bioNoPhoto");
+    noPhoto.style.display = "flex";
+    noPhoto.textContent = "Memuat foto...";
     try{
-
-        const data =
-            await jsonp(
-                SCRIPT_URL +
-                "?mode=adminphoto" +
-                "&adminPin=" +
-                encodeURIComponent(adminPin) +
-                "&fileId=" +
-                encodeURIComponent(fileId) +
-                "&fotoURL=" +
-                encodeURIComponent(url)
-            );
-
-
-        if(
-            !data ||
-            data.status !== "success"
-        ){
-
-            showNoPhoto(
-                data && data.message
-                ? data.message
-                : "Foto tidak dapat dimuat."
-            );
-
+        const data = await jsonp(SCRIPT_URL + "?mode=adminphoto&adminPin=" + encodeURIComponent(adminPin) + "&fileId=" + encodeURIComponent(fileId));
+        if(!data || data.status !== "success"){
+            showNoPhoto(data && data.message ? data.message : "Foto tidak dapat dimuat.");
             return;
-
         }
-
-
-        const mimeType =
-            data.mimeType ||
-            "image/jpeg";
-
-
-        const base64 =
-            data.base64 ||
-            "";
-
-
+        const mimeType = data.mimeType || "image/jpeg";
+        const base64 = data.base64 || "";
         if(!base64){
-
-            showNoPhoto(
-                "Data foto kosong."
-            );
-
+            showNoPhoto("Data foto kosong.");
             return;
-
         }
-
-
-        const src =
-            "data:" +
-            mimeType +
-            ";base64," +
-            base64;
-
-
-        const img =
-            document.getElementById(
-                "bioPhoto"
-            );
-
-
-        img.src =
-            src;
-
-
-        img.onload =
-            function(){
-
-                img.style.display =
-                    "block";
-
-                noPhoto.style.display =
-                    "none";
-
-            };
-
-
-        img.onerror =
-            function(){
-
-                showNoPhoto(
-                    "File foto tidak dapat ditampilkan."
-                );
-
-            };
-
-
-        currentPhotoData = {
-
-            src:src,
-
-            mimeType:mimeType,
-
-            fileName:
-                data.fileName ||
-                "foto-peserta"
-
+        const src = "data:" + mimeType + ";base64," + base64;
+        const img = document.getElementById("bioPhoto");
+        img.src = src;
+        img.onload = function(){
+            img.style.display = "block";
+            noPhoto.style.display = "none";
         };
-
-
-        document
-            .getElementById(
-                "downloadPhotoBtn"
-            )
-            .style.display =
-            "inline-block";
-
-
+        img.onerror = function(){
+            showNoPhoto("File foto tidak dapat ditampilkan.");
+        };
+        currentPhotoData = { src: src, mimeType: mimeType, fileName: data.fileName || "foto-peserta" };
+        document.getElementById("downloadPhotoBtn").style.display = "inline-block";
     }catch(err){
-
         console.error(err);
-
-        showNoPhoto(
-            "Foto gagal dimuat dari server."
-        );
-
+        showNoPhoto("Foto gagal dimuat dari server.");
     }
-
 }
-
 
 function showNoPhoto(message){
-
-    const img =
-        document.getElementById(
-            "bioPhoto"
-        );
-
-
-    const noPhoto =
-        document.getElementById(
-            "bioNoPhoto"
-        );
-
-
-    const downloadBtn =
-        document.getElementById(
-            "downloadPhotoBtn"
-        );
-
-
-    img.style.display =
-        "none";
-
+    const img = document.getElementById("bioPhoto");
+    const noPhoto = document.getElementById("bioNoPhoto");
+    const downloadBtn = document.getElementById("downloadPhotoBtn");
+    img.style.display = "none";
     img.removeAttribute("src");
-
-
-    noPhoto.style.display =
-        "flex";
-
-    noPhoto.textContent =
-        message;
-
-
-    downloadBtn.style.display =
-        "none";
-
-
+    noPhoto.style.display = "flex";
+    noPhoto.textContent = message;
+    downloadBtn.style.display = "none";
     currentPhotoData = null;
-
 }
-
-
-/* =========================================================
-   DOWNLOAD PHOTO
-========================================================= */
 
 function downloadPhoto(){
-
-    if(
-        !currentPhotoData ||
-        !currentPhotoData.src
-    ){
-
-        alert(
-            "Foto belum tersedia untuk di-download."
-        );
-
+    if(!currentPhotoData || !currentPhotoData.src){
+        alert("Foto belum tersedia untuk di-download.");
         return;
-
     }
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        currentPhotoData.src;
-
-
-    link.download =
-        currentPhotoData.fileName ||
-        "foto-peserta.jpg";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
+    const link = document.createElement("a");
+    link.href = currentPhotoData.src;
+    link.download = currentPhotoData.fileName || "foto-peserta.jpg";
+    document.body.appendChild(link);
     link.click();
-
-
     link.remove();
-
 }
-
-
-/* =========================================================
-   CLOSE BIODATA
-========================================================= */
 
 function closeBiodata(){
-
-    document
-        .getElementById("bioModal")
-        .style.display = "none";
-
+    document.getElementById("bioModal").style.display = "none";
 }
 
-
-document
-    .getElementById("bioModal")
-    .addEventListener(
-        "click",
-        function(e){
-
-            if(
-                e.target === this
-            ){
-
-                closeBiodata();
-
-            }
-
-        }
-    );
-
-
-/* =========================================================
-   DOWNLOAD BIODATA
-========================================================= */
+document.getElementById("bioModal").addEventListener("click", function(e){
+    if(e.target === this){ closeBiodata(); }
+});
 
 function downloadBiodata(){
-
-    if(!currentBiodata){
-
-        alert(
-            "Biodata belum tersedia."
-        );
-
-        return;
-
-    }
-
-
-    const nama =
-        currentBiodata.NamaLengkap ||
-        currentBiodata.namaLengkap ||
-        "Peserta";
-
-
-    const photo =
-        currentPhotoData &&
-        currentPhotoData.src
-        ? `
-            <div style="text-align:center;margin-bottom:25px;">
-                <img
-                    src="${currentPhotoData.src}"
-                    style="width:180px;height:230px;object-fit:cover;border-radius:8px;"
-                >
-            </div>
-        `
-        : "";
-
-
+    if(!currentBiodata){ alert("Biodata belum tersedia."); return; }
+    const nama = currentBiodata.NamaLengkap || currentBiodata.namaLengkap || "Peserta";
+    const photo = currentPhotoData && currentPhotoData.src ? `<div style="text-align:center;margin-bottom:25px;"><img src="${currentPhotoData.src}" style="width:180px;height:230px;object-fit:cover;border-radius:8px;"></div>` : "";
     const fields = [
-
-        ["Target Seleksi","TargetSeleksi"],
-        ["Nama Lengkap","NamaLengkap"],
-        ["Nama Panggilan","NamaPanggilan"],
-        ["Jenis Kelamin","JenisKelamin"],
-        ["Tempat Lahir","TempatLahir"],
-        ["Tanggal Lahir","TanggalLahir"],
-        ["Agama","Agama"],
-        ["WhatsApp","WhatsApp"],
-        ["Email","Email"],
-        ["Tinggi","Tinggi"],
-        ["Berat","Berat"],
-        ["Alamat","Alamat"],
-        ["Sekolah","Sekolah"],
-        ["Jurusan","Jurusan"],
-        ["Tahun Lulus","TahunLulus"],
-        ["Pendidikan Terakhir","PendidikanTerakhir"],
-        ["Nama Ayah","NamaAyah"],
-        ["Pekerjaan Ayah","PekerjaanAyah"],
-        ["Pendidikan Ayah","PendidikanAyah"],
-        ["HP Ayah","HpAyah"],
-        ["Nama Ibu","NamaIbu"],
-        ["Pekerjaan Ibu","PekerjaanIbu"],
-        ["Pendidikan Ibu","PendidikanIbu"],
-        ["HP Ibu","HpIbu"],
-        ["Jumlah Saudara","JumlahSaudara"],
-        ["Organisasi","Organisasi"],
-        ["Prestasi","Prestasi"],
-        ["Kepemimpinan","Kepemimpinan"],
-        ["Kelebihan","Kelebihan"],
-        ["Kekurangan","Kekurangan"],
-        ["Perbaikan","Perbaikan"],
-        ["Hobi","Hobi"],
-        ["Keterampilan","Keterampilan"],
-        ["Alasan","Alasan"],
-        ["Persiapan","Persiapan"],
-        ["Target","Target"],
-        ["Pernah Seleksi","PernahSeleksi"],
-        ["Tahun Seleksi","TahunSeleksi"],
-        ["Pengalaman Seleksi","PengalamanSeleksi"],
-        ["Pengalaman Sulit","PengalamanSulit"],
-        ["Cara Mengatasi","CaraMengatasi"],
-        ["Kerja Sama","KerjaSama"]
-
+        ["Target Seleksi","TargetSeleksi"], ["Nama Lengkap","NamaLengkap"], ["Nama Panggilan","NamaPanggilan"],
+        ["Jenis Kelamin","JenisKelamin"], ["Tempat Lahir","TempatLahir"], ["Tanggal Lahir","TanggalLahir"],
+        ["Agama","Agama"], ["WhatsApp","WhatsApp"], ["Email","Email"], ["Tinggi","Tinggi"], ["Berat","Berat"],
+        ["Alamat","Alamat"], ["Sekolah","Sekolah"], ["Jurusan","Jurusan"], ["Tahun Lulus","TahunLulus"],
+        ["Pendidikan Terakhir","PendidikanTerakhir"], ["Nama Ayah","NamaAyah"], ["Pekerjaan Ayah","PekerjaanAyah"],
+        ["Pendidikan Ayah","PendidikanAyah"], ["HP Ayah","HpAyah"], ["Nama Ibu","NamaIbu"], ["Pekerjaan Ibu","PekerjaanIbu"],
+        ["Pendidikan Ibu","PendidikanIbu"], ["HP Ibu","HpIbu"], ["Jumlah Saudara","JumlahSaudara"],
+        ["Organisasi","Organisasi"], ["Prestasi","Prestasi"], ["Kepemimpinan","Kepemimpinan"],
+        ["Kelebihan","Kelebihan"], ["Kekurangan","Kekurangan"], ["Perbaikan","Perbaikan"],
+        ["Hobi","Hobi"], ["Keterampilan","Keterampilan"], ["Alasan","Alasan"], ["Persiapan","Persiapan"],
+        ["Target","Target"], ["Pernah Seleksi","PernahSeleksi"], ["Tahun Seleksi","TahunSeleksi"],
+        ["Pengalaman Seleksi","PengalamanSeleksi"], ["Pengalaman Sulit","PengalamanSulit"],
+        ["Cara Mengatasi","CaraMengatasi"], ["Kerja Sama","KerjaSama"]
     ];
-
-
-    const rows =
-        fields.map(function(item){
-
-            const value =
-                currentBiodata[item[1]] ??
-                currentBiodata[item[1].toLowerCase()] ??
-                "";
-
-
-            return `
-                <tr>
-                    <td style="padding:7px;border-bottom:1px solid #ddd;font-weight:bold;width:35%;">
-                        ${escapeHTML(item[0])}
-                    </td>
-
-                    <td style="padding:7px;border-bottom:1px solid #ddd;">
-                        ${escapeHTML(String(value)) || "—"}
-                    </td>
-                </tr>
-            `;
-
-        }).join("");
-
-
-    const html = `
-
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>
-Biodata ${escapeHTML(String(nama))}
-</title>
-
-<style>
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    padding:30px;
-    color:#172033;
-}
-
-h1{
-    text-align:center;
-    font-size:22px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:13px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>
-BIODATA PESERTA
-</h1>
-
-${photo}
-
-<table>
-${rows}
-</table>
-
-</body>
-
-</html>
-
-`;
-
-
-    const blob =
-        new Blob(
-            [html],
-            {
-                type:"text/html;charset=utf-8"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        "Biodata-" +
-        sanitizeFileName(
-            String(nama)
-        ) +
-        ".html";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
+    const rows = fields.map(function(item){
+        const value = currentBiodata[item[1]] ?? currentBiodata[item[1].toLowerCase()] ?? "";
+        return `<tr><td style="padding:7px;border-bottom:1px solid #ddd;font-weight:bold;width:35%;">${escapeHTML(item[0])}</td><td style="padding:7px;border-bottom:1px solid #ddd;">${escapeHTML(String(value)) || "—"}</td></tr>`;
+    }).join("");
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata ${escapeHTML(String(nama))}</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:30px;color:#172033;}h1{text-align:center;font-size:22px;}table{width:100%;border-collapse:collapse;font-size:13px;}</style></head><body><h1>BIODATA PESERTA</h1>${photo}<table>${rows}</table></body></html>`;
+    const blob = new Blob([html], { type:"text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Biodata-" + sanitizeFileName(String(nama)) + ".html";
+    document.body.appendChild(link);
     link.click();
-
-
     link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
+    URL.revokeObjectURL(url);
 }
 
-
-/* =========================================================
-   PRINT
-========================================================= */
-
-function printBiodata(){
-
-    if(!currentBiodata){
-
-        return;
-
-    }
-
-
-    window.print();
-
-}
-
-
-/* =========================================================
-   CSV
-========================================================= */
+function printBiodata(){ if(!currentBiodata){ return; } window.print(); }
 
 function downloadCSV(){
-
-    if(!filteredResults.length){
-
-        alert(
-            "Tidak ada data untuk di-download."
-        );
-
-        return;
-
-    }
-
-
-    const headers = [
-
-        "Timestamp",
-        "SessionID",
-        "NamaSiswa",
-        "Program",
-        "NamaTryout",
-        "Tanggal",
-        "WaktuMulai",
-        "WaktuSelesai",
-        "Durasi",
-        "Kecerdasan",
-        "Kepribadian",
-        "Kecermatan",
-        "TIU",
-        "TWK",
-        "TKP",
-        "PengetahuanUmum",
-        "NilaiAkhir"
-
-    ];
-
-
-    const rows = [
-        headers,
-        ...filteredResults.map(function(r){
-
-            return headers.map(function(h){
-
-                return r[h] ?? "";
-
-            });
-
-        })
-
-    ];
-
-
-    const csv =
-        rows
-            .map(function(row){
-
-                return row.map(function(value){
-
-                    return '"' +
-                        String(value)
-                            .replace(/"/g,'""') +
-                        '"';
-
-                }).join(",");
-
-            })
-            .join("\n");
-
-
-    const blob =
-        new Blob(
-            ["\ufeff" + csv],
-            {
-                type:"text/csv;charset=utf-8;"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        "Rekap-Hasil-Tryout-" +
-        new Date()
-            .toISOString()
-            .slice(0,10) +
-        ".csv";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
+    if(!filteredResults.length){ alert("Tidak ada data untuk di-download."); return; }
+    const headers = ["Timestamp","SessionID","NamaSiswa","Program","NamaTryout","Tanggal","WaktuMulai","WaktuSelesai","Durasi","Kecerdasan","Kepribadian","Kecermatan","TIU","TWK","TKP","PengetahuanUmum","NilaiAkhir"];
+    const rows = [headers, ...filteredResults.map(function(r){ return headers.map(function(h){ return r[h] ?? ""; }); })];
+    const csv = rows.map(function(row){ return row.map(function(value){ return '"' + String(value).replace(/"/g,'""') + '"'; }).join(","); }).join("\n");
+    const blob = new Blob(["\ufeff" + csv], { type:"text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Rekap-Hasil-Tryout-" + new Date().toISOString().slice(0,10) + ".csv";
+    document.body.appendChild(link);
     link.click();
-
-
     link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
+    URL.revokeObjectURL(url);
 }
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
 
 function logoutAdmin(){
-
-    sessionStorage.removeItem(
-        "prcAdminPin"
-    );
-
+    sessionStorage.removeItem("prcAdminPin");
     adminPin = "";
-
     allResults = [];
-
     filteredResults = [];
-
-    document
-        .getElementById("adminPage")
-        .style.display = "none";
-
-    document
-        .getElementById("loginPage")
-        .style.display = "flex";
-
-    document
-        .getElementById("adminPin")
-        .value = "";
-
+    document.getElementById("adminPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("adminPin").value = "";
 }
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
 
 function numericValue(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-
-        return 0;
-
-    }
-
-
-    const n =
-        parseFloat(
-            String(value)
-                .replace(",",".")
-                .replace(/[^\d.-]/g,"")
-        );
-
-
-    return isNaN(n)
-        ? 0
-        : n;
-
+    if(value === null || value === undefined || value === ""){ return 0; }
+    const n = parseFloat(String(value).replace(",",".").replace(/[^\d.-]/g,""));
+    return isNaN(n) ? 0 : n;
 }
 
-
-function formatNumber(value){
-
-    return Number(value || 0)
-        .toLocaleString("id-ID");
-
-}
-
+function formatNumber(value){ return Number(value || 0).toLocaleString("id-ID"); }
 
 function scoreClass(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-
-        return "";
-
-    }
-
-
-    const n =
-        numericValue(value);
-
-
-    if(n < 60){
-
-        return "score-low";
-
-    }
-
-
+    if(value === null || value === undefined || value === ""){ return ""; }
+    const n = numericValue(value);
+    if(n < 60){ return "score-low"; }
     return "score-normal";
-
 }
-
 
 function normalizeDate(value){
-
-    if(!value){
-
-        return "";
-
-    }
-
-
-    const text =
-        String(value);
-
-
-    const iso =
-        text.match(
-            /(\d{4})-(\d{2})-(\d{2})/
-        );
-
-
-    if(iso){
-
-        return (
-            iso[1] +
-            "-" +
-            iso[2] +
-            "-" +
-            iso[3]
-        );
-
-    }
-
-
-    const indo =
-        text.match(
-            /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/
-        );
-
-
-    if(indo){
-
-        return (
-            indo[3] +
-            "-" +
-            String(indo[2]).padStart(2,"0") +
-            "-" +
-            String(indo[1]).padStart(2,"0")
-        );
-
-    }
-
-
+    if(!value){ return ""; }
+    const text = String(value);
+    const iso = text.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if(iso){ return iso[1] + "-" + iso[2] + "-" + iso[3]; }
+    const indo = text.match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+    if(indo){ return indo[3] + "-" + String(indo[2]).padStart(2,"0") + "-" + String(indo[1]).padStart(2,"0"); }
     return "";
-
 }
-
 
 function escapeHTML(value){
-
-    if(
-        value === null ||
-        value === undefined
-    ){
-
-        return "";
-
-    }
-
-
-    return String(value)
-
-        .replace(/&/g,"&amp;")
-
-        .replace(/</g,"&lt;")
-
-        .replace(/>/g,"&gt;")
-
-        .replace(/"/g,"&quot;")
-
-        .replace(/'/g,"&#039;");
-
+    if(value === null || value === undefined){ return ""; }
+    return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
-
 
 function sanitizeFileName(value){
-
-    return String(value)
-        .replace(/[\\\/:*?"<>|]+/g,"-")
-        .replace(/\s+/g," ")
-        .trim();
-
+    return String(value).replace(/[\\\/:*?"<>|]+/g,"-").replace(/\s+/g," ").trim();
 }
-
 </script>
-
 </body>
 </html>
