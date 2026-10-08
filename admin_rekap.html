@@ -950,7 +950,7 @@ let selectedParticipantName = "";
 
 
 /* =====================================================
-   UTILITY & PROPERTY HELPERS (MENGHINDARI BERGESER)
+   UTILITY & FLEXIBLE PROPERTY HELPERS
 ===================================================== */
 
 function normalize(value){
@@ -985,29 +985,23 @@ function formatFieldName(key){
 }
 
 
-/* 
-   Helper aman untuk mengambil property objek tanpa peduli besar/kecil huruf (case-insensitive) 
-   atau perbedaan camelCase / PascalCase dari backend.
-*/
 function getProp(obj, names){
     if(!obj || typeof obj !== 'object') return "";
     
-    // Cari exact match dulu
+    const normalizedNames = names.map(n => String(n).toLowerCase().replace(/[\s_]/g, ""));
+    
     for(let name of names){
         if(obj[name] !== undefined && obj[name] !== null && obj[name] !== "") {
             return obj[name];
         }
     }
     
-    // Cari case-insensitive match
     const keys = Object.keys(obj);
-    for(let name of names){
-        const lowerName = name.toLowerCase();
-        for(let key of keys){
-            if(key.toLowerCase() === lowerName){
-                if(obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
-                    return obj[key];
-                }
+    for(let key of keys){
+        const cleanKey = key.toLowerCase().replace(/[\s_]/g, "");
+        if(normalizedNames.includes(cleanKey)){
+            if(obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
+                return obj[key];
             }
         }
     }
@@ -1048,10 +1042,10 @@ function hideStatus(id){
 
 
 /* =====================================================
-   JSONP
+   JSONP (Optimized Timeout & Error Recovery)
 ===================================================== */
 
-function jsonp(url,timeoutMs=15000){
+function jsonp(url,timeoutMs=25000){
 
     return new Promise((resolve,reject)=>{
 
@@ -1092,7 +1086,7 @@ function jsonp(url,timeoutMs=15000){
 
                 reject(
                     new Error(
-                        "Server terlalu lama merespons."
+                        "Koneksi timeout. Server Apps Script terlalu lama merespons."
                     )
                 );
 
@@ -1122,7 +1116,7 @@ function jsonp(url,timeoutMs=15000){
 
                 reject(
                     new Error(
-                        "Gagal menghubungi Apps Script."
+                        "Gagal menghubungi server Apps Script."
                     )
                 );
 
@@ -1183,7 +1177,7 @@ async function loginAdmin(){
             encodeURIComponent(pin);
 
         const data =
-            await jsonp(url,20000);
+            await jsonp(url,25000);
 
         if(
             data &&
@@ -1292,7 +1286,7 @@ function updateSummary(){
     allResults.forEach(function(row){
 
         const name =
-            normalize(getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"]));
+            normalize(getProp(row, ["NamaSiswa", "namasiswa", "Nama Siswa", "Nama", "nama"]));
 
         if(name){
             names.add(name);
@@ -1407,7 +1401,7 @@ async function searchParticipant(){
             encodeURIComponent(keyword);
 
         const data =
-            await jsonp(url,20000);
+            await jsonp(url,25000);
 
         if(
             !data ||
@@ -1430,7 +1424,6 @@ async function searchParticipant(){
             ? data.results
             : [];
 
-        // Filter tambahan di sisi klien dengan partial match / includes case-insensitive
         const lowerKeyword = keyword.toLowerCase();
         allBiodataSearchResults = rawResults.filter(person => {
             const namaLengkap = String(getProp(person, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa", "nama"])).toLowerCase();
@@ -1596,7 +1589,7 @@ async function loadFullBiodata(nama){
             encodeURIComponent(nama);
 
         const data =
-            await jsonp(url,20000);
+            await jsonp(url,25000);
 
         if(
             !data ||
@@ -1640,12 +1633,6 @@ async function loadFullBiodata(nama){
         renderFullBiodata(
             selectedBiodata
         );
-
-        /*
-           Setelah biodata tampil,
-           otomatis filter seluruh riwayat
-           pengerjaan peserta tersebut.
-        */
 
         filterResultsForParticipant(
             nama
@@ -1706,11 +1693,6 @@ function renderFullBiodata(data){
         ? "Target Seleksi: " + target
         : "";
 
-    /*
-       Daftar urutan field spesifik sesuai permintaan Anda.
-       Memastikan mapping berdasarkan nama property (bukan indeks array yang bisa bergeser).
-    */
-
     const orderedKeys = [
         "TargetSeleksi",
         "NamaLengkap",
@@ -1758,7 +1740,6 @@ function renderFullBiodata(data){
 
     const renderedKeys = new Set();
 
-    // Render sesuai urutan yang ditentukan secara ketat
     orderedKeys.forEach(function(key){
         const val = getProp(data, [key]);
         renderedKeys.add(key.toLowerCase());
@@ -1774,7 +1755,6 @@ function renderFullBiodata(data){
         item.className =
             "bio-item";
 
-        // Tambahkan kelas full width untuk field yang panjang
         if(["Alamat", "Organisasi", "Prestasi", "Kepemimpinan", "Kelebihan", "Kekurangan", "Perbaikan", "Hobi", "Keterampilan", "Alasan", "Persiapan", "Target", "PengalamanSeleksi", "PengalamanSulit", "CaraMengatasi", "KerjaSama"].includes(key)){
             item.style.gridColumn = "1 / -1";
         }
@@ -1799,7 +1779,6 @@ function renderFullBiodata(data){
         grid.appendChild(item);
     });
 
-    // Render properti lain yang mungkin ada di object data tapi belum masuk orderedKeys
     Object.keys(data).forEach(function(key){
         const lowerKey = key.toLowerCase();
         if(
@@ -2268,15 +2247,10 @@ function filterResultsForParticipant(nama){
         allResults.filter(function(row){
 
             return normalize(
-                getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
+                getProp(row, ["NamaSiswa", "namasiswa", "Nama Siswa", "Nama", "nama"])
             ) === target;
 
         });
-
-    /*
-       Kalau penulisan nama sedikit berbeda,
-       gunakan pencarian cadangan.
-    */
 
     if(matches.length === 0){
 
@@ -2285,7 +2259,7 @@ function filterResultsForParticipant(nama){
 
                 const rowName =
                     normalize(
-                        getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
+                        getProp(row, ["NamaSiswa", "namasiswa", "Nama Siswa", "Nama", "nama"])
                     );
 
                 return (
@@ -2325,7 +2299,6 @@ function filterResultsForParticipant(nama){
 
 /* =====================================================
    TAMPILKAN SEMUA
-   RELOAD TERBARU DARI APPS SCRIPT
 ===================================================== */
 
 async function showAllResults(){
@@ -2485,7 +2458,7 @@ function applyFilters(){
 
             const rowNama =
                 normalize(
-                    getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
+                    getProp(row, ["NamaSiswa", "namasiswa", "Nama Siswa", "Nama", "nama"])
                 );
 
             const rowProgram =
@@ -2495,7 +2468,7 @@ function applyFilters(){
 
             const rowTryout =
                 normalize(
-                    getProp(row, ["NamaTryout", "namatryout", "Tryout", "tryout"])
+                    getProp(row, ["NamaTryout", "namatryout", "Nama Tryout", "Tryout", "tryout"])
                 );
 
             const rowTanggal =
@@ -2692,8 +2665,16 @@ function renderResults(results){
             const td =
                 document.createElement("td");
 
+            const possibleKeys = [
+                field, 
+                field.toLowerCase(), 
+                field.replace(/([a-z])([A-Z])/g, '$1_$2'), 
+                field.replace(/([a-z])([A-Z])/g, '$1 $2'),
+                field.replace(/([a-z])([A-Z])/g, '$1-$2')
+            ];
+
             const value =
-                getProp(row, [field, field.toLowerCase()]) ?? "";
+                getProp(row, possibleKeys) ?? "";
 
             td.textContent =
                 value;
@@ -2818,7 +2799,7 @@ function downloadBiodata(){
     }
 
     const name =
-        getProp(selectedBiodata, ["NamaLengkap", "namaLengkap", "NamaSiswa"]) ||
+        getProp(selectedBiodata, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa"]) ||
         "Peserta";
 
     let html =
@@ -2994,8 +2975,15 @@ function downloadCSV(){
             headers
                 .map(function(h){
 
+                    const possibleKeys = [
+                        h, 
+                        h.toLowerCase(), 
+                        h.replace(/([a-z])([A-Z])/g, '$1_$2'), 
+                        h.replace(/([a-z])([A-Z])/g, '$1 $2')
+                    ];
+
                     return csvEscape(
-                        getProp(row, [h, h.toLowerCase()]) ?? ""
+                        getProp(row, possibleKeys) ?? ""
                     );
 
                 })
