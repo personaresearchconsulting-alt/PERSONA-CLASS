@@ -2060,6 +2060,7 @@ function renderBiodataFields(d){
 
             const value =
                 d[key] ??
+                d[key.toLowerCase()] ??
                 "";
 
 
@@ -2542,6 +2543,7 @@ function downloadBiodata(){
 
             const value =
                 currentBiodata[item[1]] ??
+                currentBiodata[item[1].toLowerCase()] ??
                 "";
 
 
