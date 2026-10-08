@@ -7,1572 +7,1871 @@
 <title>Admin Rekap — Persona Class</title>
 
 <style>
-
 :root{
     --cream:#FAF9F6;
     --cream2:#F4EEE6;
     --rose:#C9A6A6;
     --lavender:#B8B1C8;
     --navy:#172033;
+    --navy2:#0B192C;
     --white:#FFFFFF;
-    --text:#202535;
-    --muted:#777;
-    --red:#C94C4C;
-    --green:#3D8B68;
+    --text:#273043;
+    --muted:#6B7280;
+    --border:#E5E7EB;
+    --green:#166534;
+    --greenbg:#DCFCE7;
+    --red:#991B1B;
+    --redbg:#FEE2E2;
+    --blue:#1D4ED8;
+    --bluebg:#EFF6FF;
+    --shadow:0 10px 30px rgba(23,32,51,.08);
 }
 
 *{
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     margin:0;
-    font-family:Arial, Helvetica, sans-serif;
     background:var(--cream);
     color:var(--text);
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.container{
-    width:min(1400px,94%);
-    margin:40px auto;
+button,
+input,
+select{
+    font:inherit;
 }
 
-/* LOGIN */
-
-.admin-login{
-    min-height:70vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.login-card{
-    width:min(430px,100%);
-    background:var(--white);
-    border-radius:22px;
-    padding:38px 32px;
-    box-shadow:0 12px 35px rgba(23,32,51,.10);
-    text-align:center;
-}
-
-.login-card h1{
-    margin:0 0 8px;
-    color:var(--navy);
-    font-size:25px;
-}
-
-.login-card p{
-    margin:0 0 28px;
-    color:var(--muted);
-    font-size:14px;
-}
-
-.pin-input{
-    width:100%;
-    padding:15px 16px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    font-size:18px;
-    text-align:center;
-    letter-spacing:5px;
-    outline:none;
-}
-
-.pin-input:focus{
-    border-color:var(--rose);
-}
-
-.btn{
-    border:none;
-    border-radius:11px;
-    padding:13px 20px;
+button{
     cursor:pointer;
-    font-weight:bold;
-    font-size:14px;
 }
 
-.btn-primary{
-    width:100%;
-    margin-top:15px;
-    background:var(--navy);
+/* =========================
+   HEADER
+========================= */
+
+header{
+    background:var(--navy2);
     color:white;
-}
-
-.btn-primary:hover{
-    opacity:.92;
-}
-
-.login-error{
-    color:var(--red);
-    font-size:13px;
-    margin-top:15px;
-    min-height:18px;
-}
-
-/* CONTENT */
-
-#adminContent{
-    display:none;
-}
-
-.header{
+    padding:18px 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:20px;
-    margin-bottom:25px;
+    box-shadow:0 4px 18px rgba(0,0,0,.12);
 }
 
-.header h1{
-    margin:0;
-    color:var(--navy);
+.brand{
+    font-size:21px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--rose);
+}
+
+.header-right{
+    font-size:12px;
+    color:#D8DCE4;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+    max-width:1400px;
+    margin:0 auto;
+    padding:28px 22px 60px;
+}
+
+.page-title{
+    margin-bottom:24px;
+}
+
+.page-title h1{
+    margin:0 0 7px;
     font-size:28px;
+    color:var(--navy);
+    letter-spacing:-.4px;
 }
 
-.header p{
-    margin:6px 0 0;
+.page-title p{
+    margin:0;
     color:var(--muted);
     font-size:14px;
 }
 
-.header-actions{
+/* =========================
+   LOGIN
+========================= */
+
+#loginPanel{
+    min-height:70vh;
     display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:34px;
+    box-shadow:var(--shadow);
+}
+
+.login-logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.login-logo .small{
+    font-size:12px;
+    letter-spacing:2px;
+    color:var(--muted);
+    text-transform:uppercase;
+}
+
+.login-logo h1{
+    margin:7px 0 0;
+    color:var(--navy);
+    font-size:27px;
+}
+
+.login-logo h1 span{
+    color:var(--rose);
+}
+
+.login-card label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:8px;
+}
+
+.login-card input{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #D7DCE4;
+    border-radius:10px;
+    outline:none;
+    background:#FCFCFD;
+    color:var(--navy);
+}
+
+.login-card input:focus{
+    border-color:var(--lavender);
+    box-shadow:0 0 0 3px rgba(184,177,200,.18);
+}
+
+.btn-login{
+    width:100%;
+    margin-top:18px;
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    background:var(--navy);
+    color:white;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+
+.btn-login:hover{
+    opacity:.92;
+}
+
+.login-error{
+    display:none;
+    margin-top:14px;
+    padding:11px 13px;
+    border-radius:9px;
+    background:var(--redbg);
+    color:var(--red);
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* =========================
+   ADMIN CONTENT
+========================= */
+
+#adminPanel{
+    display:none;
+}
+
+.top-actions{
+    display:flex;
+    justify-content:flex-end;
     gap:10px;
+    margin-bottom:18px;
     flex-wrap:wrap;
 }
 
-.btn-small{
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:10px 15px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.btn-dark{
     background:var(--navy);
     color:white;
 }
 
-.btn-download{
+.btn-light{
+    background:white;
+    color:var(--navy);
+    border:1px solid var(--border);
+}
+
+.btn-rose{
     background:var(--rose);
-    color:white;
-}
-
-.btn-biodata{
-    background:var(--lavender);
     color:var(--navy);
 }
 
-.btn-logout{
-    background:#eee;
-    color:var(--navy);
+.btn:hover{
+    opacity:.9;
 }
 
-/* SUMMARY */
+/* =========================
+   SUMMARY
+========================= */
 
-.summary{
+.summary-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:15px;
     margin-bottom:22px;
 }
 
 .summary-card{
     background:white;
-    border-radius:18px;
-    padding:22px;
-    box-shadow:0 8px 25px rgba(23,32,51,.06);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 5px 18px rgba(23,32,51,.04);
 }
 
 .summary-label{
-    font-size:13px;
+    font-size:11px;
     color:var(--muted);
-    margin-bottom:8px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    font-weight:700;
 }
 
 .summary-value{
+    margin-top:8px;
     font-size:28px;
-    font-weight:bold;
+    font-weight:800;
     color:var(--navy);
 }
 
-/* FILTER */
+/* =========================
+   FILTER
+========================= */
 
-.toolbar{
+.filter-card{
     background:white;
-    border-radius:18px;
+    border:1px solid var(--border);
+    border-radius:15px;
     padding:18px;
-    margin-bottom:20px;
-    display:flex;
-    flex-wrap:wrap;
+    margin-bottom:22px;
+    box-shadow:0 5px 18px rgba(23,32,51,.04);
+}
+
+.filter-title{
+    color:var(--navy);
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:14px;
+}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
     gap:10px;
-    box-shadow:0 8px 25px rgba(23,32,51,.06);
 }
 
-.toolbar input,
-.toolbar select{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:11px 13px;
-    outline:none;
-    background:white;
+.filter-grid input,
+.filter-grid select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #D9DDE5;
+    border-radius:9px;
+    background:#FCFCFD;
     color:var(--text);
+    outline:none;
 }
 
-.toolbar input{
-    flex:1;
-    min-width:220px;
+.filter-grid input:focus,
+.filter-grid select:focus{
+    border-color:var(--lavender);
 }
 
-.toolbar select{
-    min-width:140px;
+/* =========================
+   TABLE
+========================= */
+
+.table-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(23,32,51,.04);
 }
 
-/* TABLE */
+.table-header{
+    padding:17px 18px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.table-header h2{
+    margin:0;
+    color:var(--navy);
+    font-size:16px;
+}
+
+.table-status{
+    font-size:11px;
+    color:var(--muted);
+}
 
 .table-wrap{
-    background:white;
-    border-radius:18px;
-    overflow:auto;
-    box-shadow:0 8px 25px rgba(23,32,51,.06);
+    overflow-x:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1200px;
-}
-
-thead{
-    background:var(--navy);
-    color:white;
-}
-
-th,
-td{
-    padding:13px 12px;
-    text-align:left;
-    border-bottom:1px solid #eee;
-    font-size:13px;
-    vertical-align:top;
+    min-width:950px;
 }
 
 th{
+    background:var(--cream2);
+    color:var(--navy);
+    font-size:11px;
+    text-align:left;
+    padding:12px 10px;
     white-space:nowrap;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:11px 10px;
     font-size:12px;
+    border-bottom:1px solid #EEF0F3;
+    vertical-align:middle;
 }
 
 tbody tr:hover{
-    background:#faf8f5;
+    background:#FCFBFA;
 }
 
-.score-red{
+.score{
+    font-weight:800;
+}
+
+.score-low{
     color:var(--red);
-    font-weight:bold;
 }
 
 .score-normal{
-    color:#3D67A8;
-    font-weight:bold;
+    color:var(--blue);
 }
 
-.total-score{
+.score-total{
     color:var(--green);
-    font-weight:bold;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:bold;
-    background:var(--cream2);
+    font-weight:900;
 }
 
 .empty{
     text-align:center;
-    padding:45px 20px;
-    color:var(--muted);
-}
-
-.status{
-    margin-bottom:15px;
+    padding:35px 15px;
     color:var(--muted);
     font-size:13px;
 }
 
-/* BIODATA PANEL */
-
-#biodataPanel{
-    display:none;
-    margin-bottom:25px;
+.loading{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    font-size:13px;
 }
+
+/* =========================
+   BIODATA SECTION
+========================= */
 
 .biodata-card{
+    margin-top:25px;
     background:white;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 8px 25px rgba(23,32,51,.07);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
 }
 
-.biodata-header{
+.biodata-head{
+    padding:18px 20px;
+    background:var(--navy2);
+    color:white;
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:15px;
-    margin-bottom:20px;
+    flex-wrap:wrap;
 }
 
-.biodata-header h2{
+.biodata-head h2{
     margin:0;
-    color:var(--navy);
-    font-size:22px;
+    font-size:17px;
 }
 
-.biodata-search{
+.biodata-head p{
+    margin:4px 0 0;
+    color:#C9CFD9;
+    font-size:11px;
+}
+
+.biodata-body{
+    padding:20px;
+}
+
+/* =========================
+   BIODATA SEARCH
+========================= */
+
+.biodata-search-box{
     display:flex;
     gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:10px;
+    margin-bottom:14px;
 }
 
-.biodata-search input{
+.biodata-search-box input{
     flex:1;
-    min-width:220px;
-    padding:13px 14px;
-    border:1px solid #ddd;
-    border-radius:10px;
+    min-width:0;
+    padding:12px 14px;
+    border:1px solid #D9DDE5;
+    border-radius:9px;
     outline:none;
-    font-size:14px;
+    background:#FCFCFD;
 }
 
-.biodata-search input:focus{
-    border-color:var(--rose);
+.biodata-search-box input:focus{
+    border-color:var(--lavender);
 }
 
-.biodata-message{
-    color:var(--muted);
-    font-size:13px;
-    margin:10px 0 12px;
-    min-height:18px;
-}
-
-/* SEARCH RESULTS */
-
-#biodataSearchResults{
-    display:none;
-    margin-bottom:20px;
-}
-
-.search-result-title{
+.btn-search{
+    padding:12px 18px;
+    border:0;
+    border-radius:9px;
+    background:var(--navy);
+    color:white;
+    font-weight:800;
     font-size:12px;
-    color:var(--muted);
-    margin-bottom:8px;
 }
 
-.search-result-list{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
+.biodata-search-results{
+    display:none;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:#FCFCFD;
+    margin-bottom:18px;
+    overflow:hidden;
 }
 
 .search-result-item{
     width:100%;
-    border:1px solid #e5e1dc;
-    background:#faf8f5;
-    border-radius:11px;
+    border:0;
+    border-bottom:1px solid #EEF0F3;
+    background:white;
     padding:12px 14px;
-    cursor:pointer;
     text-align:left;
-    transition:.15s;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+}
+
+.search-result-item:last-child{
+    border-bottom:0;
 }
 
 .search-result-item:hover{
-    border-color:var(--rose);
-    background:#f7f1ee;
+    background:var(--cream);
 }
 
-.search-result-name{
-    display:block;
+.search-name{
     color:var(--navy);
-    font-weight:bold;
-    font-size:14px;
+    font-weight:800;
+    font-size:13px;
 }
 
-.search-result-target{
-    display:block;
-    margin-top:4px;
+.search-target{
+    font-size:10px;
+    color:var(--muted);
+    background:var(--cream2);
+    padding:5px 8px;
+    border-radius:6px;
+    white-space:nowrap;
+}
+
+/* =========================
+   BIODATA DETAIL
+========================= */
+
+#biodataResult{
+    display:none;
+}
+
+.biodata-detail{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:25px;
+}
+
+.photo-column{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.photo-frame{
+    width:180px;
+    height:225px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--cream2);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.photo-placeholder{
     color:var(--muted);
     font-size:12px;
-}
-
-/* BIODATA DETAIL */
-
-.biodata-profile{
-    display:grid;
-    grid-template-columns:180px 1fr;
-    gap:25px;
-    margin-bottom:25px;
-}
-
-.biodata-photo-box{
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-}
-
-.biodata-photo{
-    width:160px;
-    height:200px;
-    object-fit:cover;
-    border-radius:14px;
-    border:1px solid #ddd;
-    background:var(--cream2);
-}
-
-.biodata-photo-placeholder{
-    width:160px;
-    height:200px;
-    border-radius:14px;
-    background:var(--cream2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
     text-align:center;
-    color:var(--muted);
-    font-size:13px;
-    padding:15px;
+    padding:20px;
+    line-height:1.5;
 }
 
-.biodata-name{
-    margin:0 0 5px;
+.photo-link{
+    margin-top:9px;
+    font-size:11px;
+    color:var(--blue);
+    text-decoration:none;
+    display:none;
+}
+
+.photo-link:hover{
+    text-decoration:underline;
+}
+
+.biodata-info h3{
+    margin:0 0 15px;
     color:var(--navy);
-    font-size:24px;
-}
-
-.biodata-target{
-    color:var(--muted);
-    font-size:14px;
-    margin-bottom:18px;
+    font-size:20px;
 }
 
 .biodata-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    gap:0;
+    border-top:1px solid var(--border);
+    border-left:1px solid var(--border);
 }
 
-.biodata-item{
-    background:#faf8f5;
-    border-radius:10px;
-    padding:12px;
+.bio-field{
+    padding:11px 12px;
+    border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    min-height:60px;
 }
 
-.biodata-label{
-    font-size:11px;
-    color:var(--muted);
-    margin-bottom:5px;
-    font-weight:bold;
+.bio-label{
+    font-size:10px;
     text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--muted);
+    font-weight:700;
+    margin-bottom:5px;
 }
 
-.biodata-value{
-    font-size:14px;
-    color:var(--text);
+.bio-value{
+    font-size:12px;
+    color:var(--navy);
+    font-weight:600;
     white-space:pre-wrap;
     word-break:break-word;
 }
 
-.biodata-section{
-    margin-top:25px;
+.bio-full{
+    grid-column:1 / -1;
 }
 
-.biodata-section-title{
-    margin:0 0 12px;
-    color:var(--navy);
-    font-size:16px;
-    border-bottom:1px solid #eee;
-    padding-bottom:8px;
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    display:none;
+    margin-bottom:15px;
+    padding:11px 14px;
+    border-radius:9px;
+    font-size:12px;
 }
 
-/* RESPONSIVE */
+.message.error{
+    display:block;
+    background:var(--redbg);
+    color:var(--red);
+}
 
-@media(max-width:700px){
+.message.success{
+    display:block;
+    background:var(--greenbg);
+    color:var(--green);
+}
 
-    .container{
-        width:94%;
-        margin:25px auto;
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .header{
+    .filter-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .biodata-detail{
+        grid-template-columns:1fr;
+    }
+
+    .photo-column{
         align-items:flex-start;
+    }
+}
+
+@media(max-width:650px){
+
+    header{
+        padding:15px;
+    }
+
+    .brand{
+        font-size:18px;
+    }
+
+    .header-right{
+        display:none;
+    }
+
+    main{
+        padding:20px 12px 45px;
+    }
+
+    .page-title h1{
+        font-size:23px;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .summary-card{
+        padding:15px;
+    }
+
+    .summary-value{
+        font-size:23px;
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr;
+    }
+
+    .biodata-search-box{
         flex-direction:column;
-    }
-
-    .summary{
-        grid-template-columns:1fr;
-    }
-
-    .header-actions{
-        width:100%;
-    }
-
-    .header-actions .btn{
-        flex:1;
-    }
-
-    .login-card{
-        padding:30px 22px;
-    }
-
-    .biodata-profile{
-        grid-template-columns:1fr;
     }
 
     .biodata-grid{
         grid-template-columns:1fr;
     }
 
-    .biodata-photo-box{
-        justify-content:flex-start;
+    .bio-full{
+        grid-column:auto;
     }
 
+    .login-card{
+        padding:25px 20px;
+    }
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- =========================
+     HEADER
+========================= -->
 
-<!-- =====================================================
-     LOGIN ADMIN
-===================================================== -->
+<header>
+    <div class="brand">
+        PRC <span>CLASS</span>
+    </div>
 
-<div id="adminLogin" class="admin-login">
+    <div class="header-right">
+        ADMINISTRATOR • REKAP &amp; EVALUASI
+    </div>
+</header>
+
+
+<!-- =========================
+     LOGIN PANEL
+========================= -->
+
+<section id="loginPanel">
 
     <div class="login-card">
 
-        <h1>Area Pengelola</h1>
+        <div class="login-logo">
+            <div class="small">Persona Research &amp; Consulting</div>
+            <h1>ADMIN <span>REKAP</span></h1>
+        </div>
 
-        <p>
-            Masukkan PIN admin untuk melihat
-            rekap hasil Persona Class.
-        </p>
+        <label for="adminPin">
+            PIN ADMIN
+        </label>
 
         <input
             type="password"
-            id="pinInput"
-            class="pin-input"
-            placeholder="PIN Admin"
-            maxlength="20"
-            inputmode="numeric"
+            id="adminPin"
+            placeholder="Masukkan PIN admin"
             autocomplete="off"
+            maxlength="20"
         >
 
         <button
-            class="btn btn-primary"
+            class="btn-login"
             onclick="loginAdmin()"
         >
-            MASUK REKAP
+            MASUK KE AREA ADMIN
         </button>
 
         <div
             id="loginError"
             class="login-error"
-        ></div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     ADMIN CONTENT
-===================================================== -->
-
-<div id="adminContent">
-
-    <div class="header">
-
-        <div>
-
-            <h1>Rekap Persona Class</h1>
-
-            <p>
-                Data hasil latihan dan tryout siswa.
-            </p>
-
-        </div>
-
-        <div class="header-actions">
-
-            <button
-                class="btn btn-biodata"
-                onclick="toggleBiodata()"
-            >
-                👤 Biodata Peserta
-            </button>
-
-            <button
-                class="btn btn-download"
-                onclick="downloadCSV()"
-            >
-                ↓ Download Rekap
-            </button>
-
-            <button
-                class="btn btn-small"
-                onclick="loadData()"
-            >
-                ↻ Refresh
-            </button>
-
-            <button
-                class="btn btn-logout"
-                onclick="logoutAdmin()"
-            >
-                Keluar
-            </button>
-
+        >
+            PIN admin tidak benar.
         </div>
 
     </div>
 
+</section>
 
-<!-- =====================================================
-     BIODATA PANEL
-===================================================== -->
 
-<div id="biodataPanel">
+<!-- =========================
+     ADMIN PANEL
+========================= -->
 
-    <div class="biodata-card">
+<section id="adminPanel">
 
-        <div class="biodata-header">
+<main>
 
-            <h2>Biodata Peserta</h2>
+    <div class="page-title">
+        <h1>Admin Rekap &amp; Evaluasi</h1>
+        <p>
+            Persona Class — pengelolaan hasil tryout dan biodata peserta.
+        </p>
+    </div>
 
-            <button
-                class="btn btn-logout"
-                onclick="toggleBiodata()"
+
+    <!-- ACTIONS -->
+
+    <div class="top-actions">
+
+        <button
+            class="btn btn-light"
+            onclick="loadAdminData()"
+        >
+            ↻ REFRESH DATA
+        </button>
+
+        <button
+            class="btn btn-dark"
+            onclick="logoutAdmin()"
+        >
+            KELUAR
+        </button>
+
+    </div>
+
+
+    <div
+        id="adminMessage"
+        class="message"
+    ></div>
+
+
+    <!-- =========================
+         SUMMARY
+    ========================= -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <div class="summary-label">
+                Total Rekaman
+            </div>
+
+            <div
+                id="summaryTotal"
+                class="summary-value"
             >
-                Tutup
-            </button>
-
+                0
+            </div>
         </div>
 
 
-        <!-- SEARCH -->
+        <div class="summary-card">
+            <div class="summary-label">
+                Peserta
+            </div>
 
-        <div class="biodata-search">
+            <div
+                id="summaryStudents"
+                class="summary-value"
+            >
+                0
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-label">
+                POLRI
+            </div>
+
+            <div
+                id="summaryPolri"
+                class="summary-value"
+            >
+                0
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-label">
+                TNI / Lainnya
+            </div>
+
+            <div
+                id="summaryOther"
+                class="summary-value"
+            >
+                0
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTER
+    ========================= -->
+
+    <div class="filter-card">
+
+        <div class="filter-title">
+            FILTER HASIL TRYOUT
+        </div>
+
+        <div class="filter-grid">
 
             <input
                 type="text"
-                id="biodataSearch"
-                placeholder="Ketik sebagian nama peserta..."
-                autocomplete="off"
+                id="filterName"
+                placeholder="Cari nama peserta..."
+                oninput="applyFilters()"
+            >
+
+            <select
+                id="filterProgram"
+                onchange="applyFilters()"
+            >
+                <option value="">Semua Program</option>
+                <option value="POLRI">POLRI</option>
+                <option value="TNI">TNI</option>
+                <option value="KEDINASAN">KEDINASAN</option>
+                <option value="ASN">ASN</option>
+                <option value="UJI KOMPUTER">UJI KOMPUTER</option>
+            </select>
+
+            <input
+                type="text"
+                id="filterTryout"
+                placeholder="Nama tryout..."
+                oninput="applyFilters()"
             >
 
             <button
-                class="btn btn-small"
-                onclick="searchBiodata()"
+                class="btn btn-light"
+                onclick="resetFilters()"
             >
-                Cari Biodata
+                RESET
             </button>
 
         </div>
 
+    </div>
 
-        <div
-            id="biodataMessage"
-            class="biodata-message"
-        >
-            Masukkan sebagian atau seluruh nama peserta.
+
+    <!-- =========================
+         TABLE
+    ========================= -->
+
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h2>
+                HASIL TRYOUT
+            </h2>
+
+            <div
+                id="tableStatus"
+                class="table-status"
+            >
+                Memuat data...
+            </div>
+
         </div>
 
 
-        <!-- HASIL PENCARIAN -->
-        <!-- TERPISAH DARI BIODATA DETAIL -->
-
-        <div
-            id="biodataSearchResults"
-        ></div>
-
-
-        <!-- DETAIL BIODATA -->
-
-        <div
-            id="biodataResult"
-            style="display:none;"
-        >
-
-            <div class="biodata-profile">
-
-                <div class="biodata-photo-box">
-
-                    <div
-                        id="biodataPhotoContainer"
-                    ></div>
-
-                </div>
-
-
-                <div>
-
-                    <h2
-                        class="biodata-name"
-                        id="biodataNama"
-                    ></h2>
-
-                    <div
-                        class="biodata-target"
-                        id="biodataTarget"
-                    ></div>
-
-
-                    <div class="biodata-grid">
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Nama Panggilan
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataNamaPanggilan"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Jenis Kelamin
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataJenisKelamin"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Tempat Lahir
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataTempatLahir"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Tanggal Lahir
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataTanggalLahir"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Agama
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataAgama"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                WhatsApp
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataWhatsApp"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Email
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataEmail"
-                            ></div>
-                        </div>
-
-                        <div class="biodata-item">
-                            <div class="biodata-label">
-                                Tinggi / Berat
-                            </div>
-                            <div
-                                class="biodata-value"
-                                id="biodataTinggiBerat"
-                            ></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- PENDIDIKAN -->
-
-            <div class="biodata-section">
-
-                <h3 class="biodata-section-title">
-                    Pendidikan
-                </h3>
-
-                <div class="biodata-grid">
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Sekolah
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataSekolah"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Jurusan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataJurusan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Tahun Lulus
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataTahunLulus"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pendidikan Terakhir
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPendidikan"
-                        ></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ALAMAT -->
-
-            <div class="biodata-section">
-
-                <h3 class="biodata-section-title">
-                    Alamat
-                </h3>
-
-                <div class="biodata-item">
-
-                    <div class="biodata-label">
-                        Alamat Lengkap
-                    </div>
-
-                    <div
-                        class="biodata-value"
-                        id="biodataAlamat"
-                    ></div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ORANG TUA -->
-
-            <div class="biodata-section">
-
-                <h3 class="biodata-section-title">
-                    Data Orang Tua
-                </h3>
-
-                <div class="biodata-grid">
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Nama Ayah
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataNamaAyah"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pekerjaan Ayah
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPekerjaanAyah"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pendidikan Ayah
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPendidikanAyah"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            HP Ayah
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataHpAyah"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Nama Ibu
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataNamaIbu"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pekerjaan Ibu
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPekerjaanIbu"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pendidikan Ibu
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPendidikanIbu"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            HP Ibu
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataHpIbu"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Jumlah Saudara
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataJumlahSaudara"
-                        ></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- PROFIL -->
-
-            <div class="biodata-section">
-
-                <h3 class="biodata-section-title">
-                    Profil dan Pengalaman
-                </h3>
-
-                <div class="biodata-grid">
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Organisasi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataOrganisasi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Prestasi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPrestasi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Kepemimpinan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataKepemimpinan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Kelebihan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataKelebihan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Kekurangan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataKekurangan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Perbaikan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPerbaikan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Hobi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataHobi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Keterampilan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataKeterampilan"
-                        ></div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- SELEKSI -->
-
-            <div class="biodata-section">
-
-                <h3 class="biodata-section-title">
-                    Seleksi dan Target
-                </h3>
-
-                <div class="biodata-grid">
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Alasan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataAlasan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Persiapan
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPersiapan"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Target
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataTargetSeleksi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pernah Seleksi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPernahSeleksi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Tahun Seleksi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataTahunSeleksi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pengalaman Seleksi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPengalamanSeleksi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Pengalaman Sulit
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataPengalamanSulit"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Cara Mengatasi
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataCaraMengatasi"
-                        ></div>
-                    </div>
-
-                    <div class="biodata-item">
-                        <div class="biodata-label">
-                            Kerja Sama
-                        </div>
-                        <div
-                            class="biodata-value"
-                            id="biodataKerjaSama"
-                        ></div>
-                    </div>
-
-                </div>
-
-            </div>
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Siswa</th>
+                        <th>Program</th>
+                        <th>Tryout</th>
+                        <th>Tanggal</th>
+                        <th>Kecerdasan</th>
+                        <th>Kepribadian</th>
+                        <th>Kecermatan</th>
+                        <th>TIU</th>
+                        <th>TWK</th>
+                        <th>TKP</th>
+                        <th>Nilai Akhir</th>
+                    </tr>
+                </thead>
+
+                <tbody id="resultTableBody">
+
+                    <tr>
+                        <td
+                            colspan="12"
+                            class="loading"
+                        >
+                            Memuat data...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
 
         </div>
 
     </div>
 
-</div>
 
+    <!-- =========================
+         BIODATA ADMIN
+    ========================= -->
 
-<!-- =====================================================
-     SUMMARY
-===================================================== -->
+    <div class="biodata-card">
 
-<div class="summary">
+        <div class="biodata-head">
 
-    <div class="summary-card">
+            <div>
+                <h2>BIODATA PESERTA</h2>
 
-        <div class="summary-label">
-            Total Data
+                <p>
+                    Pencarian biodata hanya tersedia di area admin.
+                </p>
+            </div>
+
         </div>
 
-        <div
-            class="summary-value"
-            id="totalData"
-        >
-            0
-        </div>
 
-    </div>
-
-    <div class="summary-card">
-
-        <div class="summary-label">
-            Jumlah Siswa
-        </div>
-
-        <div
-            class="summary-value"
-            id="totalStudents"
-        >
-            0
-        </div>
-
-    </div>
-
-    <div class="summary-card">
-
-        <div class="summary-label">
-            Rata-rata Nilai Akhir
-        </div>
-
-        <div
-            class="summary-value"
-            id="averageScore"
-        >
-            0
-        </div>
-
-    </div>
-
-</div>
+        <div class="biodata-body">
 
 
-<!-- =====================================================
-     FILTER
-===================================================== -->
+            <!-- SEARCH -->
 
-<div class="toolbar">
+            <div class="biodata-search-box">
 
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Cari nama, program, nama tes, atau session..."
-        oninput="renderTable()"
-    >
-
-    <select
-        id="activityFilter"
-        onchange="renderTable()"
-    >
-
-        <option value="">
-            Semua Aktivitas
-        </option>
-
-        <option value="TRYOUT">
-            TRYOUT
-        </option>
-
-    </select>
-
-
-    <select
-        id="groupFilter"
-        onchange="renderTable()"
-    >
-
-        <option value="">
-            Semua Program
-        </option>
-
-        <option value="POLRI">
-            POLRI
-        </option>
-
-        <option value="TNI">
-            TNI
-        </option>
-
-        <option value="KEDINASAN">
-            KEDINASAN
-        </option>
-
-        <option value="LAINNYA">
-            LAINNYA
-        </option>
-
-    </select>
-
-
-    <button
-        class="btn btn-small"
-        onclick="resetFilter()"
-    >
-        Reset Filter
-    </button>
-
-</div>
-
-
-<div
-    class="status"
-    id="statusText"
->
-    Memuat data...
-</div>
-
-
-<!-- =====================================================
-     TABLE
-===================================================== -->
-
-<div class="table-wrap">
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>No</th>
-                <th>Timestamp</th>
-                <th>Nama</th>
-                <th>Session ID</th>
-                <th>Aktivitas</th>
-                <th>Program</th>
-                <th>Nama Tryout</th>
-                <th>Tanggal</th>
-                <th>Kecerdasan</th>
-                <th>Kepribadian</th>
-                <th>Kecermatan</th>
-                <th>TIU</th>
-                <th>TWK</th>
-                <th>TKP</th>
-                <th>Pengetahuan Umum</th>
-                <th>Nilai Akhir</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tableBody">
-
-            <tr>
-
-                <td
-                    colspan="16"
-                    class="empty"
+                <input
+                    type="text"
+                    id="biodataKeyword"
+                    placeholder="Ketik nama peserta..."
+                    autocomplete="off"
+                    onkeydown="if(event.key==='Enter'){searchBiodata();}"
                 >
-                    Memuat data...
 
-                </td>
+                <button
+                    class="btn-search"
+                    onclick="searchBiodata()"
+                >
+                    CARI BIODATA
+                </button>
 
-            </tr>
+            </div>
 
-        </tbody>
 
-    </table>
+            <!-- SEARCH RESULTS -->
 
-</div>
+            <div
+                id="biodataSearchResults"
+                class="biodata-search-results"
+            ></div>
 
-</div>
 
-</div>
+            <!-- DETAIL -->
+
+            <div
+                id="biodataResult"
+            >
+
+                <div class="biodata-detail">
+
+
+                    <!-- PHOTO -->
+
+                    <div class="photo-column">
+
+                        <div
+                            id="photoFrame"
+                            class="photo-frame"
+                        >
+
+                            <div
+                                id="photoPlaceholder"
+                                class="photo-placeholder"
+                            >
+                                Foto peserta<br>
+                                belum tersedia
+                            </div>
+
+                            <img
+                                id="biodataPhoto"
+                                src=""
+                                alt="Foto Peserta"
+                                style="display:none;"
+                            >
+
+                        </div>
+
+
+                        <a
+                            id="photoLink"
+                            class="photo-link"
+                            href="#"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Buka foto
+                        </a>
+
+                    </div>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="biodata-info">
+
+                        <h3 id="bioNama">
+                            -
+                        </h3>
+
+
+                        <div class="biodata-grid">
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Target Seleksi
+                                </div>
+
+                                <div
+                                    id="bioTarget"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Nama Panggilan
+                                </div>
+
+                                <div
+                                    id="bioPanggilan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Jenis Kelamin
+                                </div>
+
+                                <div
+                                    id="bioJenisKelamin"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Tempat / Tanggal Lahir
+                                </div>
+
+                                <div
+                                    id="bioLahir"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Agama
+                                </div>
+
+                                <div
+                                    id="bioAgama"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    WhatsApp
+                                </div>
+
+                                <div
+                                    id="bioWhatsapp"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Email
+                                </div>
+
+                                <div
+                                    id="bioEmail"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Tinggi / Berat
+                                </div>
+
+                                <div
+                                    id="bioTinggiBerat"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Alamat
+                                </div>
+
+                                <div
+                                    id="bioAlamat"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Sekolah
+                                </div>
+
+                                <div
+                                    id="bioSekolah"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Jurusan
+                                </div>
+
+                                <div
+                                    id="bioJurusan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Tahun Lulus
+                                </div>
+
+                                <div
+                                    id="bioTahunLulus"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pendidikan Terakhir
+                                </div>
+
+                                <div
+                                    id="bioPendidikan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Nama Ayah
+                                </div>
+
+                                <div
+                                    id="bioNamaAyah"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pekerjaan Ayah
+                                </div>
+
+                                <div
+                                    id="bioPekerjaanAyah"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pendidikan Ayah
+                                </div>
+
+                                <div
+                                    id="bioPendidikanAyah"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    HP Ayah
+                                </div>
+
+                                <div
+                                    id="bioHpAyah"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Nama Ibu
+                                </div>
+
+                                <div
+                                    id="bioNamaIbu"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pekerjaan Ibu
+                                </div>
+
+                                <div
+                                    id="bioPekerjaanIbu"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pendidikan Ibu
+                                </div>
+
+                                <div
+                                    id="bioPendidikanIbu"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    HP Ibu
+                                </div>
+
+                                <div
+                                    id="bioHpIbu"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Jumlah Saudara
+                                </div>
+
+                                <div
+                                    id="bioJumlahSaudara"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Organisasi
+                                </div>
+
+                                <div
+                                    id="bioOrganisasi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Prestasi
+                                </div>
+
+                                <div
+                                    id="bioPrestasi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Kepemimpinan
+                                </div>
+
+                                <div
+                                    id="bioKepemimpinan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Kelebihan
+                                </div>
+
+                                <div
+                                    id="bioKelebihan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Kekurangan
+                                </div>
+
+                                <div
+                                    id="bioKekurangan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Perbaikan
+                                </div>
+
+                                <div
+                                    id="bioPerbaikan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Hobi
+                                </div>
+
+                                <div
+                                    id="bioHobi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Keterampilan
+                                </div>
+
+                                <div
+                                    id="bioKeterampilan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Alasan
+                                </div>
+
+                                <div
+                                    id="bioAlasan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Persiapan
+                                </div>
+
+                                <div
+                                    id="bioPersiapan"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Target
+                                </div>
+
+                                <div
+                                    id="bioTargetPribadi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Pernah Seleksi
+                                </div>
+
+                                <div
+                                    id="bioPernahSeleksi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field">
+                                <div class="bio-label">
+                                    Tahun Seleksi
+                                </div>
+
+                                <div
+                                    id="bioTahunSeleksi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Pengalaman Seleksi
+                                </div>
+
+                                <div
+                                    id="bioPengalamanSeleksi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Pengalaman Sulit
+                                </div>
+
+                                <div
+                                    id="bioPengalamanSulit"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Cara Mengatasi
+                                </div>
+
+                                <div
+                                    id="bioCaraMengatasi"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                            <div class="bio-field bio-full">
+                                <div class="bio-label">
+                                    Kerja Sama
+                                </div>
+
+                                <div
+                                    id="bioKerjaSama"
+                                    class="bio-value"
+                                >
+                                    -
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</section>
 
 
 <script>
 
-/* =====================================================
-   SCRIPT URL
-===================================================== */
+/* =========================================================
+   KONFIGURASI
+========================================================= */
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 
-
-let allData = [];
-
-let adminPin = "";
+const ADMIN_PIN = "0501";
 
 
-/* =====================================================
+/* =========================================================
+   STATE
+========================================================= */
+
+let adminData = [];
+let filteredData = [];
+
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+function escapeHtml(value){
+
+    if(value === null || value === undefined){
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function valueOrDash(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        String(value).trim() === ""
+    ){
+        return "-";
+    }
+
+    return escapeHtml(value);
+}
+
+
+function getValue(obj, keys){
+
+    if(!obj){
+        return "";
+    }
+
+    for(const key of keys){
+
+        if(
+            obj[key] !== undefined &&
+            obj[key] !== null &&
+            String(obj[key]).trim() !== ""
+        ){
+            return obj[key];
+        }
+    }
+
+    return "";
+}
+
+
+function showMessage(message,type="success"){
+
+    const box = document.getElementById("adminMessage");
+
+    box.className = "message " + type;
+    box.textContent = message;
+
+    setTimeout(() => {
+
+        box.className = "message";
+
+    },4000);
+}
+
+
+/* =========================================================
    LOGIN ADMIN
-===================================================== */
+========================================================= */
 
-async function loginAdmin(){
-
-    const input =
-        document.getElementById("pinInput");
-
-    const errorBox =
-        document.getElementById("loginError");
+function loginAdmin(){
 
     const pin =
-        input.value.trim();
+        document.getElementById("adminPin").value.trim();
 
-    errorBox.textContent = "";
+    const error =
+        document.getElementById("loginError");
 
+    if(pin !== ADMIN_PIN){
 
-    if(!pin){
-
-        errorBox.textContent =
-            "Masukkan PIN admin.";
-
-        input.focus();
-
+        error.style.display = "block";
         return;
-
     }
 
+    error.style.display = "none";
 
-    try{
+    document.getElementById("loginPanel").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
 
-        const url =
-            SCRIPT_URL +
-            "?mode=admin&adminPin=" +
-            encodeURIComponent(pin) +
-            "&_=" +
-            Date.now();
-
-
-        const response =
-            await fetch(url,{
-                method:"GET",
-                cache:"no-store"
-            });
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " + response.status
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if(data.status !== "success"){
-
-            errorBox.textContent =
-                data.message ||
-                "PIN admin salah.";
-
-            input.select();
-
-            return;
-
-        }
-
-
-        adminPin = pin;
-
-
-        document
-        .getElementById("adminLogin")
-        .style.display = "none";
-
-
-        document
-        .getElementById("adminContent")
-        .style.display = "block";
-
-
-        allData =
-            Array.isArray(data.results)
-                ? data.results
-                : [];
-
-
-        updateSummary();
-
-        renderTable();
-
-
-        document
-        .getElementById("statusText")
-        .textContent =
-            "Data berhasil dimuat: " +
-            allData.length +
-            " record.";
-
-
-    }catch(error){
-
-        console.error(error);
-
-        errorBox.textContent =
-            "Tidak dapat terhubung ke server. Pastikan Apps Script sudah di-deploy sebagai Web App.";
-
-    }
-
+    loadAdminData();
 }
 
 
-/* =====================================================
-   ENTER LOGIN
-===================================================== */
-
-document
-.getElementById("pinInput")
-.addEventListener(
+document.getElementById("adminPin").addEventListener(
     "keydown",
-    function(e){
+    function(event){
 
-        if(e.key === "Enter"){
-
+        if(event.key === "Enter"){
             loginAdmin();
-
         }
 
     }
 );
 
 
-/* =====================================================
-   LOAD DATA
-===================================================== */
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-async function loadData(){
+function logoutAdmin(){
 
-    if(!adminPin){
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("loginPanel").style.display = "flex";
 
-        return;
+    document.getElementById("adminPin").value = "";
 
-    }
+    document.getElementById("biodataKeyword").value = "";
 
+    document.getElementById("biodataSearchResults").style.display = "none";
+
+    document.getElementById("biodataResult").style.display = "none";
+}
+
+
+/* =========================================================
+   LOAD ADMIN DATA
+========================================================= */
+
+async function loadAdminData(){
+
+    const body =
+        document.getElementById("resultTableBody");
 
     const status =
-        document.getElementById("statusText");
+        document.getElementById("tableStatus");
 
+    body.innerHTML =
+        `<tr>
+            <td colspan="12" class="loading">
+                Memuat data...
+            </td>
+        </tr>`;
 
-    status.textContent =
-        "Memuat data...";
-
+    status.textContent = "Memuat data...";
 
     try{
 
         const url =
             SCRIPT_URL +
-            "?mode=admin&adminPin=" +
-            encodeURIComponent(adminPin) +
-            "&_=" +
-            Date.now();
-
+            "?mode=admin" +
+            "&adminPin=" +
+            encodeURIComponent(ADMIN_PIN);
 
         const response =
             await fetch(url,{
@@ -1580,193 +1879,432 @@ async function loadData(){
                 cache:"no-store"
             });
 
-
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " + response.status
-            );
-
-        }
-
-
         const data =
             await response.json();
 
-
         if(data.status !== "success"){
 
-            status.textContent =
+            throw new Error(
                 data.message ||
-                "Gagal memuat data.";
-
-            return;
-
+                "Data admin tidak dapat dimuat."
+            );
         }
 
-
-        allData =
+        adminData =
             Array.isArray(data.results)
                 ? data.results
-                : [];
+                : (
+                    Array.isArray(data.data)
+                        ? data.data
+                        : []
+                );
 
+        filteredData = [...adminData];
 
         updateSummary();
 
         renderTable();
 
-
-        status.textContent =
-            "Data berhasil dimuat: " +
-            allData.length +
-            " record.";
-
-
     }catch(error){
 
         console.error(error);
 
-        status.textContent =
-            "Gagal mengambil data dari Apps Script.";
+        body.innerHTML =
+            `<tr>
+                <td colspan="12" class="empty">
+                    Gagal memuat data.<br>
+                    ${escapeHtml(error.message)}
+                </td>
+            </tr>`;
 
+        status.textContent = "Gagal memuat";
+
+        showMessage(
+            "Gagal memuat data admin: " + error.message,
+            "error"
+        );
     }
-
 }
 
 
-/* =====================================================
-   TOGGLE BIODATA
-===================================================== */
+/* =========================================================
+   SUMMARY
+========================================================= */
 
-function toggleBiodata(){
+function updateSummary(){
 
-    const panel =
-        document.getElementById(
-            "biodataPanel"
+    const total =
+        adminData.length;
+
+    const names =
+        new Set(
+            adminData
+                .map(row =>
+                    String(
+                        getValue(row,[
+                            "NamaSiswa",
+                            "namaSiswa",
+                            "Nama Lengkap",
+                            "namaLengkap"
+                        ])
+                    ).trim().toLowerCase()
+                )
+                .filter(Boolean)
         );
 
+    const polri =
+        adminData.filter(row =>
+            String(
+                getValue(row,[
+                    "Program",
+                    "program"
+                ])
+            ).toUpperCase() === "POLRI"
+        ).length;
 
-    if(panel.style.display === "block"){
+    const other =
+        total - polri;
 
-        panel.style.display = "none";
+    document.getElementById("summaryTotal").textContent =
+        total;
 
-        return;
+    document.getElementById("summaryStudents").textContent =
+        names.size;
 
-    }
+    document.getElementById("summaryPolri").textContent =
+        polri;
 
-
-    panel.style.display = "block";
-
-
-    setTimeout(function(){
-
-        document
-        .getElementById("biodataSearch")
-        .focus();
-
-    },100);
-
+    document.getElementById("summaryOther").textContent =
+        other;
 }
 
 
-/* =====================================================
-   ENTER SEARCH BIODATA
-===================================================== */
+/* =========================================================
+   FILTER
+========================================================= */
 
-document
-.getElementById("biodataSearch")
-.addEventListener(
-    "keydown",
-    function(e){
+function applyFilters(){
 
-        if(e.key === "Enter"){
+    const name =
+        document
+            .getElementById("filterName")
+            .value
+            .trim()
+            .toLowerCase();
 
-            searchBiodata();
+    const program =
+        document
+            .getElementById("filterProgram")
+            .value
+            .trim()
+            .toLowerCase();
 
-        }
+    const tryout =
+        document
+            .getElementById("filterTryout")
+            .value
+            .trim()
+            .toLowerCase();
 
+
+    filteredData =
+        adminData.filter(row => {
+
+            const rowName =
+                String(
+                    getValue(row,[
+                        "NamaSiswa",
+                        "namaSiswa",
+                        "Nama Lengkap",
+                        "namaLengkap"
+                    ])
+                ).toLowerCase();
+
+            const rowProgram =
+                String(
+                    getValue(row,[
+                        "Program",
+                        "program"
+                    ])
+                ).toLowerCase();
+
+            const rowTryout =
+                String(
+                    getValue(row,[
+                        "NamaTryout",
+                        "namaTryout",
+                        "Tryout"
+                    ])
+                ).toLowerCase();
+
+
+            return (
+                (!name || rowName.includes(name)) &&
+                (!program || rowProgram === program) &&
+                (!tryout || rowTryout.includes(tryout))
+            );
+
+        });
+
+    renderTable();
+}
+
+
+/* =========================================================
+   RESET FILTER
+========================================================= */
+
+function resetFilters(){
+
+    document.getElementById("filterName").value = "";
+    document.getElementById("filterProgram").value = "";
+    document.getElementById("filterTryout").value = "";
+
+    filteredData = [...adminData];
+
+    renderTable();
+}
+
+
+/* =========================================================
+   SCORE CLASS
+========================================================= */
+
+function scoreClass(value){
+
+    const number =
+        parseFloat(
+            String(value)
+                .replace(",",".")
+        );
+
+    if(isNaN(number)){
+        return "";
     }
-);
+
+    if(number < 60){
+        return "score score-low";
+    }
+
+    return "score score-normal";
+}
 
 
-/* =====================================================
+/* =========================================================
+   RENDER TABLE
+========================================================= */
+
+function renderTable(){
+
+    const body =
+        document.getElementById("resultTableBody");
+
+    const status =
+        document.getElementById("tableStatus");
+
+
+    if(!filteredData.length){
+
+        body.innerHTML =
+            `<tr>
+                <td colspan="12" class="empty">
+                    Tidak ada data yang sesuai.
+                </td>
+            </tr>`;
+
+        status.textContent = "0 data";
+
+        return;
+    }
+
+
+    let html = "";
+
+
+    filteredData.forEach((row,index) => {
+
+        const nama =
+            getValue(row,[
+                "NamaSiswa",
+                "namaSiswa",
+                "Nama Lengkap",
+                "namaLengkap"
+            ]);
+
+        const program =
+            getValue(row,[
+                "Program",
+                "program"
+            ]);
+
+        const tryout =
+            getValue(row,[
+                "NamaTryout",
+                "namaTryout",
+                "Tryout"
+            ]);
+
+        const tanggal =
+            getValue(row,[
+                "Tanggal",
+                "tanggal"
+            ]);
+
+        const kecerdasan =
+            getValue(row,[
+                "Kecerdasan",
+                "kecerdasan"
+            ]);
+
+        const kepribadian =
+            getValue(row,[
+                "Kepribadian",
+                "kepribadian"
+            ]);
+
+        const kecermatan =
+            getValue(row,[
+                "Kecermatan",
+                "kecermatan"
+            ]);
+
+        const tiu =
+            getValue(row,[
+                "TIU",
+                "tiu"
+            ]);
+
+        const twk =
+            getValue(row,[
+                "TWK",
+                "twk"
+            ]);
+
+        const tkp =
+            getValue(row,[
+                "TKP",
+                "tkp"
+            ]);
+
+        const nilaiAkhir =
+            getValue(row,[
+                "NilaiAkhir",
+                "nilaiAkhir",
+                "Total",
+                "total"
+            ]);
+
+
+        html += `
+            <tr>
+
+                <td>${index + 1}</td>
+
+                <td>
+                    <strong>
+                        ${valueOrDash(nama)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${valueOrDash(program)}
+                </td>
+
+                <td>
+                    ${valueOrDash(tryout)}
+                </td>
+
+                <td>
+                    ${valueOrDash(tanggal)}
+                </td>
+
+                <td class="${scoreClass(kecerdasan)}">
+                    ${valueOrDash(kecerdasan)}
+                </td>
+
+                <td class="${scoreClass(kepribadian)}">
+                    ${valueOrDash(kepribadian)}
+                </td>
+
+                <td class="${scoreClass(kecermatan)}">
+                    ${valueOrDash(kecermatan)}
+                </td>
+
+                <td class="${scoreClass(tiu)}">
+                    ${valueOrDash(tiu)}
+                </td>
+
+                <td class="${scoreClass(twk)}">
+                    ${valueOrDash(twk)}
+                </td>
+
+                <td class="${scoreClass(tkp)}">
+                    ${valueOrDash(tkp)}
+                </td>
+
+                <td class="score-total">
+                    ${valueOrDash(nilaiAkhir)}
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+
+    body.innerHTML = html;
+
+    status.textContent =
+        filteredData.length +
+        " data ditampilkan";
+}
+
+
+/* =========================================================
    SEARCH BIODATA
-   KHUSUS ADMIN
-===================================================== */
+========================================================= */
 
 async function searchBiodata(){
 
-    const input =
-        document.getElementById(
-            "biodataSearch"
-        );
+    const keyword =
+        document
+            .getElementById("biodataKeyword")
+            .value
+            .trim();
 
-    const message =
-        document.getElementById(
-            "biodataMessage"
-        );
+    const resultBox =
+        document.getElementById("biodataSearchResults");
 
-    const result =
-        document.getElementById(
-            "biodataResult"
-        );
-
-    const searchResults =
-        document.getElementById(
-            "biodataSearchResults"
-        );
+    const detail =
+        document.getElementById("biodataResult");
 
 
-    const nama =
-        input.value.trim();
+    if(!keyword){
 
-
-    result.style.display = "none";
-
-    searchResults.style.display = "none";
-
-    searchResults.innerHTML = "";
-
-
-    if(!nama){
-
-        message.textContent =
-            "Masukkan sebagian atau seluruh nama peserta.";
+        resultBox.style.display = "none";
+        detail.style.display = "none";
 
         return;
-
     }
 
 
-    if(!adminPin){
+    resultBox.style.display = "block";
 
-        message.textContent =
-            "Sesi admin sudah berakhir. Silakan login kembali.";
-
-        return;
-
-    }
-
-
-    message.textContent =
-        "Mencari biodata...";
+    resultBox.innerHTML =
+        `<div class="loading">
+            Mencari biodata...
+        </div>`;
 
 
     try{
-
-        /* ---------------------------------------------
-           STEP 1 — CARI NAMA
-        --------------------------------------------- */
 
         const url =
             SCRIPT_URL +
             "?mode=adminbiodata" +
             "&adminPin=" +
-            encodeURIComponent(adminPin) +
+            encodeURIComponent(ADMIN_PIN) +
             "&keyword=" +
-            encodeURIComponent(nama) +
-            "&_=" +
-            Date.now();
+            encodeURIComponent(keyword);
 
 
         const response =
@@ -1776,188 +2314,135 @@ async function searchBiodata(){
             });
 
 
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " + response.status
-            );
-
-        }
-
-
         const data =
             await response.json();
 
 
-        if(
-            !data ||
-            data.status !== "success" ||
-            !Array.isArray(data.results)
-        ){
+        if(data.status !== "success"){
 
-            message.textContent =
-                data &&
-                data.message
-                    ? data.message
-                    : "Peserta tidak ditemukan.";
-
-            return;
-
+            throw new Error(
+                data.message ||
+                "Biodata tidak dapat dicari."
+            );
         }
 
 
-        /* ---------------------------------------------
-           STEP 2 — TAMPILKAN DAFTAR NAMA
-        --------------------------------------------- */
-
-        showBiodataSearchResults(
-            data.results
-        );
+        const results =
+            Array.isArray(data.results)
+                ? data.results
+                : [];
 
 
-        message.textContent =
-            "Ditemukan " +
-            data.results.length +
-            " peserta. Pilih nama untuk melihat biodata.";
+        showBiodataSearchResults(results);
 
 
     }catch(error){
 
         console.error(error);
 
-        message.textContent =
-            "Gagal mencari biodata dari server.";
+        resultBox.innerHTML =
+            `<div class="empty">
+                Gagal mencari biodata.<br>
+                ${escapeHtml(error.message)}
+            </div>`;
 
     }
-
 }
 
 
-/* =====================================================
-   TAMPILKAN HASIL SEARCH
-===================================================== */
+/* =========================================================
+   SHOW BIODATA SEARCH RESULTS
+========================================================= */
 
-function showBiodataSearchResults(
-    results
-){
+function showBiodataSearchResults(results){
 
-    const container =
+    const box =
         document.getElementById(
             "biodataSearchResults"
         );
 
+    document.getElementById(
+        "biodataResult"
+    ).style.display = "none";
 
-    if(!container){
+
+    if(!results.length){
+
+        box.style.display = "block";
+
+        box.innerHTML =
+            `<div class="empty">
+                Biodata tidak ditemukan.
+            </div>`;
 
         return;
-
     }
 
 
-    if(
-        !Array.isArray(results) ||
-        results.length === 0
-    ){
-
-        container.style.display = "none";
-
-        container.innerHTML = "";
-
-        return;
-
-    }
+    let html = "";
 
 
-    let html = `
+    results.forEach((item,index) => {
 
-        <div class="search-result-title">
-            Pilih peserta:
-        </div>
+        const nama =
+            getValue(item,[
+                "namaLengkap",
+                "NamaLengkap",
+                "NamaSiswa",
+                "namaSiswa"
+            ]);
 
-        <div class="search-result-list">
-
-    `;
-
-
-    results.forEach(
-        function(item){
-
-            const nama =
-                String(
-                    item.namaLengkap || ""
-                );
+        const target =
+            getValue(item,[
+                "targetSeleksi",
+                "TargetSeleksi",
+                "Target"
+            ]);
 
 
-            const target =
-                String(
-                    item.targetSeleksi || ""
-                );
+        /*
+         * JSON.stringify dipakai supaya nama dengan tanda kutip
+         * tetap aman ketika dikirim ke loadBiodataByName().
+         */
+
+        const safeName =
+            JSON.stringify(String(nama));
 
 
-            html += `
+        html += `
+            <button
+                type="button"
+                class="search-result-item"
+                onclick='loadBiodataByName(${safeName})'
+            >
 
-                <button
-                    type="button"
-                    class="search-result-item"
-                    onclick="loadBiodataByName(${JSON.stringify(nama)})"
-                >
+                <span class="search-name">
+                    ${valueOrDash(nama)}
+                </span>
 
-                    <span class="search-result-name">
-                        ${escapeHtml(nama)}
-                    </span>
+                <span class="search-target">
+                    ${valueOrDash(target)}
+                </span>
 
-                    ${
-                        target
-                            ? `
-                                <span class="search-result-target">
-                                    Target: ${escapeHtml(target)}
-                                </span>
-                              `
-                            : ""
-                    }
+            </button>
+        `;
 
-                </button>
-
-            `;
-
-        }
-    );
+    });
 
 
-    html += `
-
-        </div>
-
-    `;
-
-
-    container.innerHTML =
-        html;
-
-    container.style.display =
-        "block";
-
+    box.innerHTML = html;
+    box.style.display = "block";
 }
 
 
-/* =====================================================
+/* =========================================================
    LOAD BIODATA DETAIL
-   KHUSUS ADMIN
-===================================================== */
+========================================================= */
 
-async function loadBiodataByName(
-    namaLengkap
-){
+async function loadBiodataByName(namaLengkap){
 
-    const message =
-        document.getElementById(
-            "biodataMessage"
-        );
-
-    const result =
-        document.getElementById(
-            "biodataResult"
-        );
+    const detail =
+        document.getElementById("biodataResult");
 
     const searchResults =
         document.getElementById(
@@ -1965,24 +2450,17 @@ async function loadBiodataByName(
         );
 
 
-    if(!adminPin){
+    detail.style.display = "block";
 
-        message.textContent =
-            "Sesi admin sudah berakhir. Silakan login kembali.";
-
-        return;
-
-    }
+    searchResults.style.display = "none";
 
 
-    message.textContent =
-        "Memuat biodata " +
-        namaLengkap +
-        "...";
+    /*
+     * Bersihkan tampilan sementara.
+     */
 
-
-    result.style.display =
-        "none";
+    document.getElementById("bioNama").textContent =
+        "Memuat biodata...";
 
 
     try{
@@ -1991,11 +2469,9 @@ async function loadBiodataByName(
             SCRIPT_URL +
             "?mode=admingetbiodata" +
             "&adminPin=" +
-            encodeURIComponent(adminPin) +
+            encodeURIComponent(ADMIN_PIN) +
             "&namaLengkap=" +
-            encodeURIComponent(namaLengkap) +
-            "&_=" +
-            Date.now();
+            encodeURIComponent(namaLengkap);
 
 
         const response =
@@ -2005,1239 +2481,593 @@ async function loadBiodataByName(
             });
 
 
-        if(!response.ok){
-
-            throw new Error(
-                "HTTP " + response.status
-            );
-
-        }
-
-
         const data =
             await response.json();
 
 
-        if(
-            !data ||
-            data.status !== "success" ||
-            !data.biodata
-        ){
+        if(data.status !== "success"){
 
-            message.textContent =
-                data &&
-                data.message
-                    ? data.message
-                    : "Biodata tidak ditemukan.";
-
-            return;
-
-        }
-
-
-        const b =
-            data.biodata;
-
-
-        showBiodata(b);
-
-
-        if(searchResults){
-
-            searchResults.style.display =
-                "none";
-
-        }
-
-
-        result.style.display =
-            "block";
-
-
-        message.textContent =
-            "Biodata ditemukan: " +
-            (
-                b.namaLengkap ||
-                namaLengkap
+            throw new Error(
+                data.message ||
+                "Biodata tidak ditemukan."
             );
+        }
 
 
-        /* scroll sedikit ke biodata */
+        /*
+         * Endpoint yang sudah kita tes mengembalikan:
+         *
+         * {
+         *   status:"success",
+         *   biodata:{ ... }
+         * }
+         *
+         * Jadi detail diambil dari data.biodata.
+         */
 
-        result.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-        });
+        const biodata =
+            data.biodata || data.data || {};
+
+
+        showBiodata(biodata);
 
 
     }catch(error){
 
         console.error(error);
 
-        message.textContent =
-            "Gagal mengambil biodata dari server.";
+        detail.style.display = "block";
 
+        document.getElementById(
+            "bioNama"
+        ).textContent = "Biodata tidak ditemukan";
+
+
+        showMessage(
+            error.message,
+            "error"
+        );
     }
-
 }
 
 
-/* =====================================================
+/* =========================================================
    SHOW BIODATA
-===================================================== */
+========================================================= */
 
 function showBiodata(b){
 
-    setText(
-        "biodataNama",
-        b.namaLengkap
+    /*
+     * Identitas utama
+     */
+
+    setBio(
+        "bioNama",
+        getValue(b,["namaLengkap","NamaLengkap"])
     );
 
-    setText(
-        "biodataTarget",
-        b.targetSeleksi
-            ? "Target Seleksi: " +
-              b.targetSeleksi
-            : ""
+    setBio(
+        "bioTarget",
+        getValue(b,["targetSeleksi","TargetSeleksi"])
     );
 
-    setText(
-        "biodataNamaPanggilan",
-        b.namaPanggilan
+    setBio(
+        "bioPanggilan",
+        getValue(b,["namaPanggilan","NamaPanggilan"])
     );
 
-    setText(
-        "biodataJenisKelamin",
-        b.jenisKelamin
-    );
-
-    setText(
-        "biodataTempatLahir",
-        b.tempatLahir
-    );
-
-    setText(
-        "biodataTanggalLahir",
-        b.tanggalLahir
-    );
-
-    setText(
-        "biodataAgama",
-        b.agama
-    );
-
-    setText(
-        "biodataWhatsApp",
-        b.whatsapp
-    );
-
-    setText(
-        "biodataEmail",
-        b.email
-    );
-
-    setText(
-        "biodataTinggiBerat",
-        formatTinggiBerat(
-            b.tinggi,
-            b.berat
-        )
-    );
-
-    setText(
-        "biodataSekolah",
-        b.sekolah
-    );
-
-    setText(
-        "biodataJurusan",
-        b.jurusan
-    );
-
-    setText(
-        "biodataTahunLulus",
-        b.tahunLulus
-    );
-
-    setText(
-        "biodataPendidikan",
-        b.pendidikanTerakhir
-    );
-
-    setText(
-        "biodataAlamat",
-        b.alamat
-    );
-
-    setText(
-        "biodataNamaAyah",
-        b.namaAyah
-    );
-
-    setText(
-        "biodataPekerjaanAyah",
-        b.pekerjaanAyah
-    );
-
-    setText(
-        "biodataPendidikanAyah",
-        b.pendidikanAyah
-    );
-
-    setText(
-        "biodataHpAyah",
-        b.hpAyah
-    );
-
-    setText(
-        "biodataNamaIbu",
-        b.namaIbu
-    );
-
-    setText(
-        "biodataPekerjaanIbu",
-        b.pekerjaanIbu
-    );
-
-    setText(
-        "biodataPendidikanIbu",
-        b.pendidikanIbu
-    );
-
-    setText(
-        "biodataHpIbu",
-        b.hpIbu
-    );
-
-    setText(
-        "biodataJumlahSaudara",
-        b.jumlahSaudara
-    );
-
-    setText(
-        "biodataOrganisasi",
-        b.organisasi
-    );
-
-    setText(
-        "biodataPrestasi",
-        b.prestasi
-    );
-
-    setText(
-        "biodataKepemimpinan",
-        b.kepemimpinan
-    );
-
-    setText(
-        "biodataKelebihan",
-        b.kelebihan
-    );
-
-    setText(
-        "biodataKekurangan",
-        b.kekurangan
-    );
-
-    setText(
-        "biodataPerbaikan",
-        b.perbaikan
-    );
-
-    setText(
-        "biodataHobi",
-        b.hobi
-    );
-
-    setText(
-        "biodataKeterampilan",
-        b.keterampilan
-    );
-
-    setText(
-        "biodataAlasan",
-        b.alasan
-    );
-
-    setText(
-        "biodataPersiapan",
-        b.persiapan
-    );
-
-    setText(
-        "biodataTargetSeleksi",
-        b.target
-    );
-
-    setText(
-        "biodataPernahSeleksi",
-        b.pernahSeleksi
-    );
-
-    setText(
-        "biodataTahunSeleksi",
-        b.tahunSeleksi
-    );
-
-    setText(
-        "biodataPengalamanSeleksi",
-        b.pengalamanSeleksi
-    );
-
-    setText(
-        "biodataPengalamanSulit",
-        b.pengalamanSulit
-    );
-
-    setText(
-        "biodataCaraMengatasi",
-        b.caraMengatasi
-    );
-
-    setText(
-        "biodataKerjaSama",
-        b.kerjaSama
+    setBio(
+        "bioJenisKelamin",
+        getValue(b,["jenisKelamin","JenisKelamin"])
     );
 
 
-    showPhoto(
-        b.fotoURL
+    /*
+     * Lahir
+     */
+
+    const tempat =
+        getValue(b,[
+            "tempatLahir",
+            "TempatLahir"
+        ]);
+
+    const tanggal =
+        getValue(b,[
+            "tanggalLahir",
+            "TanggalLahir"
+        ]);
+
+    let lahir = "";
+
+    if(tempat && tanggal){
+
+        lahir =
+            String(tempat) +
+            " / " +
+            String(tanggal);
+
+    }else{
+
+        lahir =
+            tempat ||
+            tanggal ||
+            "";
+
+    }
+
+    setBio(
+        "bioLahir",
+        lahir
     );
 
+
+    /*
+     * Kontak & fisik
+     */
+
+    setBio(
+        "bioAgama",
+        getValue(b,["agama","Agama"])
+    );
+
+    setBio(
+        "bioWhatsapp",
+        getValue(b,["whatsapp","WhatsApp"])
+    );
+
+    setBio(
+        "bioEmail",
+        getValue(b,["email","Email"])
+    );
+
+
+    const tinggi =
+        getValue(b,["tinggi","Tinggi"]);
+
+    const berat =
+        getValue(b,["berat","Berat"]);
+
+    let tinggiBerat = "";
+
+    if(tinggi && berat){
+
+        tinggiBerat =
+            String(tinggi) +
+            " / " +
+            String(berat);
+
+    }else{
+
+        tinggiBerat =
+            tinggi ||
+            berat ||
+            "";
+
+    }
+
+    setBio(
+        "bioTinggiBerat",
+        tinggiBerat
+    );
+
+
+    /*
+     * Alamat & pendidikan
+     */
+
+    setBio(
+        "bioAlamat",
+        getValue(b,["alamat","Alamat"])
+    );
+
+    setBio(
+        "bioSekolah",
+        getValue(b,["sekolah","Sekolah"])
+    );
+
+    setBio(
+        "bioJurusan",
+        getValue(b,["jurusan","Jurusan"])
+    );
+
+    setBio(
+        "bioTahunLulus",
+        getValue(b,["tahunLulus","TahunLulus"])
+    );
+
+    setBio(
+        "bioPendidikan",
+        getValue(b,[
+            "pendidikanTerakhir",
+            "PendidikanTerakhir"
+        ])
+    );
+
+
+    /*
+     * AYAH
+     */
+
+    setBio(
+        "bioNamaAyah",
+        getValue(b,["namaAyah","NamaAyah"])
+    );
+
+    setBio(
+        "bioPekerjaanAyah",
+        getValue(b,[
+            "pekerjaanAyah",
+            "PekerjaanAyah"
+        ])
+    );
+
+    setBio(
+        "bioPendidikanAyah",
+        getValue(b,[
+            "pendidikanAyah",
+            "PendidikanAyah"
+        ])
+    );
+
+    setBio(
+        "bioHpAyah",
+        getValue(b,[
+            "hpAyah",
+            "HpAyah"
+        ])
+    );
+
+
+    /*
+     * IBU
+     */
+
+    setBio(
+        "bioNamaIbu",
+        getValue(b,["namaIbu","NamaIbu"])
+    );
+
+    setBio(
+        "bioPekerjaanIbu",
+        getValue(b,[
+            "pekerjaanIbu",
+            "PekerjaanIbu"
+        ])
+    );
+
+    setBio(
+        "bioPendidikanIbu",
+        getValue(b,[
+            "pendidikanIbu",
+            "PendidikanIbu"
+        ])
+    );
+
+    setBio(
+        "bioHpIbu",
+        getValue(b,[
+            "hpIbu",
+            "HpIbu"
+        ])
+    );
+
+
+    /*
+     * ORGANISASI & PRESTASI
+     */
+
+    setBio(
+        "bioJumlahSaudara",
+        getValue(b,[
+            "jumlahSaudara",
+            "JumlahSaudara"
+        ])
+    );
+
+    setBio(
+        "bioOrganisasi",
+        getValue(b,[
+            "organisasi",
+            "Organisasi"
+        ])
+    );
+
+    setBio(
+        "bioPrestasi",
+        getValue(b,[
+            "prestasi",
+            "Prestasi"
+        ])
+    );
+
+    setBio(
+        "bioKepemimpinan",
+        getValue(b,[
+            "kepemimpinan",
+            "Kepemimpinan"
+        ])
+    );
+
+
+    /*
+     * REFLEKSI DIRI
+     */
+
+    setBio(
+        "bioKelebihan",
+        getValue(b,[
+            "kelebihan",
+            "Kelebihan"
+        ])
+    );
+
+    setBio(
+        "bioKekurangan",
+        getValue(b,[
+            "kekurangan",
+            "Kekurangan"
+        ])
+    );
+
+    setBio(
+        "bioPerbaikan",
+        getValue(b,[
+            "perbaikan",
+            "Perbaikan"
+        ])
+    );
+
+    setBio(
+        "bioHobi",
+        getValue(b,[
+            "hobi",
+            "Hobi"
+        ])
+    );
+
+    setBio(
+        "bioKeterampilan",
+        getValue(b,[
+            "keterampilan",
+            "Keterampilan"
+        ])
+    );
+
+
+    /*
+     * MOTIVASI & SELEKSI
+     */
+
+    setBio(
+        "bioAlasan",
+        getValue(b,[
+            "alasan",
+            "Alasan"
+        ])
+    );
+
+    setBio(
+        "bioPersiapan",
+        getValue(b,[
+            "persiapan",
+            "Persiapan"
+        ])
+    );
+
+    setBio(
+        "bioTargetPribadi",
+        getValue(b,[
+            "target",
+            "Target"
+        ])
+    );
+
+    setBio(
+        "bioPernahSeleksi",
+        getValue(b,[
+            "pernahSeleksi",
+            "PernahSeleksi"
+        ])
+    );
+
+    setBio(
+        "bioTahunSeleksi",
+        getValue(b,[
+            "tahunSeleksi",
+            "TahunSeleksi"
+        ])
+    );
+
+    setBio(
+        "bioPengalamanSeleksi",
+        getValue(b,[
+            "pengalamanSeleksi",
+            "PengalamanSeleksi"
+        ])
+    );
+
+    setBio(
+        "bioPengalamanSulit",
+        getValue(b,[
+            "pengalamanSulit",
+            "PengalamanSulit"
+        ])
+    );
+
+    setBio(
+        "bioCaraMengatasi",
+        getValue(b,[
+            "caraMengatasi",
+            "CaraMengatasi"
+        ])
+    );
+
+    setBio(
+        "bioKerjaSama",
+        getValue(b,[
+            "kerjaSama",
+            "KerjaSama"
+        ])
+    );
+
+
+    /*
+     * FOTO
+     *
+     * Endpoint yang sudah terbukti berhasil:
+     *
+     * fotoURL:
+     * https://drive.google.com/file/d/FILE_ID/view?usp=drivesdk
+     */
+
+    const fotoURL =
+        getValue(b,[
+            "fotoURL",
+            "FotoURL"
+        ]);
+
+
+    showPhoto(fotoURL);
 }
 
 
-/* =====================================================
-   SAFE TEXT
-===================================================== */
+/* =========================================================
+   SET BIO FIELD
+========================================================= */
 
-function setText(
-    id,
-    value
-){
+function setBio(id,value){
 
     const element =
         document.getElementById(id);
 
-
     if(!element){
-
         return;
-
     }
-
-
-    if(
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-    ){
-
-        element.textContent =
-            "-";
-
-        return;
-
-    }
-
 
     element.textContent =
-        String(value);
-
+        value !== undefined &&
+        value !== null &&
+        String(value).trim() !== ""
+            ? String(value)
+            : "-";
 }
 
 
-/* =====================================================
-   FORMAT TINGGI / BERAT
-===================================================== */
-
-function formatTinggiBerat(
-    tinggi,
-    berat
-){
-
-    const t =
-        String(
-            tinggi == null
-                ? ""
-                : tinggi
-        ).trim();
-
-    const b =
-        String(
-            berat == null
-                ? ""
-                : berat
-        ).trim();
-
-
-    if(!t && !b){
-
-        return "-";
-
-    }
-
-
-    if(t && b){
-
-        return (
-            t +
-            " cm / " +
-            b +
-            " kg"
-        );
-
-    }
-
-
-    if(t){
-
-        return t + " cm";
-
-    }
-
-
-    return b + " kg";
-
-}
-
-
-/* =====================================================
-   FOTO
-===================================================== */
+/* =========================================================
+   SHOW PHOTO
+========================================================= */
 
 function showPhoto(url){
 
-    const container =
+    const img =
         document.getElementById(
-            "biodataPhotoContainer"
+            "biodataPhoto"
         );
 
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    const foto =
-        String(
-            url == null
-                ? ""
-                : url
-        ).trim();
-
-
-    if(!foto){
-
-        container.innerHTML = `
-
-            <div class="biodata-photo-placeholder">
-                Foto tidak tersedia
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML = `
-
-        <img
-            class="biodata-photo"
-            src="${escapeHtml(foto)}"
-            alt="Foto peserta"
-            onerror="
-                this.style.display='none';
-                this.nextElementSibling.style.display='flex';
-            "
-        >
-
-        <div
-            class="biodata-photo-placeholder"
-            style="display:none;"
-        >
-            Foto tidak dapat ditampilkan
-        </div>
-
-    `;
-
-}
-
-
-/* =====================================================
-   SUMMARY
-===================================================== */
-
-function updateSummary(){
-
-    document
-    .getElementById("totalData")
-    .textContent =
-        allData.length;
-
-
-    const students =
-        new Set();
-
-
-    let totalScore = 0;
-
-    let scoreCount = 0;
-
-
-    allData.forEach(
-        function(row){
-
-            if(
-                row.name &&
-                String(row.name).trim()
-            ){
-
-                students.add(
-                    String(row.name).trim()
-                );
-
-            }
-
-
-            const score =
-                parseFloat(
-                    String(
-                        row.value || ""
-                    ).replace(",", ".")
-                );
-
-
-            if(!isNaN(score)){
-
-                totalScore += score;
-
-                scoreCount++;
-
-            }
-
-        }
-    );
-
-
-    document
-    .getElementById("totalStudents")
-    .textContent =
-        students.size;
-
-
-    document
-    .getElementById("averageScore")
-    .textContent =
-        scoreCount
-            ? (
-                totalScore /
-                scoreCount
-              ).toFixed(1)
-            : "0";
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-    return String(
-        value == null
-            ? ""
-            : value
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/* =====================================================
-   SCORE CLASS
-===================================================== */
-
-function scoreClass(value){
-
-    const score =
-        parseFloat(
-            String(
-                value == null
-                    ? ""
-                    : value
-            ).replace(",", ".")
-        );
-
-
-    if(
-        !isNaN(score) &&
-        score < 60
-    ){
-
-        return "score-red";
-
-    }
-
-
-    return "score-normal";
-
-}
-
-
-/* =====================================================
-   ACTIVITY BADGE
-===================================================== */
-
-function activityBadge(value){
-
-    if(!value){
-
-        return "-";
-
-    }
-
-
-    return `
-
-        <span class="badge">
-            ${escapeHtml(value)}
-        </span>
-
-    `;
-
-}
-
-
-/* =====================================================
-   RENDER TABLE
-===================================================== */
-
-function renderTable(){
-
-    const body =
+    const placeholder =
         document.getElementById(
-            "tableBody"
+            "photoPlaceholder"
         );
-
-
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const activity =
-        document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
-
-
-    const group =
-        document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
-
-
-    const filtered =
-        allData.filter(
-            function(row){
-
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
-
-
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
-
-
-                const searchMatch =
-                    !search ||
-                    text.includes(search);
-
-
-                const activityMatch =
-                    !activity ||
-                    rowActivity === activity;
-
-
-                const groupMatch =
-                    !group ||
-                    rowGroup === group;
-
-
-                return (
-                    searchMatch &&
-                    activityMatch &&
-                    groupMatch
-                );
-
-            }
-        );
-
-
-    if(
-        filtered.length === 0
-    ){
-
-        body.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="16"
-                    class="empty"
-                >
-                    Tidak ada data yang sesuai.
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        filtered
-        .map(
-            function(row,index){
-
-                return `
-
-                    <tr>
-
-                        <td>
-                            ${index + 1}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.timestamp
-                            )}
-                        </td>
-
-                        <td>
-                            <strong>
-                                ${escapeHtml(
-                                    row.name
-                                )}
-                            </strong>
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.code
-                            )}
-                        </td>
-
-                        <td>
-                            ${activityBadge(
-                                row.activity
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.group
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.test
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.date
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kecerdasan
-                        )}">
-                            ${escapeHtml(
-                                row.kecerdasan
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kepribadian
-                        )}">
-                            ${escapeHtml(
-                                row.kepribadian
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kecermatan
-                        )}">
-                            ${escapeHtml(
-                                row.kecermatan
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.tiu
-                        )}">
-                            ${escapeHtml(
-                                row.tiu
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.twk
-                        )}">
-                            ${escapeHtml(
-                                row.twk
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.tkp
-                        )}">
-                            ${escapeHtml(
-                                row.tkp
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.pengetahuanUmum
-                        )}">
-                            ${escapeHtml(
-                                row.pengetahuanUmum
-                            )}
-                        </td>
-
-                        <td class="total-score">
-                            ${escapeHtml(
-                                row.value
-                            )}
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-        )
-        .join("");
-
-}
-
-
-/* =====================================================
-   RESET FILTER
-===================================================== */
-
-function resetFilter(){
-
-    document
-    .getElementById("searchInput")
-    .value = "";
-
-
-    document
-    .getElementById("activityFilter")
-    .value = "";
-
-
-    document
-    .getElementById("groupFilter")
-    .value = "";
-
-
-    renderTable();
-
-}
-
-
-/* =====================================================
-   DOWNLOAD CSV
-===================================================== */
-
-function downloadCSV(){
-
-    if(
-        !allData ||
-        allData.length === 0
-    ){
-
-        alert(
-            "Belum ada data untuk di-download."
-        );
-
-        return;
-
-    }
-
-
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const activity =
-        document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
-
-
-    const group =
-        document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
-
-
-    const filtered =
-        allData.filter(
-            function(row){
-
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
-
-
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
-
-
-                return (
-
-                    (!search ||
-                        text.includes(search))
-
-                    &&
-
-                    (!activity ||
-                        rowActivity === activity)
-
-                    &&
-
-                    (!group ||
-                        rowGroup === group)
-
-                );
-
-            }
-        );
-
-
-    if(
-        filtered.length === 0
-    ){
-
-        alert(
-            "Tidak ada data sesuai filter."
-        );
-
-        return;
-
-    }
-
-
-    const headers = [
-
-        "No",
-        "Timestamp",
-        "Nama Siswa",
-        "Session ID",
-        "Aktivitas",
-        "Program",
-        "Nama Tryout",
-        "Tanggal",
-        "Kecerdasan",
-        "Kepribadian",
-        "Kecermatan",
-        "TIU",
-        "TWK",
-        "TKP",
-        "Pengetahuan Umum",
-        "Nilai Akhir"
-
-    ];
-
-
-    const rows = [
-        headers
-    ];
-
-
-    filtered.forEach(
-        function(row,index){
-
-            rows.push([
-
-                index + 1,
-                row.timestamp || "",
-                row.name || "",
-                row.code || "",
-                row.activity || "",
-                row.group || "",
-                row.test || "",
-                row.date || "",
-                row.kecerdasan || "",
-                row.kepribadian || "",
-                row.kecermatan || "",
-                row.tiu || "",
-                row.twk || "",
-                row.tkp || "",
-                row.pengetahuanUmum || "",
-                row.value || ""
-
-            ]);
-
-        }
-    );
-
-
-    const csv =
-        rows
-        .map(
-            function(row){
-
-                return row
-                .map(
-                    function(value){
-
-                        return '"' +
-                            String(
-                                value == null
-                                    ? ""
-                                    : value
-                            )
-                            .replace(
-                                /"/g,
-                                '""'
-                            ) +
-                            '"';
-
-                    }
-                )
-                .join(",");
-
-            }
-        )
-        .join("\r\n");
-
-
-    const blob =
-        new Blob(
-            [
-                "\uFEFF" +
-                csv
-            ],
-            {
-                type:
-                    "text/csv;charset=utf-8;"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
 
     const link =
-        document.createElement("a");
+        document.getElementById(
+            "photoLink"
+        );
 
 
-    const today =
-        new Date()
-        .toISOString()
-        .slice(0,10);
+    /*
+     * Reset dulu.
+     */
+
+    img.style.display = "none";
+    placeholder.style.display = "block";
+    link.style.display = "none";
+
+    img.removeAttribute("src");
+    link.removeAttribute("href");
+
+
+    if(!url){
+        return;
+    }
+
+
+    /*
+     * URL Google Drive:
+     *
+     * /file/d/ID/view
+     *
+     * diubah menjadi:
+     *
+     * /uc?export=view&id=ID
+     *
+     * agar bisa dipakai sebagai source gambar.
+     */
+
+    let imageURL = url;
+
+
+    const match =
+        String(url).match(
+            /\/file\/d\/([^/]+)/
+        );
+
+
+    if(match && match[1]){
+
+        imageURL =
+            "https://drive.google.com/uc?export=view&id=" +
+            encodeURIComponent(match[1]);
+    }
+
+
+    img.onload = function(){
+
+        placeholder.style.display = "none";
+        img.style.display = "block";
+
+    };
+
+
+    img.onerror = function(){
+
+        img.style.display = "none";
+        placeholder.style.display = "block";
+
+        placeholder.innerHTML =
+            "Foto tersedia di Google Drive.<br>" +
+            "Gunakan tautan di bawah.";
+
+    };
+
+
+    img.src = imageURL;
 
 
     link.href = url;
-
-    link.download =
-        "rekap-prc-class-" +
-        today +
-        ".csv";
-
-
-    document
-    .body
-    .appendChild(link);
-
-
-    link.click();
-
-
-    document
-    .body
-    .removeChild(link);
-
-
-    URL.revokeObjectURL(url);
-
+    link.style.display = "inline-block";
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* =========================================================
+   INITIAL STATE
+========================================================= */
 
-function logoutAdmin(){
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-    adminPin = "";
+        document.getElementById(
+            "loginPanel"
+        ).style.display = "flex";
 
-    allData = [];
+        document.getElementById(
+            "adminPanel"
+        ).style.display = "none";
 
-
-    document
-    .getElementById("adminContent")
-    .style.display = "none";
-
-
-    document
-    .getElementById("adminLogin")
-    .style.display = "flex";
-
-
-    document
-    .getElementById("pinInput")
-    .value = "";
-
-
-    document
-    .getElementById("loginError")
-    .textContent = "";
-
-
-    document
-    .getElementById("tableBody")
-    .innerHTML = "";
-
-
-    document
-    .getElementById("totalData")
-    .textContent = "0";
-
-
-    document
-    .getElementById("totalStudents")
-    .textContent = "0";
-
-
-    document
-    .getElementById("averageScore")
-    .textContent = "0";
-
-
-    document
-    .getElementById("biodataPanel")
-    .style.display = "none";
-
-
-    document
-    .getElementById("biodataSearch")
-    .value = "";
-
-
-    document
-    .getElementById("biodataResult")
-    .style.display = "none";
-
-
-    document
-    .getElementById("biodataSearchResults")
-    .style.display = "none";
-
-
-    document
-    .getElementById("biodataSearchResults")
-    .innerHTML = "";
-
-
-    document
-    .getElementById("biodataMessage")
-    .textContent =
-        "Masukkan sebagian atau seluruh nama peserta.";
-
-
-    document
-    .getElementById("pinInput")
-    .focus();
-
-}
+    }
+);
 
 </script>
 
