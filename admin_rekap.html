@@ -950,7 +950,7 @@ let selectedParticipantName = "";
 
 
 /* =====================================================
-   UTILITY
+   UTILITY & PROPERTY HELPERS (MENGHINDARI BERGESER)
 ===================================================== */
 
 function normalize(value){
@@ -982,6 +982,36 @@ function formatFieldName(key){
         .replace(/_/g," ")
         .trim();
 
+}
+
+
+/* 
+   Helper aman untuk mengambil property objek tanpa peduli besar/kecil huruf (case-insensitive) 
+   atau perbedaan camelCase / PascalCase dari backend.
+*/
+function getProp(obj, names){
+    if(!obj || typeof obj !== 'object') return "";
+    
+    // Cari exact match dulu
+    for(let name of names){
+        if(obj[name] !== undefined && obj[name] !== null && obj[name] !== "") {
+            return obj[name];
+        }
+    }
+    
+    // Cari case-insensitive match
+    const keys = Object.keys(obj);
+    for(let name of names){
+        const lowerName = name.toLowerCase();
+        for(let key of keys){
+            if(key.toLowerCase() === lowerName){
+                if(obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
+                    return obj[key];
+                }
+            }
+        }
+    }
+    return "";
 }
 
 
@@ -1262,7 +1292,7 @@ function updateSummary(){
     allResults.forEach(function(row){
 
         const name =
-            normalize(row.NamaSiswa);
+            normalize(getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"]));
 
         if(name){
             names.add(name);
@@ -1327,7 +1357,7 @@ async function loadBiodataCount(){
 
 
 /* =====================================================
-   SEARCH PESERTA
+   CARI PESERTA (PARTIAL MATCH / INCLUDES)
 ===================================================== */
 
 async function searchParticipant(){
@@ -1395,10 +1425,17 @@ async function searchParticipant(){
             return;
         }
 
-        allBiodataSearchResults =
+        const rawResults =
             Array.isArray(data.results)
             ? data.results
             : [];
+
+        // Filter tambahan di sisi klien dengan partial match / includes case-insensitive
+        const lowerKeyword = keyword.toLowerCase();
+        allBiodataSearchResults = rawResults.filter(person => {
+            const namaLengkap = String(getProp(person, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa", "nama"])).toLowerCase();
+            return namaLengkap.includes(lowerKeyword);
+        });
 
         if(
             allBiodataSearchResults.length === 0
@@ -1455,15 +1492,10 @@ function renderParticipantResults(results){
     results.forEach(function(person,index){
 
         const name =
-            person.NamaLengkap ||
-            person.namaLengkap ||
-            person.NamaSiswa ||
-            "-";
+            getProp(person, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa", "nama"]) || "-";
 
         const target =
-            person.TargetSeleksi ||
-            person.targetSeleksi ||
-            "-";
+            getProp(person, ["TargetSeleksi", "targetSeleksi", "Target"]) || "-";
 
         const div =
             document.createElement("div");
@@ -1514,10 +1546,7 @@ function selectParticipant(index){
     if(!person) return;
 
     const nama =
-        person.NamaLengkap ||
-        person.namaLengkap ||
-        person.NamaSiswa ||
-        "";
+        getProp(person, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa", "nama"]);
 
     if(!nama) return;
 
@@ -1591,7 +1620,7 @@ async function loadFullBiodata(nama){
             data.biodata ||
             data.data ||
             data.result ||
-            null;
+            data;
 
         if(
             !selectedBiodata ||
@@ -1645,7 +1674,7 @@ async function loadFullBiodata(nama){
 
 
 /* =====================================================
-   RENDER SEMUA BIODATA
+   RENDER SEMUA BIODATA DENGAN URUTAN YANG DIMINTA
 ===================================================== */
 
 function renderFullBiodata(data){
@@ -1658,16 +1687,12 @@ function renderFullBiodata(data){
     grid.innerHTML = "";
 
     const name =
-        data.NamaLengkap ||
-        data.namaLengkap ||
-        data.NamaSiswa ||
+        getProp(data, ["NamaLengkap", "namaLengkap", "NamaSiswa", "namasiswa"]) ||
         selectedParticipantName ||
         "-";
 
     const target =
-        data.TargetSeleksi ||
-        data.targetSeleksi ||
-        "";
+        getProp(data, ["TargetSeleksi", "targetSeleksi", "Target"]) || "";
 
     document.getElementById(
         "selectedParticipantName"
@@ -1682,31 +1707,109 @@ function renderFullBiodata(data){
         : "";
 
     /*
-       Semua field biodata dari Google Sheet
-       akan ditampilkan.
-       Hanya field foto yang dikeluarkan.
+       Daftar urutan field spesifik sesuai permintaan Anda.
+       Memastikan mapping berdasarkan nama property (bukan indeks array yang bisa bergeser).
     */
 
-    const photoKeys = new Set([
-        "fotoURL",
-        "FotoURL",
-        "photoURL",
-        "PhotoURL",
-        "foto",
-        "Foto",
-        "photo",
-        "Photo"
-    ]);
+    const orderedKeys = [
+        "TargetSeleksi",
+        "NamaLengkap",
+        "NamaPanggilan",
+        "JenisKelamin",
+        "TempatLahir",
+        "TanggalLahir",
+        "Agama",
+        "WhatsApp",
+        "Email",
+        "Tinggi",
+        "Berat",
+        "Alamat",
+        "Sekolah",
+        "Jurusan",
+        "TahunLulus",
+        "PendidikanTerakhir",
+        "NamaAyah",
+        "PekerjaanAyah",
+        "PendidikanAyah",
+        "HpAyah",
+        "NamaIbu",
+        "PekerjaanIbu",
+        "PendidikanIbu",
+        "HpIbu",
+        "JumlahSaudara",
+        "Organisasi",
+        "Prestasi",
+        "Kepemimpinan",
+        "Kelebihan",
+        "Kekurangan",
+        "Perbaikan",
+        "Hobi",
+        "Keterampilan",
+        "Alasan",
+        "Persiapan",
+        "Target",
+        "PernahSeleksi",
+        "TahunSeleksi",
+        "PengalamanSeleksi",
+        "PengalamanSulit",
+        "CaraMengatasi",
+        "KerjaSama"
+    ];
 
+    const renderedKeys = new Set();
+
+    // Render sesuai urutan yang ditentukan secara ketat
+    orderedKeys.forEach(function(key){
+        const val = getProp(data, [key]);
+        renderedKeys.add(key.toLowerCase());
+
+        const empty =
+            val === null ||
+            val === undefined ||
+            String(val).trim() === "";
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "bio-item";
+
+        // Tambahkan kelas full width untuk field yang panjang
+        if(["Alamat", "Organisasi", "Prestasi", "Kepemimpinan", "Kelebihan", "Kekurangan", "Perbaikan", "Hobi", "Keterampilan", "Alasan", "Persiapan", "Target", "PengalamanSeleksi", "PengalamanSulit", "CaraMengatasi", "KerjaSama"].includes(key)){
+            item.style.gridColumn = "1 / -1";
+        }
+
+        item.innerHTML = `
+
+            <div class="bio-label">
+                ${escapeHTML(
+                    formatFieldName(key)
+                )}
+            </div>
+
+            <div class="bio-value ${empty ? "empty" : ""}">
+                ${empty
+                    ? "Belum diisi"
+                    : escapeHTML(val)
+                }
+            </div>
+
+        `;
+
+        grid.appendChild(item);
+    });
+
+    // Render properti lain yang mungkin ada di object data tapi belum masuk orderedKeys
     Object.keys(data).forEach(function(key){
-
-        if(photoKeys.has(key)){
+        const lowerKey = key.toLowerCase();
+        if(
+            renderedKeys.has(lowerKey) ||
+            ["fotourl", "photourl", "foto", "photo"].includes(lowerKey)
+        ){
             return;
         }
 
-        const value =
-            data[key];
-
+        const value = data[key];
         const empty =
             value === null ||
             value === undefined ||
@@ -1736,19 +1839,10 @@ function renderFullBiodata(data){
         `;
 
         grid.appendChild(item);
-
     });
 
     selectedPhotoURL =
-        data.FotoURL ||
-        data.fotoURL ||
-        data.photoURL ||
-        data.PhotoURL ||
-        data.foto ||
-        data.Foto ||
-        data.photo ||
-        data.Photo ||
-        "";
+        getProp(data, ["FotoURL", "fotoURL", "PhotoURL", "photoURL", "Foto", "foto", "Photo", "photo"]);
 
     if(selectedPhotoURL){
 
@@ -2174,7 +2268,7 @@ function filterResultsForParticipant(nama){
         allResults.filter(function(row){
 
             return normalize(
-                row.NamaSiswa
+                getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
             ) === target;
 
         });
@@ -2191,7 +2285,7 @@ function filterResultsForParticipant(nama){
 
                 const rowName =
                     normalize(
-                        row.NamaSiswa
+                        getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
                     );
 
                 return (
@@ -2231,7 +2325,7 @@ function filterResultsForParticipant(nama){
 
 /* =====================================================
    TAMPILKAN SEMUA
-   VERSI BARU — RELOAD DARI APPS SCRIPT
+   RELOAD TERBARU DARI APPS SCRIPT
 ===================================================== */
 
 async function showAllResults(){
@@ -2265,11 +2359,6 @@ async function showAllResults(){
 
     try{
 
-        /*
-           AMBIL ULANG SEMUA HASIL
-           LANGSUNG DARI APPS SCRIPT
-        */
-
         const url =
             API_URL +
             "?mode=admin" +
@@ -2293,25 +2382,12 @@ async function showAllResults(){
 
         }
 
-        /*
-           GANTI MASTER DATA
-           DENGAN DATA TERBARU
-        */
-
         allResults =
             Array.isArray(data.results)
             ? data.results
             : [];
 
-        /*
-           KOSONGKAN SEMUA FILTER
-        */
-
         clearResultFilters();
-
-        /*
-           TAMPILKAN SEMUA
-        */
 
         filteredResults =
             allResults.slice();
@@ -2333,10 +2409,6 @@ async function showAllResults(){
             "displayedResults"
         ).textContent =
             filteredResults.length;
-
-        /*
-           Pastikan tabel terlihat.
-        */
 
         document.getElementById(
             "tableLoading"
@@ -2413,22 +2485,22 @@ function applyFilters(){
 
             const rowNama =
                 normalize(
-                    row.NamaSiswa
+                    getProp(row, ["NamaSiswa", "namasiswa", "Nama", "nama"])
                 );
 
             const rowProgram =
                 normalize(
-                    row.Program
+                    getProp(row, ["Program", "program"])
                 );
 
             const rowTryout =
                 normalize(
-                    row.NamaTryout
+                    getProp(row, ["NamaTryout", "namatryout", "Tryout", "tryout"])
                 );
 
             const rowTanggal =
                 normalizeDate(
-                    row.Tanggal
+                    getProp(row, ["Tanggal", "tanggal"])
                 );
 
             return (
@@ -2542,7 +2614,7 @@ function normalizeDate(value){
 
 
 /* =====================================================
-   RENDER HASIL
+   RENDER HASIL (17 KOLOM LENGKAP)
 ===================================================== */
 
 function renderResults(results){
@@ -2621,7 +2693,7 @@ function renderResults(results){
                 document.createElement("td");
 
             const value =
-                row[field] ?? "";
+                getProp(row, [field, field.toLowerCase()]) ?? "";
 
             td.textContent =
                 value;
@@ -2705,12 +2777,6 @@ function resetParticipant(){
 
     resetPhoto();
 
-    /*
-       Reset peserta = tampilkan
-       semua hasil lagi.
-       Tidak menggunakan filter lama.
-    */
-
     clearResultFilters();
 
     filteredResults =
@@ -2752,8 +2818,7 @@ function downloadBiodata(){
     }
 
     const name =
-        selectedBiodata.NamaLengkap ||
-        selectedBiodata.namaLengkap ||
+        getProp(selectedBiodata, ["NamaLengkap", "namaLengkap", "NamaSiswa"]) ||
         "Peserta";
 
     let html =
@@ -2781,15 +2846,11 @@ function downloadBiodata(){
     ).forEach(function(key){
 
         if([
-            "fotoURL",
-            "FotoURL",
-            "photoURL",
-            "PhotoURL",
+            "fotourl",
+            "photourl",
             "foto",
-            "Foto",
-            "photo",
-            "Photo"
-        ].includes(key)){
+            "photo"
+        ].includes(key.toLowerCase())){
 
             return;
         }
@@ -2934,7 +2995,7 @@ function downloadCSV(){
                 .map(function(h){
 
                     return csvEscape(
-                        row[h] ?? ""
+                        getProp(row, [h, h.toLowerCase()]) ?? ""
                     );
 
                 })
