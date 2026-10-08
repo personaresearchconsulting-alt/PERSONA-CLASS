@@ -20,9 +20,7 @@
     --success:#18794e;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
@@ -31,11 +29,7 @@ body{
     color:var(--navy);
 }
 
-button,
-input,
-select{
-    font:inherit;
-}
+button,input,select{font:inherit}
 
 .container{
     width:min(1500px,94%);
@@ -157,6 +151,11 @@ main{
     font-weight:bold;
 }
 
+.primary-btn:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
 .secondary-btn{
     border:1px solid var(--border);
     background:#fff;
@@ -164,6 +163,11 @@ main{
     padding:10px 15px;
     border-radius:8px;
     cursor:pointer;
+}
+
+.secondary-btn:disabled{
+    opacity:.6;
+    cursor:wait;
 }
 
 .small-btn{
@@ -387,8 +391,7 @@ table{
     background:#fff;
 }
 
-th,
-td{
+th,td{
     border-bottom:1px solid #eee;
     padding:9px 10px;
     font-size:12px;
@@ -429,6 +432,11 @@ tr:hover td{
     color:var(--muted);
 }
 
+.refreshing{
+    opacity:.65;
+    pointer-events:none;
+}
+
 @media(max-width:900px){
 
     .summary{
@@ -442,7 +450,6 @@ tr:hover td{
     .bio-layout{
         grid-template-columns:1fr;
     }
-
 }
 
 @media(max-width:600px){
@@ -472,16 +479,13 @@ tr:hover td{
         flex-direction:column;
         align-items:flex-start;
     }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+<!-- LOGIN -->
 
 <div id="loginSection">
 
@@ -497,10 +501,7 @@ tr:hover td{
                 Persona Class — Data Peserta & Hasil Tryout
             </p>
 
-            <div
-                id="loginStatus"
-                class="status"
-            ></div>
+            <div id="loginStatus" class="status"></div>
 
             <div class="form-group">
 
@@ -519,6 +520,7 @@ tr:hover td{
             </div>
 
             <button
+                id="loginButton"
                 class="primary-btn"
                 onclick="loginAdmin()"
             >
@@ -532,14 +534,9 @@ tr:hover td{
 </div>
 
 
-<!-- =====================================================
-     ADMIN
-===================================================== -->
+<!-- ADMIN -->
 
-<div
-    id="adminSection"
-    class="hidden"
->
+<div id="adminSection" class="hidden">
 
 <header>
 
@@ -573,15 +570,10 @@ tr:hover td{
 
 <div class="container">
 
-    <div
-        id="mainStatus"
-        class="status"
-    ></div>
+    <div id="mainStatus" class="status"></div>
 
 
-    <!-- =================================================
-         SUMMARY
-    ================================================= -->
+    <!-- SUMMARY -->
 
     <div class="summary card">
 
@@ -600,7 +592,6 @@ tr:hover td{
 
         </div>
 
-
         <div class="summary-card">
 
             <div class="summary-label">
@@ -616,7 +607,6 @@ tr:hover td{
 
         </div>
 
-
         <div class="summary-card">
 
             <div class="summary-label">
@@ -631,7 +621,6 @@ tr:hover td{
             </div>
 
         </div>
-
 
         <div class="summary-card">
 
@@ -651,9 +640,7 @@ tr:hover td{
     </div>
 
 
-    <!-- =================================================
-         CARI PESERTA
-    ================================================= -->
+    <!-- CARI PESERTA -->
 
     <div class="card">
 
@@ -662,10 +649,9 @@ tr:hover td{
         </h2>
 
         <p class="card-subtitle">
-            Cari nama peserta untuk menampilkan biodata lengkap
-            dan seluruh riwayat pengerjaan.
+            Cari nama peserta untuk menampilkan seluruh biodata
+            dan seluruh riwayat pengerjaan peserta.
         </p>
-
 
         <div class="participant-search">
 
@@ -678,6 +664,7 @@ tr:hover td{
             >
 
             <button
+                id="searchParticipantButton"
                 class="primary-btn"
                 onclick="searchParticipant()"
             >
@@ -693,7 +680,6 @@ tr:hover td{
 
         </div>
 
-
         <div
             id="participantResults"
             class="search-results"
@@ -702,9 +688,7 @@ tr:hover td{
     </div>
 
 
-    <!-- =================================================
-         BIODATA
-    ================================================= -->
+    <!-- BIODATA -->
 
     <div
         id="biodataCard"
@@ -754,7 +738,6 @@ tr:hover td{
                     Foto belum tersedia
                 </div>
 
-
                 <div class="photo-actions">
 
                     <button
@@ -778,7 +761,7 @@ tr:hover td{
             </div>
 
 
-            <!-- SEMUA DATA -->
+            <!-- SEMUA DATA BIODATA -->
 
             <div>
 
@@ -798,9 +781,7 @@ tr:hover td{
     </div>
 
 
-    <!-- =================================================
-         HASIL TRYOUT
-    ================================================= -->
+    <!-- HASIL TRYOUT -->
 
     <div class="card">
 
@@ -814,7 +795,6 @@ tr:hover td{
 
                 <div
                     id="rekapInfo"
-                    class="rekap-info"
                     style="font-size:12px;color:#777;margin-top:4px"
                 >
                     Menampilkan seluruh hasil tryout.
@@ -822,10 +802,10 @@ tr:hover td{
 
             </div>
 
-
             <div class="filter-actions">
 
                 <button
+                    id="showAllButton"
                     class="secondary-btn"
                     onclick="showAllResults()"
                 >
@@ -964,6 +944,7 @@ let allBiodataSearchResults = [];
 
 let selectedBiodata = null;
 let selectedPhotoURL = "";
+let selectedPhotoData = null;
 
 let selectedParticipantName = "";
 
@@ -1040,7 +1021,7 @@ function hideStatus(id){
    JSONP
 ===================================================== */
 
-function jsonp(url){
+function jsonp(url,timeoutMs=15000){
 
     return new Promise((resolve,reject)=>{
 
@@ -1050,13 +1031,10 @@ function jsonp(url){
             "_" +
             Math.floor(Math.random()*100000);
 
-
         const script =
             document.createElement("script");
 
-
         let finished = false;
-
 
         function cleanup(){
 
@@ -1071,9 +1049,7 @@ function jsonp(url){
             if(script.parentNode){
                 script.parentNode.removeChild(script);
             }
-
         }
-
 
         const timer =
             setTimeout(function(){
@@ -1090,8 +1066,7 @@ function jsonp(url){
                     )
                 );
 
-            },15000);
-
+            },timeoutMs);
 
         window[callbackName] =
             function(data){
@@ -1105,7 +1080,6 @@ function jsonp(url){
                 resolve(data);
 
             };
-
 
         script.onerror =
             function(){
@@ -1124,15 +1098,11 @@ function jsonp(url){
 
             };
 
-
         script.src =
             url +
             (url.includes("?") ? "&" : "?") +
             "callback=" +
-            encodeURIComponent(
-                callbackName
-            );
-
+            encodeURIComponent(callbackName);
 
         document.body.appendChild(script);
 
@@ -1153,7 +1123,6 @@ async function loginAdmin(){
             .value
             .trim();
 
-
     if(!pin){
 
         showStatus(
@@ -1165,25 +1134,15 @@ async function loginAdmin(){
         return;
     }
 
-
     const button =
-        document.querySelector(
-            "#loginSection .primary-btn"
+        document.getElementById(
+            "loginButton"
         );
-
 
     button.disabled = true;
 
     button.textContent =
         "MEMERIKSA...";
-
-
-    showStatus(
-        "loginStatus",
-        "Memeriksa akses admin...",
-        "success"
-    );
-
 
     try{
 
@@ -1193,10 +1152,8 @@ async function loginAdmin(){
             "&adminPin=" +
             encodeURIComponent(pin);
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,20000);
 
         if(
             data &&
@@ -1207,28 +1164,18 @@ async function loginAdmin(){
                 .getElementById("loginSection")
                 .classList.add("hidden");
 
-
             document
                 .getElementById("adminSection")
                 .classList.remove("hidden");
-
 
             sessionStorage.setItem(
                 "prc_admin_login",
                 "1"
             );
 
-
             processAdminData(data);
 
-
-            /*
-               Biodata count dijalankan setelah
-               dashboard sudah tampil.
-            */
-
             loadBiodataCount();
-
 
         }else{
 
@@ -1240,7 +1187,6 @@ async function loginAdmin(){
             );
 
         }
-
 
     }catch(error){
 
@@ -1264,7 +1210,7 @@ async function loginAdmin(){
 
 
 /* =====================================================
-   PROCESS HASIL ADMIN
+   PROCESS ADMIN
 ===================================================== */
 
 function processAdminData(data){
@@ -1274,22 +1220,46 @@ function processAdminData(data){
         ? data.results
         : [];
 
-
     filteredResults =
-        [...allResults];
+        allResults.slice();
 
+    updateSummary();
+
+    document
+        .getElementById("tableLoading")
+        .classList.add("hidden");
+
+    document
+        .getElementById("tableWrap")
+        .classList.remove("hidden");
+
+    renderResults(
+        allResults
+    );
+
+    document.getElementById(
+        "rekapInfo"
+    ).textContent =
+        "Menampilkan seluruh hasil tryout.";
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(){
 
     document.getElementById(
         "totalResults"
     ).textContent =
         allResults.length;
 
-
     const names =
         new Set();
 
-
-    allResults.forEach(row=>{
+    allResults.forEach(function(row){
 
         const name =
             normalize(row.NamaSiswa);
@@ -1300,32 +1270,15 @@ function processAdminData(data){
 
     });
 
-
     document.getElementById(
         "totalStudents"
     ).textContent =
         names.size;
 
-
-    document.getElementById(
-        "tableLoading"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "tableWrap"
-    ).classList.remove("hidden");
-
-
-    renderResults(
-        allResults
-    );
-
-
     document.getElementById(
         "displayedResults"
     ).textContent =
-        allResults.length;
+        filteredResults.length;
 
 }
 
@@ -1345,10 +1298,8 @@ async function loadBiodataCount(){
             encodeURIComponent(ADMIN_PIN) +
             "&keyword=";
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,20000);
 
         if(
             data &&
@@ -1387,7 +1338,6 @@ async function searchParticipant(){
             .value
             .trim();
 
-
     if(!keyword){
 
         document.getElementById(
@@ -1398,16 +1348,23 @@ async function searchParticipant(){
 
     }
 
-
     const container =
         document.getElementById(
             "participantResults"
         );
 
+    const button =
+        document.getElementById(
+            "searchParticipantButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "MENCARI...";
 
     container.innerHTML =
         '<div class="loading">Mencari peserta...</div>';
-
 
     try{
 
@@ -1419,10 +1376,8 @@ async function searchParticipant(){
             "&keyword=" +
             encodeURIComponent(keyword);
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,20000);
 
         if(
             !data ||
@@ -1438,15 +1393,12 @@ async function searchParticipant(){
                 "</div>";
 
             return;
-
         }
-
 
         allBiodataSearchResults =
             Array.isArray(data.results)
             ? data.results
             : [];
-
 
         if(
             allBiodataSearchResults.length === 0
@@ -1458,14 +1410,11 @@ async function searchParticipant(){
                 "</div>";
 
             return;
-
         }
-
 
         renderParticipantResults(
             allBiodataSearchResults
         );
-
 
     }catch(error){
 
@@ -1474,6 +1423,13 @@ async function searchParticipant(){
             "Gagal mencari peserta: " +
             escapeHTML(error.message) +
             "</div>";
+
+    }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+            "CARI PESERTA";
 
     }
 
@@ -1491,66 +1447,57 @@ function renderParticipantResults(results){
             "participantResults"
         );
 
-
     container.innerHTML =
         "<div style='font-size:12px;color:#777;margin-bottom:9px'>" +
         results.length +
         " peserta ditemukan. Pilih peserta:</div>";
 
+    results.forEach(function(person,index){
 
-    results.forEach(
-        function(person,index){
+        const name =
+            person.NamaLengkap ||
+            person.namaLengkap ||
+            person.NamaSiswa ||
+            "-";
 
-            const name =
-                person.NamaLengkap ||
-                person.namaLengkap ||
-                person.NamaSiswa ||
-                "-";
+        const target =
+            person.TargetSeleksi ||
+            person.targetSeleksi ||
+            "-";
 
+        const div =
+            document.createElement("div");
 
-            const target =
-                person.TargetSeleksi ||
-                person.targetSeleksi ||
-                "-";
+        div.className =
+            "search-person";
 
+        div.innerHTML = `
 
-            const div =
-                document.createElement("div");
+            <div>
 
-
-            div.className =
-                "search-person";
-
-
-            div.innerHTML = `
-
-                <div>
-
-                    <div class="search-person-name">
-                        ${escapeHTML(name)}
-                    </div>
-
-                    <div class="search-person-target">
-                        Target: ${escapeHTML(target)}
-                    </div>
-
+                <div class="search-person-name">
+                    ${escapeHTML(name)}
                 </div>
 
-                <button
-                    class="primary-btn"
-                    style="padding:8px 12px;font-size:12px"
-                    onclick="selectParticipant(${index})"
-                >
-                    LIHAT DATA
-                </button>
+                <div class="search-person-target">
+                    Target: ${escapeHTML(target)}
+                </div>
 
-            `;
+            </div>
 
+            <button
+                class="primary-btn"
+                style="padding:8px 12px;font-size:12px"
+                onclick="selectParticipant(${index})"
+            >
+                LIHAT DATA
+            </button>
 
-            container.appendChild(div);
+        `;
 
-        }
-    );
+        container.appendChild(div);
+
+    });
 
 }
 
@@ -1564,9 +1511,7 @@ function selectParticipant(index){
     const person =
         allBiodataSearchResults[index];
 
-
     if(!person) return;
-
 
     const nama =
         person.NamaLengkap ||
@@ -1574,9 +1519,7 @@ function selectParticipant(index){
         person.NamaSiswa ||
         "";
 
-
     if(!nama) return;
-
 
     loadFullBiodata(nama);
 
@@ -1592,32 +1535,26 @@ async function loadFullBiodata(nama){
     selectedParticipantName =
         nama;
 
-
     document.getElementById(
         "biodataCard"
     ).classList.remove("hidden");
-
 
     document.getElementById(
         "selectedParticipantName"
     ).textContent =
         nama;
 
-
     document.getElementById(
         "selectedParticipantTarget"
     ).textContent =
         "Memuat data peserta...";
-
 
     document.getElementById(
         "bioGrid"
     ).innerHTML =
         '<div class="loading">Memuat seluruh biodata...</div>';
 
-
     resetPhoto();
-
 
     try{
 
@@ -1629,10 +1566,8 @@ async function loadFullBiodata(nama){
             "&namaLengkap=" +
             encodeURIComponent(nama);
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,20000);
 
         if(
             !data ||
@@ -1650,16 +1585,13 @@ async function loadFullBiodata(nama){
                 "</div>";
 
             return;
-
         }
-
 
         selectedBiodata =
             data.biodata ||
             data.data ||
             data.result ||
             null;
-
 
         if(
             !selectedBiodata ||
@@ -1674,25 +1606,28 @@ async function loadFullBiodata(nama){
                 "</div>";
 
             return;
-
         }
-
 
         renderFullBiodata(
             selectedBiodata
         );
 
-
         /*
-           Setelah biodata berhasil,
-           tampilkan SEMUA riwayat hasil
-           peserta tersebut.
+           Setelah biodata tampil,
+           otomatis filter seluruh riwayat
+           pengerjaan peserta tersebut.
         */
 
         filterResultsForParticipant(
             nama
         );
 
+        document
+            .getElementById("biodataCard")
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
 
     }catch(error){
 
@@ -1710,7 +1645,7 @@ async function loadFullBiodata(nama){
 
 
 /* =====================================================
-   RENDER BIODATA
+   RENDER SEMUA BIODATA
 ===================================================== */
 
 function renderFullBiodata(data){
@@ -1720,9 +1655,7 @@ function renderFullBiodata(data){
             "bioGrid"
         );
 
-
     grid.innerHTML = "";
-
 
     const name =
         data.NamaLengkap ||
@@ -1731,18 +1664,15 @@ function renderFullBiodata(data){
         selectedParticipantName ||
         "-";
 
-
     const target =
         data.TargetSeleksi ||
         data.targetSeleksi ||
         "";
 
-
     document.getElementById(
         "selectedParticipantName"
     ).textContent =
         name;
-
 
     document.getElementById(
         "selectedParticipantTarget"
@@ -1751,15 +1681,13 @@ function renderFullBiodata(data){
         ? "Target Seleksi: " + target
         : "";
 
-
     /*
-       Tampilkan SEMUA field yang dikirim
-       oleh Apps Script.
-       Foto saja dikeluarkan dari grid.
+       Semua field biodata dari Google Sheet
+       akan ditampilkan.
+       Hanya field foto yang dikeluarkan.
     */
 
     const photoKeys = new Set([
-
         "fotoURL",
         "FotoURL",
         "photoURL",
@@ -1768,63 +1696,48 @@ function renderFullBiodata(data){
         "Foto",
         "photo",
         "Photo"
-
     ]);
 
+    Object.keys(data).forEach(function(key){
 
-    Object.keys(data).forEach(
-        function(key){
-
-            if(photoKeys.has(key)){
-                return;
-            }
-
-
-            const value =
-                data[key];
-
-
-            const empty =
-                value === null ||
-                value === undefined ||
-                String(value).trim() === "";
-
-
-            const item =
-                document.createElement("div");
-
-
-            item.className =
-                "bio-item";
-
-
-            item.innerHTML = `
-
-                <div class="bio-label">
-                    ${escapeHTML(
-                        formatFieldName(key)
-                    )}
-                </div>
-
-                <div class="bio-value ${empty ? "empty" : ""}">
-                    ${empty
-                        ? "Belum diisi"
-                        : escapeHTML(value)
-                    }
-                </div>
-
-            `;
-
-
-            grid.appendChild(item);
-
+        if(photoKeys.has(key)){
+            return;
         }
-    );
 
+        const value =
+            data[key];
 
-    /*
-       FOTO URL
-    */
+        const empty =
+            value === null ||
+            value === undefined ||
+            String(value).trim() === "";
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "bio-item";
+
+        item.innerHTML = `
+
+            <div class="bio-label">
+                ${escapeHTML(
+                    formatFieldName(key)
+                )}
+            </div>
+
+            <div class="bio-value ${empty ? "empty" : ""}">
+                ${empty
+                    ? "Belum diisi"
+                    : escapeHTML(value)
+                }
+            </div>
+
+        `;
+
+        grid.appendChild(item);
+
+    });
 
     selectedPhotoURL =
         data.FotoURL ||
@@ -1836,7 +1749,6 @@ function renderFullBiodata(data){
         data.photo ||
         data.Photo ||
         "";
-
 
     if(selectedPhotoURL){
 
@@ -1863,18 +1775,19 @@ function renderFullBiodata(data){
 function resetPhoto(){
 
     selectedPhotoURL = "";
+    selectedPhotoData = null;
 
+    const box =
+        document.getElementById(
+            "photoBox"
+        );
 
-    document.getElementById(
-        "photoBox"
-    ).innerHTML =
+    box.innerHTML =
         "Foto belum tersedia";
-
 
     document.getElementById(
         "openPhotoBtn"
     ).classList.add("hidden");
-
 
     document.getElementById(
         "downloadPhotoBtn"
@@ -1884,39 +1797,33 @@ function resetPhoto(){
 
 
 /* =====================================================
-   AMBIL FILE ID DRIVE
+   EXTRACT DRIVE ID
 ===================================================== */
 
 function extractDriveFileId(url){
 
     if(!url) return "";
 
-
     const text =
         String(url);
-
 
     let match =
         text.match(
             /\/d\/([a-zA-Z0-9_-]+)/
         );
 
-
     if(match){
         return match[1];
     }
-
 
     match =
         text.match(
             /[?&]id=([a-zA-Z0-9_-]+)/
         );
 
-
     if(match){
         return match[1];
     }
-
 
     return "";
 
@@ -1924,7 +1831,7 @@ function extractDriveFileId(url){
 
 
 /* =====================================================
-   LOAD FOTO VIA ADMINPHOTO
+   FOTO VIA APPS SCRIPT
 ===================================================== */
 
 async function loadPhotoFromAppsScript(photoURL){
@@ -1934,12 +1841,10 @@ async function loadPhotoFromAppsScript(photoURL){
             "photoBox"
         );
 
-
     const fileId =
         extractDriveFileId(
             photoURL
         );
-
 
     if(!fileId){
 
@@ -1947,13 +1852,10 @@ async function loadPhotoFromAppsScript(photoURL){
             "ID foto tidak ditemukan.";
 
         return;
-
     }
-
 
     box.textContent =
         "Memuat foto...";
-
 
     try{
 
@@ -1965,10 +1867,8 @@ async function loadPhotoFromAppsScript(photoURL){
             "&fileId=" +
             encodeURIComponent(fileId);
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,30000);
 
         if(
             !data ||
@@ -1981,29 +1881,25 @@ async function loadPhotoFromAppsScript(photoURL){
                 "Foto tidak dapat ditampilkan.";
 
             return;
-
         }
 
+        selectedPhotoData = data;
 
         const mimeType =
             data.mimeType ||
             "image/jpeg";
 
-
         const image =
             document.createElement("img");
 
-
         image.alt =
             "Foto peserta";
-
 
         image.src =
             "data:" +
             mimeType +
             ";base64," +
             data.base64;
-
 
         image.onload =
             function(){
@@ -2014,11 +1910,9 @@ async function loadPhotoFromAppsScript(photoURL){
                     image
                 );
 
-
                 document.getElementById(
                     "openPhotoBtn"
                 ).classList.remove("hidden");
-
 
                 document.getElementById(
                     "downloadPhotoBtn"
@@ -2026,15 +1920,13 @@ async function loadPhotoFromAppsScript(photoURL){
 
             };
 
-
         image.onerror =
             function(){
 
                 box.textContent =
-                    "File foto tidak dapat dibaca.";
+                    "Data foto diterima tetapi gambar tidak dapat dibaca.";
 
             };
-
 
     }catch(error){
 
@@ -2052,20 +1944,38 @@ async function loadPhotoFromAppsScript(photoURL){
 
 function openPhoto(){
 
-    if(!selectedPhotoURL){
+    if(selectedPhotoData && selectedPhotoData.base64){
 
-        alert(
-            "Foto peserta tidak tersedia."
+        const mime =
+            selectedPhotoData.mimeType ||
+            "image/jpeg";
+
+        const url =
+            "data:" +
+            mime +
+            ";base64," +
+            selectedPhotoData.base64;
+
+        window.open(
+            url,
+            "_blank"
         );
 
         return;
-
     }
 
+    if(selectedPhotoURL){
 
-    window.open(
-        selectedPhotoURL,
-        "_blank"
+        window.open(
+            selectedPhotoURL,
+            "_blank"
+        );
+
+        return;
+    }
+
+    alert(
+        "Foto peserta tidak tersedia."
     );
 
 }
@@ -2077,6 +1987,18 @@ function openPhoto(){
 
 async function downloadPhoto(){
 
+    if(
+        selectedPhotoData &&
+        selectedPhotoData.base64
+    ){
+
+        savePhotoFromBase64(
+            selectedPhotoData
+        );
+
+        return;
+    }
+
     if(!selectedPhotoURL){
 
         alert(
@@ -2084,15 +2006,12 @@ async function downloadPhoto(){
         );
 
         return;
-
     }
-
 
     const fileId =
         extractDriveFileId(
             selectedPhotoURL
         );
-
 
     if(!fileId){
 
@@ -2101,9 +2020,7 @@ async function downloadPhoto(){
         );
 
         return;
-
     }
-
 
     try{
 
@@ -2115,10 +2032,8 @@ async function downloadPhoto(){
             "&fileId=" +
             encodeURIComponent(fileId);
 
-
         const data =
-            await jsonp(url);
-
+            await jsonp(url,30000);
 
         if(
             !data ||
@@ -2132,85 +2047,14 @@ async function downloadPhoto(){
             );
 
             return;
-
         }
 
+        selectedPhotoData =
+            data;
 
-        const binary =
-            atob(data.base64);
-
-
-        const bytes =
-            new Uint8Array(
-                binary.length
-            );
-
-
-        for(
-            let i=0;
-            i<binary.length;
-            i++
-        ){
-
-            bytes[i] =
-                binary.charCodeAt(i);
-
-        }
-
-
-        const blob =
-            new Blob(
-                [bytes],
-                {
-                    type:
-                        data.mimeType ||
-                        "image/jpeg"
-                }
-            );
-
-
-        const blobURL =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const a =
-            document.createElement("a");
-
-
-        a.href =
-            blobURL;
-
-
-        const safeName =
-            normalize(
-                selectedParticipantName ||
-                "peserta"
-            )
-            .replace(/\s+/g,"_");
-
-
-        a.download =
-            "Foto_" +
-            safeName +
-            ".jpg";
-
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        a.remove();
-
-
-        setTimeout(
-            function(){
-                URL.revokeObjectURL(blobURL);
-            },
-            1000
+        savePhotoFromBase64(
+            data
         );
-
 
     }catch(error){
 
@@ -2225,7 +2069,100 @@ async function downloadPhoto(){
 
 
 /* =====================================================
-   FILTER SEMUA HASIL UNTUK PESERTA
+   SAVE FOTO BASE64
+===================================================== */
+
+function savePhotoFromBase64(data){
+
+    try{
+
+        const binary =
+            atob(data.base64);
+
+        const bytes =
+            new Uint8Array(
+                binary.length
+            );
+
+        for(
+            let i=0;
+            i<binary.length;
+            i++
+        ){
+
+            bytes[i] =
+                binary.charCodeAt(i);
+
+        }
+
+        const mime =
+            data.mimeType ||
+            "image/jpeg";
+
+        const blob =
+            new Blob(
+                [bytes],
+                {type:mime}
+            );
+
+        const blobURL =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement("a");
+
+        a.href =
+            blobURL;
+
+        const safeName =
+            normalize(
+                selectedParticipantName ||
+                "peserta"
+            )
+            .replace(/\s+/g,"_");
+
+        let extension =
+            "jpg";
+
+        if(mime.includes("png")){
+            extension = "png";
+        }else if(mime.includes("webp")){
+            extension = "webp";
+        }
+
+        a.download =
+            "Foto_" +
+            safeName +
+            "." +
+            extension;
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+        setTimeout(function(){
+
+            URL.revokeObjectURL(
+                blobURL
+            );
+
+        },1000);
+
+    }catch(error){
+
+        alert(
+            "Foto tidak dapat disimpan."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   FILTER HASIL PESERTA
 ===================================================== */
 
 function filterResultsForParticipant(nama){
@@ -2233,61 +2170,47 @@ function filterResultsForParticipant(nama){
     const target =
         normalize(nama);
 
-
-    /*
-       EXACT MATCH
-    */
-
     let matches =
-        allResults.filter(
-            function(row){
+        allResults.filter(function(row){
 
-                return normalize(
-                    row.NamaSiswa
-                ) === target;
+            return normalize(
+                row.NamaSiswa
+            ) === target;
 
-            }
-        );
-
+        });
 
     /*
-       FALLBACK MATCH
+       Kalau penulisan nama sedikit berbeda,
+       gunakan pencarian cadangan.
     */
 
     if(matches.length === 0){
 
         matches =
-            allResults.filter(
-                function(row){
+            allResults.filter(function(row){
 
-                    const rowName =
-                        normalize(
-                            row.NamaSiswa
-                        );
-
-
-                    return (
-                        rowName.includes(target) ||
-                        target.includes(rowName)
+                const rowName =
+                    normalize(
+                        row.NamaSiswa
                     );
 
-                }
-            );
+                return (
+                    rowName.includes(target) ||
+                    target.includes(rowName)
+                );
+
+            });
 
     }
 
-
     filteredResults =
-        matches;
-
+        matches.slice();
 
     clearResultFilters();
-
 
     renderResults(
         filteredResults
     );
-
 
     document.getElementById(
         "rekapInfo"
@@ -2297,7 +2220,6 @@ function filterResultsForParticipant(nama){
         " — " +
         matches.length +
         " hasil.";
-
 
     document.getElementById(
         "displayedResults"
@@ -2309,38 +2231,147 @@ function filterResultsForParticipant(nama){
 
 /* =====================================================
    TAMPILKAN SEMUA
+   VERSI BARU — RELOAD DARI APPS SCRIPT
 ===================================================== */
 
-function showAllResults(){
+async function showAllResults(){
 
-    /*
-       PENTING:
-       Jangan memakai filter sebelumnya.
-       Ambil ulang seluruh array master.
-    */
+    const button =
+        document.getElementById(
+            "showAllButton"
+        );
 
-    clearResultFilters();
+    const tableWrap =
+        document.getElementById(
+            "tableWrap"
+        );
 
+    const oldText =
+        button.textContent;
 
-    filteredResults =
-        allResults.slice();
+    button.disabled = true;
 
+    button.textContent =
+        "MEMUAT SEMUA...";
 
-    renderResults(
-        filteredResults
+    tableWrap.classList.add(
+        "refreshing"
     );
-
 
     document.getElementById(
         "rekapInfo"
     ).textContent =
-        "Menampilkan seluruh hasil tryout.";
+        "Mengambil seluruh data terbaru dari Google Sheet...";
 
+    try{
 
-    document.getElementById(
-        "displayedResults"
-    ).textContent =
-        filteredResults.length;
+        /*
+           AMBIL ULANG SEMUA HASIL
+           LANGSUNG DARI APPS SCRIPT
+        */
+
+        const url =
+            API_URL +
+            "?mode=admin" +
+            "&adminPin=" +
+            encodeURIComponent(ADMIN_PIN) +
+            "&_=" +
+            Date.now();
+
+        const data =
+            await jsonp(url,30000);
+
+        if(
+            !data ||
+            data.status !== "success"
+        ){
+
+            throw new Error(
+                data?.message ||
+                "Data tidak berhasil dimuat."
+            );
+
+        }
+
+        /*
+           GANTI MASTER DATA
+           DENGAN DATA TERBARU
+        */
+
+        allResults =
+            Array.isArray(data.results)
+            ? data.results
+            : [];
+
+        /*
+           KOSONGKAN SEMUA FILTER
+        */
+
+        clearResultFilters();
+
+        /*
+           TAMPILKAN SEMUA
+        */
+
+        filteredResults =
+            allResults.slice();
+
+        renderResults(
+            filteredResults
+        );
+
+        updateSummary();
+
+        document.getElementById(
+            "rekapInfo"
+        ).textContent =
+            "Menampilkan seluruh hasil tryout — " +
+            filteredResults.length +
+            " data.";
+
+        document.getElementById(
+            "displayedResults"
+        ).textContent =
+            filteredResults.length;
+
+        /*
+           Pastikan tabel terlihat.
+        */
+
+        document.getElementById(
+            "tableLoading"
+        ).classList.add("hidden");
+
+        document.getElementById(
+            "tableWrap"
+        ).classList.remove("hidden");
+
+    }catch(error){
+
+        document.getElementById(
+            "rekapInfo"
+        ).textContent =
+            "Gagal memuat seluruh data.";
+
+        showStatus(
+            "mainStatus",
+            "Gagal memuat semua hasil: " +
+            error.message,
+            "error"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+            oldText;
+
+        tableWrap.classList.remove(
+            "refreshing"
+        );
+
+    }
 
 }
 
@@ -2358,14 +2389,12 @@ function applyFilters(){
             ).value
         );
 
-
     const program =
         normalize(
             document.getElementById(
                 "filterProgram"
             ).value
         );
-
 
     const tryout =
         normalize(
@@ -2374,78 +2403,67 @@ function applyFilters(){
             ).value
         );
 
-
     const tanggal =
         document.getElementById(
             "filterTanggal"
         ).value;
 
-
     filteredResults =
-        allResults.filter(
-            function(row){
+        allResults.filter(function(row){
 
-                const rowNama =
-                    normalize(
-                        row.NamaSiswa
-                    );
-
-
-                const rowProgram =
-                    normalize(
-                        row.Program
-                    );
-
-
-                const rowTryout =
-                    normalize(
-                        row.NamaTryout
-                    );
-
-
-                const rowTanggal =
-                    normalizeDate(
-                        row.Tanggal
-                    );
-
-
-                return (
-
-                    (!nama ||
-                     rowNama.includes(nama))
-
-                    &&
-
-                    (!program ||
-                     rowProgram.includes(program))
-
-                    &&
-
-                    (!tryout ||
-                     rowTryout.includes(tryout))
-
-                    &&
-
-                    (!tanggal ||
-                     rowTanggal === tanggal)
-
+            const rowNama =
+                normalize(
+                    row.NamaSiswa
                 );
 
-            }
-        );
+            const rowProgram =
+                normalize(
+                    row.Program
+                );
 
+            const rowTryout =
+                normalize(
+                    row.NamaTryout
+                );
+
+            const rowTanggal =
+                normalizeDate(
+                    row.Tanggal
+                );
+
+            return (
+
+                (!nama ||
+                 rowNama.includes(nama))
+
+                &&
+
+                (!program ||
+                 rowProgram.includes(program))
+
+                &&
+
+                (!tryout ||
+                 rowTryout.includes(tryout))
+
+                &&
+
+                (!tanggal ||
+                 rowTanggal === tanggal)
+
+            );
+
+        });
 
     renderResults(
         filteredResults
     );
-
 
     document.getElementById(
         "rekapInfo"
     ).textContent =
         filteredResults.length +
         " hasil ditampilkan.";
-
 
     document.getElementById(
         "displayedResults"
@@ -2488,10 +2506,8 @@ function normalizeDate(value){
 
     if(!value) return "";
 
-
     const text =
         String(value).trim();
-
 
     if(
         /^\d{4}-\d{2}-\d{2}$/.test(text)
@@ -2501,17 +2517,14 @@ function normalizeDate(value){
 
     }
 
-
     const d =
         new Date(text);
-
 
     if(isNaN(d.getTime())){
 
         return text;
 
     }
-
 
     return (
         d.getFullYear() +
@@ -2529,7 +2542,7 @@ function normalizeDate(value){
 
 
 /* =====================================================
-   RENDER HASIL TRYOUT
+   RENDER HASIL
 ===================================================== */
 
 function renderResults(results){
@@ -2539,9 +2552,7 @@ function renderResults(results){
             "resultBody"
         );
 
-
     tbody.innerHTML = "";
-
 
     if(
         !Array.isArray(results) ||
@@ -2555,125 +2566,108 @@ function renderResults(results){
             "</td>" +
             "</tr>";
 
-
         document.getElementById(
             "displayedResults"
         ).textContent =
             "0";
 
-
         return;
 
     }
 
+    const fields = [
 
-    results.forEach(
-        function(row){
+        "Timestamp",
+        "SessionID",
+        "NamaSiswa",
+        "Program",
+        "NamaTryout",
+        "Tanggal",
+        "WaktuMulai",
+        "WaktuSelesai",
+        "Durasi",
+        "Kecerdasan",
+        "Kepribadian",
+        "Kecermatan",
+        "TIU",
+        "TWK",
+        "TKP",
+        "PengetahuanUmum",
+        "NilaiAkhir"
 
-            const tr =
-                document.createElement("tr");
+    ];
 
+    const scoreFields = [
 
-            const fields = [
+        "Kecerdasan",
+        "Kepribadian",
+        "Kecermatan",
+        "TIU",
+        "TWK",
+        "TKP",
+        "PengetahuanUmum",
+        "NilaiAkhir"
 
-                "Timestamp",
-                "SessionID",
-                "NamaSiswa",
-                "Program",
-                "NamaTryout",
-                "Tanggal",
-                "WaktuMulai",
-                "WaktuSelesai",
-                "Durasi",
-                "Kecerdasan",
-                "Kepribadian",
-                "Kecermatan",
-                "TIU",
-                "TWK",
-                "TKP",
-                "PengetahuanUmum",
-                "NilaiAkhir"
+    ];
 
-            ];
+    results.forEach(function(row){
 
+        const tr =
+            document.createElement("tr");
 
-            fields.forEach(
-                function(field){
+        fields.forEach(function(field){
 
-                    const td =
-                        document.createElement("td");
+            const td =
+                document.createElement("td");
 
+            const value =
+                row[field] ?? "";
 
-                    const value =
-                        row[field] ?? "";
+            td.textContent =
+                value;
 
+            if(
+                scoreFields.includes(field)
+            ){
 
-                    td.textContent =
-                        value;
+                const number =
+                    parseFloat(
+                        String(value)
+                            .replace(",",".")
+                    );
 
+                if(!isNaN(number)){
 
-                    const scoreFields = [
+                    if(number < 60){
 
-                        "Kecerdasan",
-                        "Kepribadian",
-                        "Kecermatan",
-                        "TIU",
-                        "TWK",
-                        "TKP",
-                        "PengetahuanUmum",
-                        "NilaiAkhir"
+                        td.className =
+                            "score-danger";
 
-                    ];
-
-
-                    if(
-                        scoreFields.includes(field)
+                    }else if(
+                        field === "NilaiAkhir"
                     ){
 
-                        const number =
-                            parseFloat(
-                                String(value)
-                                    .replace(",",".")
-                            );
+                        td.className =
+                            "score-total";
 
+                    }else{
 
-                        if(!isNaN(number)){
-
-                            if(number < 60){
-
-                                td.className =
-                                    "score-danger";
-
-                            }else if(
-                                field === "NilaiAkhir"
-                            ){
-
-                                td.className =
-                                    "score-total";
-
-                            }else{
-
-                                td.className =
-                                    "score-normal";
-
-                            }
-
-                        }
+                        td.className =
+                            "score-normal";
 
                     }
 
-
-                    tr.appendChild(td);
-
                 }
-            );
 
+            }
 
-            tbody.appendChild(tr);
+            tr.appendChild(td);
 
-        }
-    );
+        });
 
+        tbody.appendChild(tr);
+
+    });
 
     document.getElementById(
         "displayedResults"
@@ -2693,28 +2687,48 @@ function resetParticipant(){
         "participantSearch"
     ).value = "";
 
-
     document.getElementById(
         "participantResults"
     ).innerHTML = "";
-
 
     document.getElementById(
         "biodataCard"
     ).classList.add("hidden");
 
-
     selectedBiodata = null;
 
     selectedPhotoURL = "";
 
-    selectedParticipantName = "";
+    selectedPhotoData = null;
 
+    selectedParticipantName = "";
 
     resetPhoto();
 
+    /*
+       Reset peserta = tampilkan
+       semua hasil lagi.
+       Tidak menggunakan filter lama.
+    */
 
-    showAllResults();
+    clearResultFilters();
+
+    filteredResults =
+        allResults.slice();
+
+    renderResults(
+        filteredResults
+    );
+
+    document.getElementById(
+        "rekapInfo"
+    ).textContent =
+        "Menampilkan seluruh hasil tryout.";
+
+    document.getElementById(
+        "displayedResults"
+    ).textContent =
+        filteredResults.length;
 
 }
 
@@ -2735,15 +2749,12 @@ function downloadBiodata(){
         );
 
         return;
-
     }
-
 
     const name =
         selectedBiodata.NamaLengkap ||
         selectedBiodata.namaLengkap ||
         "Peserta";
-
 
     let html =
         "<!DOCTYPE html>" +
@@ -2765,51 +2776,44 @@ function downloadBiodata(){
         "<h1>BIODATA PESERTA</h1>" +
         "<table>";
 
-
     Object.keys(
         selectedBiodata
-    ).forEach(
-        function(key){
+    ).forEach(function(key){
 
-            if([
-                "fotoURL",
-                "FotoURL",
-                "photoURL",
-                "PhotoURL",
-                "foto",
-                "Foto",
-                "photo",
-                "Photo"
-            ].includes(key)){
+        if([
+            "fotoURL",
+            "FotoURL",
+            "photoURL",
+            "PhotoURL",
+            "foto",
+            "Foto",
+            "photo",
+            "Photo"
+        ].includes(key)){
 
-                return;
-
-            }
-
-
-            html +=
-                "<tr>" +
-                "<td>" +
-                escapeHTML(
-                    formatFieldName(key)
-                ) +
-                "</td>" +
-                "<td>" +
-                escapeHTML(
-                    selectedBiodata[key] ?? ""
-                ) +
-                "</td>" +
-                "</tr>";
-
+            return;
         }
-    );
 
+        html +=
+            "<tr>" +
+            "<td>" +
+            escapeHTML(
+                formatFieldName(key)
+            ) +
+            "</td>" +
+            "<td>" +
+            escapeHTML(
+                selectedBiodata[key] ?? ""
+            ) +
+            "</td>" +
+            "</tr>";
+
+    });
 
     html +=
         "</table>" +
         "</body>" +
         "</html>";
-
 
     const blob =
         new Blob(
@@ -2820,17 +2824,14 @@ function downloadBiodata(){
             }
         );
 
-
     const url =
         URL.createObjectURL(blob);
-
 
     const a =
         document.createElement("a");
 
-
-    a.href = url;
-
+    a.href =
+        url;
 
     a.download =
         "Biodata_" +
@@ -2838,15 +2839,17 @@ function downloadBiodata(){
             .replace(/\s+/g,"_") +
         ".html";
 
-
     document.body.appendChild(a);
 
     a.click();
 
     a.remove();
 
+    setTimeout(function(){
 
-    URL.revokeObjectURL(url);
+        URL.revokeObjectURL(url);
+
+    },1000);
 
 }
 
@@ -2859,7 +2862,6 @@ function csvEscape(value){
 
     const text =
         String(value ?? "");
-
 
     if(
         text.includes(",") ||
@@ -2875,7 +2877,6 @@ function csvEscape(value){
             '"';
 
     }
-
 
     return text;
 
@@ -2894,9 +2895,7 @@ function downloadCSV(){
         );
 
         return;
-
     }
-
 
     const headers = [
 
@@ -2920,9 +2919,7 @@ function downloadCSV(){
 
     ];
 
-
     const rows = [];
-
 
     rows.push(
         headers
@@ -2930,25 +2927,21 @@ function downloadCSV(){
             .join(",")
     );
 
+    filteredResults.forEach(function(row){
 
-    filteredResults.forEach(
-        function(row){
+        rows.push(
+            headers
+                .map(function(h){
 
-            rows.push(
-                headers
-                    .map(
-                        function(h){
-                            return csvEscape(
-                                row[h] ?? ""
-                            );
-                        }
-                    )
-                    .join(",")
-            );
+                    return csvEscape(
+                        row[h] ?? ""
+                    );
 
-        }
-    );
+                })
+                .join(",")
+        );
 
+    });
 
     const blob =
         new Blob(
@@ -2959,17 +2952,14 @@ function downloadCSV(){
             }
         );
 
-
     const url =
         URL.createObjectURL(blob);
-
 
     const a =
         document.createElement("a");
 
-
-    a.href = url;
-
+    a.href =
+        url;
 
     a.download =
         "Rekap_Hasil_Tryout_" +
@@ -2978,15 +2968,17 @@ function downloadCSV(){
             .slice(0,10) +
         ".csv";
 
-
     document.body.appendChild(a);
 
     a.click();
 
     a.remove();
 
+    setTimeout(function(){
 
-    URL.revokeObjectURL(url);
+        URL.revokeObjectURL(url);
+
+    },1000);
 
 }
 
@@ -3001,54 +2993,46 @@ function logoutAdmin(){
         "prc_admin_login"
     );
 
-
     allResults = [];
-
     filteredResults = [];
-
     allBiodataSearchResults = [];
 
     selectedBiodata = null;
-
     selectedPhotoURL = "";
-
+    selectedPhotoData = null;
     selectedParticipantName = "";
-
 
     document.getElementById(
         "adminSection"
     ).classList.add("hidden");
 
-
     document.getElementById(
         "loginSection"
     ).classList.remove("hidden");
-
 
     document.getElementById(
         "adminPin"
     ).value = "";
 
-
     document.getElementById(
         "participantSearch"
     ).value = "";
-
 
     document.getElementById(
         "participantResults"
     ).innerHTML = "";
 
-
     document.getElementById(
         "biodataCard"
     ).classList.add("hidden");
+
+    resetPhoto();
 
 }
 
 
 /* =====================================================
-   JANGAN AUTO LOGIN
+   START
 ===================================================== */
 
 window.addEventListener(
