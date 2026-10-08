@@ -628,74 +628,131 @@ tbody tr:hover{
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 
-
 let allData = [];
-
 let adminPin = "";
+let jsonpCounter = 0;
 
 
 /* =====================================================
-   FETCH JSON ADMIN
+   JSONP REQUEST
    ===================================================== */
 
-async function fetchAdminData(pin){
+function fetchAdminData(pin){
 
-    const url =
-        SCRIPT_URL +
-        "?mode=admin" +
-        "&adminPin=" +
-        encodeURIComponent(pin) +
-        "&_=" +
-        Date.now();
+    return new Promise(function(resolve,reject){
 
-    const response =
-        await fetch(url, {
-            method:"GET",
-            cache:"no-store",
-            credentials:"omit",
-            redirect:"follow"
-        });
+        jsonpCounter++;
 
-    if(!response.ok){
+        const callbackName =
+            "prcAdminCallback_" +
+            Date.now() +
+            "_" +
+            jsonpCounter;
 
-        throw new Error(
-            "HTTP " + response.status
-        );
+        const script =
+            document.createElement("script");
 
-    }
+        let finished = false;
 
-    const text =
-        await response.text();
+        const timeout =
+            setTimeout(function(){
 
-    if(!text){
+                if(finished){
+                    return;
+                }
 
-        throw new Error(
-            "Server mengembalikan response kosong."
-        );
+                finished = true;
 
-    }
+                cleanup();
 
-    let data;
+                reject(
+                    new Error(
+                        "Server tidak merespons. Pastikan Apps Script sudah di-deploy ke versi terbaru."
+                    )
+                );
 
-    try{
+            },15000);
 
-        data =
-            JSON.parse(text);
 
-    }catch(parseError){
+        function cleanup(){
 
-        console.error(
-            "Response Apps Script:",
-            text
-        );
+            clearTimeout(timeout);
 
-        throw new Error(
-            "Response Apps Script bukan JSON."
-        );
+            if(script.parentNode){
+                script.parentNode.removeChild(script);
+            }
 
-    }
+            try{
+                delete window[callbackName];
+            }catch(e){
+                window[callbackName] = undefined;
+            }
 
-    return data;
+        }
+
+
+        window[callbackName] =
+            function(data){
+
+                if(finished){
+                    return;
+                }
+
+                finished = true;
+
+                cleanup();
+
+                if(!data){
+
+                    reject(
+                        new Error(
+                            "Response server kosong."
+                        )
+                    );
+
+                    return;
+
+                }
+
+                resolve(data);
+
+            };
+
+
+        script.onerror =
+            function(){
+
+                if(finished){
+                    return;
+                }
+
+                finished = true;
+
+                cleanup();
+
+                reject(
+                    new Error(
+                        "Tidak dapat menghubungi server Apps Script."
+                    )
+                );
+
+            };
+
+
+        script.src =
+            SCRIPT_URL +
+            "?mode=admin" +
+            "&adminPin=" +
+            encodeURIComponent(pin) +
+            "&callback=" +
+            encodeURIComponent(callbackName) +
+            "&_=" +
+            Date.now();
+
+
+        document.body.appendChild(script);
+
+    });
 
 }
 
@@ -720,6 +777,7 @@ async function loginAdmin(){
 
     errorBox.textContent = "";
 
+
     if(!pin){
 
         errorBox.textContent =
@@ -733,7 +791,6 @@ async function loginAdmin(){
 
 
     button.disabled = true;
-
     button.textContent = "MEMERIKSA...";
 
 
@@ -742,16 +799,6 @@ async function loginAdmin(){
         const data =
             await fetchAdminData(pin);
 
-
-        /*
-         * Apps Script mengembalikan:
-         *
-         * {
-         *   status:"success",
-         *   message:"Data admin berhasil dimuat.",
-         *   results:[...]
-         * }
-         */
 
         if(
             !data ||
@@ -787,7 +834,6 @@ async function loginAdmin(){
 
 
         updateSummary();
-
         renderTable();
 
 
@@ -853,15 +899,12 @@ document
 async function loadData(){
 
     if(!adminPin){
-
         return;
-
     }
 
 
     const status =
-        document
-        .getElementById("statusText");
+        document.getElementById("statusText");
 
 
     status.textContent =
@@ -879,20 +922,10 @@ async function loadData(){
             data.status !== "success"
         ){
 
-            if(
-                data &&
-                data.message
-            ){
-
-                status.textContent =
-                    data.message;
-
-            }else{
-
-                status.textContent =
-                    "Gagal memuat data.";
-
-            }
+            status.textContent =
+                data && data.message
+                    ? data.message
+                    : "Gagal memuat data.";
 
             return;
 
@@ -906,7 +939,6 @@ async function loadData(){
 
 
         updateSummary();
-
         renderTable();
 
 
@@ -950,9 +982,7 @@ function updateSummary(){
     const students =
         new Set();
 
-
     let totalScore = 0;
-
     let scoreCount = 0;
 
 
@@ -962,12 +992,6 @@ function updateSummary(){
             row.name &&
             String(row.name).trim()
         ){
-
-            /*
-             * Dibuat case-insensitive supaya
-             * "atra" dan "ATRA" dihitung
-             * sebagai siswa yang sama.
-             */
 
             students.add(
                 String(row.name)
@@ -981,11 +1005,6 @@ function updateSummary(){
         const rawScore =
             row.value;
 
-
-        /*
-         * Jangan gunakan row.value || ""
-         * supaya nilai 0 tetap diproses.
-         */
 
         if(
             rawScore !== null &&
@@ -1003,7 +1022,6 @@ function updateSummary(){
             if(!isNaN(score)){
 
                 totalScore += score;
-
                 scoreCount++;
 
             }
@@ -1063,9 +1081,7 @@ function scoreClass(value){
         value === undefined ||
         value === ""
     ){
-
         return "score-normal";
-
     }
 
 
@@ -1080,9 +1096,7 @@ function scoreClass(value){
         !isNaN(score) &&
         score < 60
     ){
-
         return "score-red";
-
     }
 
 
@@ -1098,9 +1112,7 @@ function scoreClass(value){
 function activityBadge(value){
 
     if(!value){
-
         return "-";
-
     }
 
 
@@ -1120,8 +1132,7 @@ function activityBadge(value){
 function renderTable(){
 
     const body =
-        document
-        .getElementById("tableBody");
+        document.getElementById("tableBody");
 
 
     const search =
@@ -1147,81 +1158,52 @@ function renderTable(){
 
 
     const filtered =
-        allData.filter(
-            function(row){
+        allData.filter(function(row){
 
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value,
-                        row.activity
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
+            const text =
+                [
+                    row.name,
+                    row.code,
+                    row.group,
+                    row.material,
+                    row.test,
+                    row.date,
+                    row.value,
+                    row.activity
+                ]
+                .join(" ")
+                .toLowerCase();
 
 
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
+            const rowActivity =
+                String(
+                    row.activity || ""
+                ).toLowerCase();
 
 
-                const searchMatch =
-                    !search ||
-                    text.includes(search);
+            const rowGroup =
+                String(
+                    row.group || ""
+                ).toLowerCase();
 
 
-                const activityMatch =
-                    !activity ||
-                    rowActivity === activity;
+            return (
+                (!search || text.includes(search)) &&
+                (!activity || rowActivity === activity) &&
+                (!group || rowGroup === group)
+            );
+
+        });
 
 
-                const groupMatch =
-                    !group ||
-                    rowGroup === group;
-
-
-                return (
-                    searchMatch &&
-                    activityMatch &&
-                    groupMatch
-                );
-
-            }
-        );
-
-
-    if(
-        filtered.length === 0
-    ){
+    if(filtered.length === 0){
 
         body.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="16"
-                    class="empty"
-                >
+                <td colspan="16" class="empty">
                     Tidak ada data yang sesuai.
-
                 </td>
-
             </tr>
-
         `;
 
         return;
@@ -1230,131 +1212,81 @@ function renderTable(){
 
 
     body.innerHTML =
-        filtered
-        .map(
-            function(row,index){
+        filtered.map(function(row,index){
 
-                return `
+            return `
+                <tr>
 
-                    <tr>
+                    <td>
+                        ${index + 1}
+                    </td>
 
-                        <td>
-                            ${index + 1}
-                        </td>
+                    <td>
+                        ${escapeHtml(row.timestamp)}
+                    </td>
 
-                        <td>
-                            ${escapeHtml(
-                                row.timestamp
-                            )}
-                        </td>
+                    <td>
+                        <strong>
+                            ${escapeHtml(row.name)}
+                        </strong>
+                    </td>
 
-                        <td>
-                            <strong>
-                                ${escapeHtml(
-                                    row.name
-                                )}
-                            </strong>
-                        </td>
+                    <td>
+                        ${escapeHtml(row.code)}
+                    </td>
 
-                        <td>
-                            ${escapeHtml(
-                                row.code
-                            )}
-                        </td>
+                    <td>
+                        ${activityBadge(row.activity)}
+                    </td>
 
-                        <td>
-                            ${activityBadge(
-                                row.activity
-                            )}
-                        </td>
+                    <td>
+                        ${escapeHtml(row.group)}
+                    </td>
 
-                        <td>
-                            ${escapeHtml(
-                                row.group
-                            )}
-                        </td>
+                    <td>
+                        ${escapeHtml(row.test)}
+                    </td>
 
-                        <td>
-                            ${escapeHtml(
-                                row.test
-                            )}
-                        </td>
+                    <td>
+                        ${escapeHtml(row.date)}
+                    </td>
 
-                        <td>
-                            ${escapeHtml(
-                                row.date
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.kecerdasan)}">
+                        ${escapeHtml(row.kecerdasan)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.kecerdasan
-                        )}">
-                            ${escapeHtml(
-                                row.kecerdasan
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.kepribadian)}">
+                        ${escapeHtml(row.kepribadian)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.kepribadian
-                        )}">
-                            ${escapeHtml(
-                                row.kepribadian
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.kecermatan)}">
+                        ${escapeHtml(row.kecermatan)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.kecermatan
-                        )}">
-                            ${escapeHtml(
-                                row.kecermatan
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.tiu)}">
+                        ${escapeHtml(row.tiu)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.tiu
-                        )}">
-                            ${escapeHtml(
-                                row.tiu
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.twk)}">
+                        ${escapeHtml(row.twk)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.twk
-                        )}">
-                            ${escapeHtml(
-                                row.twk
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.tkp)}">
+                        ${escapeHtml(row.tkp)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.tkp
-                        )}">
-                            ${escapeHtml(
-                                row.tkp
-                            )}
-                        </td>
+                    <td class="${scoreClass(row.pengetahuanUmum)}">
+                        ${escapeHtml(row.pengetahuanUmum)}
+                    </td>
 
-                        <td class="${scoreClass(
-                            row.pengetahuanUmum
-                        )}">
-                            ${escapeHtml(
-                                row.pengetahuanUmum
-                            )}
-                        </td>
+                    <td class="total-score">
+                        ${escapeHtml(row.value)}
+                    </td>
 
-                        <td class="total-score">
-                            ${escapeHtml(
-                                row.value
-                            )}
-                        </td>
+                </tr>
+            `;
 
-                    </tr>
-
-                `;
-
-            }
-        )
-        .join("");
+        }).join("");
 
 }
 
@@ -1369,16 +1301,13 @@ function resetFilter(){
     .getElementById("searchInput")
     .value = "";
 
-
     document
     .getElementById("activityFilter")
     .value = "";
 
-
     document
     .getElementById("groupFilter")
     .value = "";
-
 
     renderTable();
 
@@ -1428,61 +1357,44 @@ function downloadCSV(){
 
 
     const filtered =
-        allData.filter(
-            function(row){
+        allData.filter(function(row){
 
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
+            const text =
+                [
+                    row.name,
+                    row.code,
+                    row.group,
+                    row.material,
+                    row.test,
+                    row.date,
+                    row.value
+                ]
+                .join(" ")
+                .toLowerCase();
 
 
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
+            const rowActivity =
+                String(
+                    row.activity || ""
+                ).toLowerCase();
 
 
-                return (
-
-                    (!search ||
-                        text.includes(search))
-
-                    &&
-
-                    (!activity ||
-                        rowActivity === activity)
-
-                    &&
-
-                    (!group ||
-                        rowGroup === group)
-
-                );
-
-            }
-        );
+            const rowGroup =
+                String(
+                    row.group || ""
+                ).toLowerCase();
 
 
-    if(
-        filtered.length === 0
-    ){
+            return (
+                (!search || text.includes(search)) &&
+                (!activity || rowActivity === activity) &&
+                (!group || rowGroup === group)
+            );
+
+        });
+
+
+    if(filtered.length === 0){
 
         alert(
             "Tidak ada data sesuai filter."
@@ -1520,76 +1432,70 @@ function downloadCSV(){
     ];
 
 
-    filtered.forEach(
-        function(row,index){
+    filtered.forEach(function(row,index){
 
-            rows.push([
+        rows.push([
 
-                index + 1,
+            index + 1,
 
-                row.timestamp || "",
+            row.timestamp || "",
 
-                row.name || "",
+            row.name || "",
 
-                row.code || "",
+            row.code || "",
 
-                row.activity || "",
+            row.activity || "",
 
-                row.group || "",
+            row.group || "",
 
-                row.test || "",
+            row.test || "",
 
-                row.date || "",
+            row.date || "",
 
-                row.kecerdasan ?? "",
+            row.kecerdasan ?? "",
 
-                row.kepribadian ?? "",
+            row.kepribadian ?? "",
 
-                row.kecermatan ?? "",
+            row.kecermatan ?? "",
 
-                row.tiu ?? "",
+            row.tiu ?? "",
 
-                row.twk ?? "",
+            row.twk ?? "",
 
-                row.tkp ?? "",
+            row.tkp ?? "",
 
-                row.pengetahuanUmum ?? "",
+            row.pengetahuanUmum ?? "",
 
-                row.value ?? ""
+            row.value ?? ""
 
-            ]);
+        ]);
 
-        }
-    );
+    });
 
 
     const csv =
         rows
-        .map(
-            function(row){
+        .map(function(row){
 
-                return row
-                .map(
-                    function(value){
+            return row
+            .map(function(value){
 
-                        return '"' +
-                            String(
-                                value == null
-                                    ? ""
-                                    : value
-                            )
-                            .replace(
-                                /"/g,
-                                '""'
-                            ) +
-                            '"';
+                return '"' +
+                    String(
+                        value == null
+                            ? ""
+                            : value
+                    )
+                    .replace(
+                        /"/g,
+                        '""'
+                    ) +
+                    '"';
 
-                    }
-                )
-                .join(",");
+            })
+            .join(",");
 
-            }
-        )
+        })
         .join("\r\n");
 
 
