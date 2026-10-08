@@ -603,7 +603,6 @@ tbody tr:hover{
                             class="empty"
                         >
                             Silakan login sebagai admin.
-
                         </td>
 
                     </tr>
@@ -628,9 +627,10 @@ tbody tr:hover{
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
 
+
 let allData = [];
+
 let adminPin = "";
-let jsonpCounter = 0;
 
 
 /* =====================================================
@@ -641,18 +641,19 @@ function fetchAdminData(pin){
 
     return new Promise(function(resolve,reject){
 
-        jsonpCounter++;
-
         const callbackName =
             "prcAdminCallback_" +
             Date.now() +
             "_" +
-            jsonpCounter;
+            Math.floor(Math.random()*100000);
+
 
         const script =
             document.createElement("script");
 
+
         let finished = false;
+
 
         const timeout =
             setTimeout(function(){
@@ -667,7 +668,7 @@ function fetchAdminData(pin){
 
                 reject(
                     new Error(
-                        "Server tidak merespons. Pastikan Apps Script sudah di-deploy ke versi terbaru."
+                        "Tidak dapat menghubungi server Apps Script."
                     )
                 );
 
@@ -678,14 +679,14 @@ function fetchAdminData(pin){
 
             clearTimeout(timeout);
 
-            if(script.parentNode){
-                script.parentNode.removeChild(script);
-            }
-
             try{
                 delete window[callbackName];
             }catch(e){
                 window[callbackName] = undefined;
+            }
+
+            if(script.parentNode){
+                script.parentNode.removeChild(script);
             }
 
         }
@@ -701,18 +702,6 @@ function fetchAdminData(pin){
                 finished = true;
 
                 cleanup();
-
-                if(!data){
-
-                    reject(
-                        new Error(
-                            "Response server kosong."
-                        )
-                    );
-
-                    return;
-
-                }
 
                 resolve(data);
 
@@ -739,7 +728,7 @@ function fetchAdminData(pin){
             };
 
 
-        script.src =
+        const url =
             SCRIPT_URL +
             "?mode=admin" +
             "&adminPin=" +
@@ -750,7 +739,9 @@ function fetchAdminData(pin){
             Date.now();
 
 
-        document.body.appendChild(script);
+        script.src = url;
+
+        document.head.appendChild(script);
 
     });
 
@@ -775,6 +766,7 @@ async function loginAdmin(){
     const pin =
         input.value.trim();
 
+
     errorBox.textContent = "";
 
 
@@ -791,7 +783,9 @@ async function loginAdmin(){
 
 
     button.disabled = true;
-    button.textContent = "MEMERIKSA...";
+
+    button.textContent =
+        "MEMERIKSA...";
 
 
     try{
@@ -824,25 +818,26 @@ async function loginAdmin(){
 
 
         document
-        .getElementById("adminLogin")
-        .style.display = "none";
+            .getElementById("adminLogin")
+            .style.display = "none";
 
 
         document
-        .getElementById("adminContent")
-        .style.display = "block";
+            .getElementById("adminContent")
+            .style.display = "block";
 
 
         updateSummary();
+
         renderTable();
 
 
         document
-        .getElementById("statusText")
-        .textContent =
-            "Data berhasil dimuat: " +
-            allData.length +
-            " record.";
+            .getElementById("statusText")
+            .textContent =
+                "Data berhasil dimuat: " +
+                allData.length +
+                " record.";
 
 
     }catch(error){
@@ -852,11 +847,14 @@ async function loginAdmin(){
             error
         );
 
+
         errorBox.textContent =
             error.message ||
             "Login admin gagal.";
 
+
         input.select();
+
 
     }finally{
 
@@ -875,21 +873,21 @@ async function loginAdmin(){
    ===================================================== */
 
 document
-.getElementById("pinInput")
-.addEventListener(
-    "keydown",
-    function(e){
+    .getElementById("pinInput")
+    .addEventListener(
+        "keydown",
+        function(e){
 
-        if(e.key === "Enter"){
+            if(e.key === "Enter"){
 
-            e.preventDefault();
+                e.preventDefault();
 
-            loginAdmin();
+                loginAdmin();
+
+            }
 
         }
-
-    }
-);
+    );
 
 
 /* =====================================================
@@ -904,7 +902,9 @@ async function loadData(){
 
 
     const status =
-        document.getElementById("statusText");
+        document.getElementById(
+            "statusText"
+        );
 
 
     status.textContent =
@@ -939,6 +939,7 @@ async function loadData(){
 
 
         updateSummary();
+
         renderTable();
 
 
@@ -954,6 +955,7 @@ async function loadData(){
             "REFRESH ERROR:",
             error
         );
+
 
         status.textContent =
             "Gagal mengambil data: " +
@@ -974,15 +976,17 @@ async function loadData(){
 function updateSummary(){
 
     document
-    .getElementById("totalData")
-    .textContent =
-        allData.length;
+        .getElementById("totalData")
+        .textContent =
+            allData.length;
 
 
     const students =
         new Set();
 
+
     let totalScore = 0;
+
     let scoreCount = 0;
 
 
@@ -1015,13 +1019,14 @@ function updateSummary(){
             const score =
                 parseFloat(
                     String(rawScore)
-                    .replace(",", ".")
+                        .replace(",", ".")
                 );
 
 
             if(!isNaN(score)){
 
                 totalScore += score;
+
                 scoreCount++;
 
             }
@@ -1032,20 +1037,20 @@ function updateSummary(){
 
 
     document
-    .getElementById("totalStudents")
-    .textContent =
-        students.size;
+        .getElementById("totalStudents")
+        .textContent =
+            students.size;
 
 
     document
-    .getElementById("averageScore")
-    .textContent =
-        scoreCount
-            ? (
-                totalScore /
-                scoreCount
-              ).toFixed(1)
-            : "0";
+        .getElementById("averageScore")
+        .textContent =
+            scoreCount
+                ? (
+                    totalScore /
+                    scoreCount
+                  ).toFixed(1)
+                : "0";
 
 }
 
@@ -1081,14 +1086,16 @@ function scoreClass(value){
         value === undefined ||
         value === ""
     ){
+
         return "score-normal";
+
     }
 
 
     const score =
         parseFloat(
             String(value)
-            .replace(",", ".")
+                .replace(",", ".")
         );
 
 
@@ -1096,7 +1103,9 @@ function scoreClass(value){
         !isNaN(score) &&
         score < 60
     ){
+
         return "score-red";
+
     }
 
 
@@ -1132,29 +1141,31 @@ function activityBadge(value){
 function renderTable(){
 
     const body =
-        document.getElementById("tableBody");
+        document.getElementById(
+            "tableBody"
+        );
 
 
     const search =
         document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
+            .getElementById("searchInput")
+            .value
+            .trim()
+            .toLowerCase();
 
 
     const activity =
         document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
+            .getElementById("activityFilter")
+            .value
+            .toLowerCase();
 
 
     const group =
         document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
+            .getElementById("groupFilter")
+            .value
+            .toLowerCase();
 
 
     const filtered =
@@ -1178,19 +1189,30 @@ function renderTable(){
             const rowActivity =
                 String(
                     row.activity || ""
-                ).toLowerCase();
+                )
+                .toLowerCase();
 
 
             const rowGroup =
                 String(
                     row.group || ""
-                ).toLowerCase();
+                )
+                .toLowerCase();
 
 
             return (
-                (!search || text.includes(search)) &&
-                (!activity || rowActivity === activity) &&
-                (!group || rowGroup === group)
+                (!search ||
+                    text.includes(search))
+
+                &&
+
+                (!activity ||
+                    rowActivity === activity)
+
+                &&
+
+                (!group ||
+                    rowGroup === group)
             );
 
         });
@@ -1200,7 +1222,10 @@ function renderTable(){
 
         body.innerHTML = `
             <tr>
-                <td colspan="16" class="empty">
+                <td
+                    colspan="16"
+                    class="empty"
+                >
                     Tidak ada data yang sesuai.
                 </td>
             </tr>
@@ -1212,9 +1237,11 @@ function renderTable(){
 
 
     body.innerHTML =
-        filtered.map(function(row,index){
+        filtered
+        .map(function(row,index){
 
             return `
+
                 <tr>
 
                     <td>
@@ -1222,71 +1249,117 @@ function renderTable(){
                     </td>
 
                     <td>
-                        ${escapeHtml(row.timestamp)}
+                        ${escapeHtml(
+                            row.timestamp
+                        )}
                     </td>
 
                     <td>
                         <strong>
-                            ${escapeHtml(row.name)}
+                            ${escapeHtml(
+                                row.name
+                            )}
                         </strong>
                     </td>
 
                     <td>
-                        ${escapeHtml(row.code)}
+                        ${escapeHtml(
+                            row.code
+                        )}
                     </td>
 
                     <td>
-                        ${activityBadge(row.activity)}
+                        ${activityBadge(
+                            row.activity
+                        )}
                     </td>
 
                     <td>
-                        ${escapeHtml(row.group)}
+                        ${escapeHtml(
+                            row.group
+                        )}
                     </td>
 
                     <td>
-                        ${escapeHtml(row.test)}
+                        ${escapeHtml(
+                            row.test
+                        )}
                     </td>
 
                     <td>
-                        ${escapeHtml(row.date)}
+                        ${escapeHtml(
+                            row.date
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.kecerdasan)}">
-                        ${escapeHtml(row.kecerdasan)}
+                    <td class="${scoreClass(
+                        row.kecerdasan
+                    )}">
+                        ${escapeHtml(
+                            row.kecerdasan
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.kepribadian)}">
-                        ${escapeHtml(row.kepribadian)}
+                    <td class="${scoreClass(
+                        row.kepribadian
+                    )}">
+                        ${escapeHtml(
+                            row.kepribadian
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.kecermatan)}">
-                        ${escapeHtml(row.kecermatan)}
+                    <td class="${scoreClass(
+                        row.kecermatan
+                    )}">
+                        ${escapeHtml(
+                            row.kecermatan
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.tiu)}">
-                        ${escapeHtml(row.tiu)}
+                    <td class="${scoreClass(
+                        row.tiu
+                    )}">
+                        ${escapeHtml(
+                            row.tiu
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.twk)}">
-                        ${escapeHtml(row.twk)}
+                    <td class="${scoreClass(
+                        row.twk
+                    )}">
+                        ${escapeHtml(
+                            row.twk
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.tkp)}">
-                        ${escapeHtml(row.tkp)}
+                    <td class="${scoreClass(
+                        row.tkp
+                    )}">
+                        ${escapeHtml(
+                            row.tkp
+                        )}
                     </td>
 
-                    <td class="${scoreClass(row.pengetahuanUmum)}">
-                        ${escapeHtml(row.pengetahuanUmum)}
+                    <td class="${scoreClass(
+                        row.pengetahuanUmum
+                    )}">
+                        ${escapeHtml(
+                            row.pengetahuanUmum
+                        )}
                     </td>
 
                     <td class="total-score">
-                        ${escapeHtml(row.value)}
+                        ${escapeHtml(
+                            row.value
+                        )}
                     </td>
 
                 </tr>
+
             `;
 
-        }).join("");
+        })
+        .join("");
 
 }
 
@@ -1298,16 +1371,19 @@ function renderTable(){
 function resetFilter(){
 
     document
-    .getElementById("searchInput")
-    .value = "";
+        .getElementById("searchInput")
+        .value = "";
+
 
     document
-    .getElementById("activityFilter")
-    .value = "";
+        .getElementById("activityFilter")
+        .value = "";
+
 
     document
-    .getElementById("groupFilter")
-    .value = "";
+        .getElementById("groupFilter")
+        .value = "";
+
 
     renderTable();
 
@@ -1336,24 +1412,24 @@ function downloadCSV(){
 
     const search =
         document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
+            .getElementById("searchInput")
+            .value
+            .trim()
+            .toLowerCase();
 
 
     const activity =
         document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
+            .getElementById("activityFilter")
+            .value
+            .toLowerCase();
 
 
     const group =
         document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
+            .getElementById("groupFilter")
+            .value
+            .toLowerCase();
 
 
     const filtered =
@@ -1376,19 +1452,32 @@ function downloadCSV(){
             const rowActivity =
                 String(
                     row.activity || ""
-                ).toLowerCase();
+                )
+                .toLowerCase();
 
 
             const rowGroup =
                 String(
                     row.group || ""
-                ).toLowerCase();
+                )
+                .toLowerCase();
 
 
             return (
-                (!search || text.includes(search)) &&
-                (!activity || rowActivity === activity) &&
-                (!group || rowGroup === group)
+
+                (!search ||
+                    text.includes(search))
+
+                &&
+
+                (!activity ||
+                    rowActivity === activity)
+
+                &&
+
+                (!group ||
+                    rowGroup === group)
+
             );
 
         });
@@ -1522,11 +1611,12 @@ function downloadCSV(){
 
     link.href = url;
 
+
     link.download =
         "PRC_REKAP_HASIL_TRYOUT_" +
         new Date()
-        .toISOString()
-        .slice(0,10) +
+            .toISOString()
+            .slice(0,10) +
         ".csv";
 
 
@@ -1553,48 +1643,48 @@ function logoutAdmin(){
 
 
     document
-    .getElementById("adminContent")
-    .style.display = "none";
+        .getElementById("adminContent")
+        .style.display = "none";
 
 
     document
-    .getElementById("adminLogin")
-    .style.display = "flex";
+        .getElementById("adminLogin")
+        .style.display = "flex";
 
 
     document
-    .getElementById("pinInput")
-    .value = "";
+        .getElementById("pinInput")
+        .value = "";
 
 
     document
-    .getElementById("loginError")
-    .textContent = "";
+        .getElementById("loginError")
+        .textContent = "";
 
 
     document
-    .getElementById("statusText")
-    .textContent =
-        "Menunggu login admin...";
+        .getElementById("statusText")
+        .textContent =
+            "Menunggu login admin...";
 
 
     document
-    .getElementById("tableBody")
-    .innerHTML = `
+        .getElementById("tableBody")
+        .innerHTML = `
 
-        <tr>
+            <tr>
 
-            <td
-                colspan="16"
-                class="empty"
-            >
-                Silakan login sebagai admin.
+                <td
+                    colspan="16"
+                    class="empty"
+                >
+                    Silakan login sebagai admin.
 
-            </td>
+                </td>
 
-        </tr>
+            </tr>
 
-    `;
+        `;
 
 
     updateSummary();
