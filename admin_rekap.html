@@ -697,7 +697,7 @@ tbody tr:hover{background:#faf8f5}
             type="text"
             id="searchInput"
             placeholder="Cari nama, program, nama tes, atau session..."
-            oninput="renderTable()"
+            autocomplete="off"
         >
 
         <select
@@ -872,6 +872,7 @@ document
 .addEventListener("keydown",function(e){
 
     if(e.key === "Enter"){
+        e.preventDefault();
         loginAdmin();
     }
 
@@ -892,6 +893,11 @@ async function loadData(){
     status.textContent = "Memuat data...";
 
     try{
+
+        /*
+         * INI HANYA GET / MEMBACA DATA.
+         * TIDAK ADA DELETE, CLEAR, ATAU WRITE KE SHEET.
+         */
 
         const url =
             SCRIPT_URL +
@@ -928,7 +934,7 @@ async function loadData(){
         renderTable();
 
         status.textContent =
-            "Data berhasil dimuat: " +
+            "Data berhasil diperbarui: " +
             allData.length +
             " record.";
 
@@ -1026,6 +1032,22 @@ function activityBadge(value){
         </span>
     `;
 }
+
+
+/* =====================================================
+SEARCH HASIL TRYOUT
+===================================================== */
+
+document
+.getElementById("searchInput")
+.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        e.preventDefault();
+        renderTable();
+    }
+
+});
 
 
 /* =====================================================
@@ -1301,13 +1323,13 @@ async function searchBiodata(){
             " biodata ditemukan. Klik nama peserta.";
 
         resultsBox.innerHTML =
-            results.map(function(item){
+            results.map(function(item,index){
 
                 return `
                     <button
                         type="button"
                         class="biodata-result-item"
-                        data-name="${escapeHtml(item.namaLengkap || "")}"
+                        data-index="${index}"
                     >
                         <div class="biodata-result-name">
                             ${escapeHtml(item.namaLengkap || "-")}
@@ -1328,8 +1350,15 @@ async function searchBiodata(){
 
             button.addEventListener("click",function(){
 
+                const index =
+                    Number(button.dataset.index);
+
+                const item = results[index];
+
+                if(!item) return;
+
                 loadBiodataByName(
-                    button.dataset.name
+                    item.namaLengkap || ""
                 );
 
             });
@@ -1449,87 +1478,46 @@ function renderBiodataFields(b){
     const fields = [
 
         ["Target Seleksi",b.targetSeleksi],
-
         ["Nama Lengkap",b.namaLengkap],
-
         ["Nama Panggilan",b.namaPanggilan],
-
         ["Jenis Kelamin",b.jenisKelamin],
-
         ["Tempat Lahir",b.tempatLahir],
-
         ["Tanggal Lahir",b.tanggalLahir],
-
         ["Agama",b.agama],
-
         ["WhatsApp",b.whatsapp],
-
         ["Email",b.email],
-
         ["Tinggi",b.tinggi],
-
         ["Berat",b.berat],
-
         ["Alamat",b.alamat],
-
         ["Sekolah",b.sekolah],
-
         ["Jurusan",b.jurusan],
-
         ["Tahun Lulus",b.tahunLulus],
-
         ["Pendidikan Terakhir",b.pendidikanTerakhir],
-
         ["Nama Ayah",b.namaAyah],
-
         ["Pekerjaan Ayah",b.pekerjaanAyah],
-
         ["Pendidikan Ayah",b.pendidikanAyah],
-
         ["HP Ayah",b.hpAyah],
-
         ["Nama Ibu",b.namaIbu],
-
         ["Pekerjaan Ibu",b.pekerjaanIbu],
-
         ["Pendidikan Ibu",b.pendidikanIbu],
-
         ["HP Ibu",b.hpIbu],
-
         ["Jumlah Saudara",b.jumlahSaudara],
-
         ["Organisasi",b.organisasi],
-
         ["Prestasi",b.prestasi],
-
         ["Kepemimpinan",b.kepemimpinan],
-
         ["Kelebihan",b.kelebihan],
-
         ["Kekurangan",b.kekurangan],
-
         ["Perbaikan",b.perbaikan],
-
         ["Hobi",b.hobi],
-
         ["Keterampilan",b.keterampilan],
-
         ["Alasan",b.alasan],
-
         ["Persiapan",b.persiapan],
-
         ["Target",b.target],
-
         ["Pernah Seleksi",b.pernahSeleksi],
-
         ["Tahun Seleksi",b.tahunSeleksi],
-
         ["Pengalaman Seleksi",b.pengalamanSeleksi],
-
         ["Pengalaman Sulit",b.pengalamanSulit],
-
         ["Cara Mengatasi",b.caraMengatasi],
-
         ["Kerja Sama",b.kerjaSama]
 
     ];
@@ -1627,10 +1615,14 @@ async function loadPhoto(fotoURL){
         return;
     }
 
+
     /*
-     * Gunakan endpoint adminphoto.
-     * Foto dikirim dari Apps Script sebagai Base64,
-     * sehingga tidak tergantung pada URL preview Drive.
+     * PRIORITAS 1:
+     * Endpoint adminphoto Apps Script.
+     *
+     * Jika Code.gs sudah memiliki mode ini,
+     * foto akan dikirim sebagai Base64 dan
+     * tidak bergantung pada izin preview Drive.
      */
 
     try{
@@ -1649,70 +1641,109 @@ async function loadPhoto(fotoURL){
                 cache:"no-store"
             });
 
-        if(!response.ok){
-            throw new Error("HTTP " + response.status);
+        if(response.ok){
+
+            const data =
+                await response.json();
+
+            if(
+                data.status === "success" &&
+                data.base64
+            ){
+
+                const img =
+                    document.createElement("img");
+
+                img.className = "biodata-photo";
+                img.alt = "Foto peserta";
+
+                img.src =
+                    "data:" +
+                    (data.mimeType || "image/jpeg") +
+                    ";base64," +
+                    data.base64;
+
+                container.innerHTML = "";
+                container.appendChild(img);
+
+                actions.innerHTML =
+                    `<a href="${escapeHtml(fotoURL)}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        BUKA FOTO ASLI
+                    </a>`;
+
+                return;
+            }
         }
 
-        const data =
-            await response.json();
+    }catch(error){
 
-        if(
-            data.status !== "success" ||
-            !data.base64
-        ){
-            throw new Error(
-                data.message ||
-                "Foto gagal diambil."
-            );
-        }
+        console.warn(
+            "Endpoint adminphoto belum tersedia atau gagal:",
+            error
+        );
+    }
 
-        const img =
-            document.createElement("img");
 
-        img.className = "biodata-photo";
+    /*
+     * PRIORITAS 2:
+     * Google Drive thumbnail.
+     */
 
-        img.alt = "Foto peserta";
+    const thumbnail =
+        "https://drive.google.com/thumbnail?id=" +
+        encodeURIComponent(fileId) +
+        "&sz=w1000";
 
-        img.src =
-            "data:" +
-            (data.mimeType || "image/jpeg") +
-            ";base64," +
-            data.base64;
+
+    const img =
+        document.createElement("img");
+
+    img.className = "biodata-photo";
+
+    img.alt = "Foto peserta";
+
+    img.src = thumbnail;
+
+    img.onload = function(){
 
         container.innerHTML = "";
 
         container.appendChild(img);
 
-        actions.innerHTML =
-            `<a href="${escapeHtml(fotoURL)}"
-                target="_blank"
-                rel="noopener noreferrer">
-                BUKA FOTO ASLI
-            </a>`;
+    };
 
-    }catch(error){
-
-        console.error(error);
+    img.onerror = function(){
 
         /*
-         * Fallback browser URL.
+         * PRIORITAS 3:
+         * Googleusercontent.
          */
 
-        const thumbnail =
-            "https://drive.google.com/thumbnail?id=" +
+        const googleusercontent =
+            "https://lh3.googleusercontent.com/d/" +
             encodeURIComponent(fileId) +
-            "&sz=w1000";
+            "=w1000";
 
-        const img =
+        const img2 =
             document.createElement("img");
 
-        img.className = "biodata-photo";
+        img2.className = "biodata-photo";
 
-        img.alt = "Foto peserta";
+        img2.alt = "Foto peserta";
 
-        img.src = thumbnail;
+        img2.src = googleusercontent;
 
-        img.onerror = function(){
+        img2.onload = function(){
+
+            container.innerHTML = "";
+
+            container.appendChild(img2);
+
+        };
+
+        img2.onerror = function(){
 
             container.innerHTML = `
                 <div class="photo-error">
@@ -1722,17 +1753,14 @@ async function loadPhoto(fotoURL){
 
         };
 
-        container.innerHTML = "";
+    };
 
-        container.appendChild(img);
-
-        actions.innerHTML =
-            `<a href="${escapeHtml(fotoURL)}"
-                target="_blank"
-                rel="noopener noreferrer">
-                BUKA FOTO ASLI
-            </a>`;
-    }
+    actions.innerHTML =
+        `<a href="${escapeHtml(fotoURL)}"
+            target="_blank"
+            rel="noopener noreferrer">
+            BUKA FOTO ASLI
+        </a>`;
 }
 
 
@@ -1883,35 +1911,20 @@ function downloadCSV(){
         rows.push([
 
             index + 1,
-
             row.timestamp || "",
-
             row.name || "",
-
             row.code || "",
-
             row.activity || "",
-
             row.group || "",
-
             row.test || "",
-
             row.date || "",
-
             row.kecerdasan || "",
-
             row.kepribadian || "",
-
             row.kecermatan || "",
-
             row.tiu || "",
-
             row.twk || "",
-
             row.tkp || "",
-
             row.pengetahuanUmum || "",
-
             row.value || ""
 
         ]);
