@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin Rekap — Persona Class</title>
+<title>Biodata Siswa PRC Class — Bimbel Cerdas NTB 2026/2027</title>
 
 <style>
 
@@ -155,6 +155,18 @@ body{
     background:#eee;
     color:var(--navy);
 }
+
+/* HEADER LABEL + BIODATA SEARCH */
+.school-year-label{font-size:11px;font-weight:800;letter-spacing:.7px;line-height:1.55;color:var(--rose);margin-bottom:8px}
+.header{align-items:flex-start;flex-wrap:wrap}
+.biodata-top-right{width:min(330px,100%);margin:0 0 0 auto;padding:13px 14px;border-radius:14px;box-shadow:0 5px 18px rgba(23,32,51,.06)}
+.biodata-top-right .biodata-title{font-size:15px;margin-bottom:9px}
+.biodata-top-right .bio-search{gap:6px;flex-wrap:nowrap}
+.biodata-top-right .bio-search input{min-width:0;width:100%;padding:10px 11px;font-size:12px}
+.biodata-top-right .bio-search .btn{padding:10px 12px;font-size:12px;white-space:nowrap}
+.biodata-top-right .bio-results{grid-template-columns:1fr;max-height:220px;overflow:auto;margin-top:8px}
+.header-actions{margin-left:auto}
+@media(max-width:760px){.biodata-top-right{width:100%;margin:0}.header-actions{margin-left:0}.school-year-label{font-size:10px}}
 
 /* SUMMARY */
 
@@ -381,12 +393,23 @@ tbody tr:hover{
 
             <div>
 
+                <div class="school-year-label">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB<br>TAHUN AJARAN 2026/2027</div>
                 <h1>Rekap Persona Class</h1>
 
                 <p>
                     Data hasil latihan dan tryout siswa.
                 </p>
 
+            </div>
+
+            <!-- Pencarian biodata ditempatkan di pojok kanan atas -->
+            <div class="biodata-panel biodata-top-right">
+                <h2 class="biodata-title">Biodata Siswa</h2>
+                <div class="bio-search">
+                    <input id="bioSearchInput" type="text" placeholder="Nama siswa / KodeSiswa" onkeydown="if(event.key==='Enter')searchBiodataAdmin()">
+                    <button class="btn btn-small" onclick="searchBiodataAdmin()">Cari</button>
+                </div>
+                <div id="bioResults" class="bio-results"></div>
             </div>
 
             <div class="header-actions">
@@ -478,7 +501,10 @@ tbody tr:hover{
                 id="searchInput"
                 placeholder="Cari nama, program, nama tes, atau session..."
                 oninput="renderTable()"
+                onkeydown="if(event.key==='Enter')renderTable()"
             >
+
+            <button class="btn btn-small" type="button" onclick="renderTable()">Cari</button>
 
             <select
                 id="activityFilter"
@@ -594,16 +620,6 @@ tbody tr:hover{
         </div>
 
 
-        <!-- BIODATA PESERTA -->
-        <div class="biodata-panel">
-            <h2 class="biodata-title">Biodata Peserta</h2>
-            <p class="biodata-note">Cari peserta menggunakan nama lengkap, sebagian nama, atau KodeSiswa. Pilih kartu peserta untuk membuka detail biodata, foto, dan opsi cetak.</p>
-            <div class="bio-search">
-                <input id="bioSearchInput" type="text" placeholder="Masukkan nama peserta atau KodeSiswa" onkeydown="if(event.key==='Enter')searchBiodataAdmin()">
-                <button class="btn btn-small" onclick="searchBiodataAdmin()">Cari Peserta</button>
-            </div>
-            <div id="bioResults" class="bio-results"></div>
-        </div>
 
         <div id="bioModal" class="bio-modal">
           <div class="bio-box">
