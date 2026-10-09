@@ -562,6 +562,11 @@ tbody tr:hover{
         </div>
 
 
+        <div class="toolbar" style="margin-top:14px;">
+            <button id="detailViewBtn" class="btn btn-primary btn-small" type="button" onclick="setRekapView('detail')">Detail per Tryout</button>
+            <button id="studentViewBtn" class="btn btn-small" type="button" onclick="setRekapView('student')">Rekap Nilai Keseluruhan per Siswa</button>
+        </div>
+
         <div
             class="status"
             id="statusText"
@@ -621,6 +626,14 @@ tbody tr:hover{
 
         </div>
 
+        <div id="studentSummaryWrap" class="table-wrap" style="display:none; margin-top:18px;">
+            <table>
+                <thead><tr>
+                    <th>No</th><th>Nama Siswa</th><th>Program</th><th>Jumlah Tryout</th><th>Riwayat Seluruh Tryout dan Nilai</th><th>Rata-rata Nilai Akhir</th>
+                </tr></thead>
+                <tbody id="studentSummaryBody"><tr><td colspan="6" class="empty">Memuat data...</td></tr></tbody>
+            </table>
+        </div>
 
 
         <div id="bioModal" class="bio-modal">
@@ -671,6 +684,50 @@ const SCRIPT_URL =
 let allData = [];
 
 let adminPin = "";
+let rekapView = "detail";
+
+/* Normalisasi nama kolom dari Google Sheet HasilTryout ke field yang dipakai tabel.
+   Data mentah tetap dipertahankan; hanya menambahkan alias untuk tampilan/filter. */
+function normalizeTryoutRow(row){
+    row = row && typeof row === "object" ? row : {};
+    const keyMap = {};
+    Object.keys(row).forEach(function(k){
+        keyMap[String(k).replace(/[^a-z0-9]/gi, "").toLowerCase()] = row[k];
+    });
+    function pick(names){
+        for(let i=0;i<names.length;i++){
+            const k=String(names[i]).replace(/[^a-z0-9]/gi, "").toLowerCase();
+            if(Object.prototype.hasOwnProperty.call(keyMap,k) && keyMap[k] !== null && keyMap[k] !== undefined) return keyMap[k];
+        }
+        return "";
+    }
+    const timestamp=pick(["Timestamp","Waktu","CreatedAt"]);
+    const name=pick(["NamaSiswa","Nama Siswa","NamaLengkap","Nama"]);
+    const code=pick(["SessionID","Session Id","KodeSiswa","Kode Siswa"]);
+    const group=pick(["Program","TargetSeleksi","Target Seleksi"]);
+    const test=pick(["NamaTryout","Nama Tryout","NamaTes","Nama Tes"]);
+    const date=pick(["Tanggal","TanggalTryout","Tanggal Tryout"]);
+    const activity=pick(["Aktivitas","Activity","JenisAktivitas","Jenis Aktivitas"]);
+    const value=pick(["NilaiAkhir","Nilai Akhir","Total","TotalNilai"]);
+    return Object.assign({}, row, {
+        timestamp: timestamp,
+        name: name,
+        code: code,
+        activity: activity || "TRYOUT",
+        group: group,
+        material: pick(["Materi","NamaMateri"]),
+        test: test,
+        date: date,
+        kecerdasan: pick(["Kecerdasan"]),
+        kepribadian: pick(["Kepribadian"]),
+        kecermatan: pick(["Kecermatan"]),
+        tiu: pick(["TIU"]),
+        twk: pick(["TWK"]),
+        tkp: pick(["TKP"]),
+        pengetahuanUmum: pick(["PengetahuanUmum","Pengetahuan Umum"]),
+        value: value
+    });
+}
 
 
 /*
@@ -764,9 +821,9 @@ async function loginAdmin(){
 
 
         allData =
-            Array.isArray(data.results)
-                ? data.results
-                : [];
+            (Array.isArray(data.results) ? data.results :
+             (Array.isArray(data.data) ? data.data : []))
+            .map(normalizeTryoutRow);
 
 
         updateSummary();
@@ -884,9 +941,9 @@ async function loadData(){
 
 
         allData =
-            Array.isArray(data.results)
-                ? data.results
-                : [];
+            (Array.isArray(data.results) ? data.results :
+             (Array.isArray(data.data) ? data.data : []))
+            .map(normalizeTryoutRow);
 
 
         updateSummary();
@@ -1072,246 +1129,110 @@ RENDER TABLE
 =====================================================
 */
 
-function renderTable(){
+function getFilteredRows(){
+    const search = String(document.getElementById("searchInput").value || "").trim().toLowerCase();
+    const activity = String(document.getElementById("activityFilter").value || "").trim().toLowerCase();
+    const group = String(document.getElementById("groupFilter").value || "").trim().toLowerCase();
 
-    const body =
-        document
-        .getElementById("tableBody");
-
-
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const activity =
-        document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
-
-
-    const group =
-        document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
-
-
-    const filtered =
-        allData.filter(
-            function(row){
-
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
-
-
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
-
-
-                const searchMatch =
-                    !search ||
-                    text.includes(search);
-
-
-                const activityMatch =
-                    !activity ||
-                    rowActivity === activity;
-
-
-                const groupMatch =
-                    !group ||
-                    rowGroup === group;
-
-
-                return (
-                    searchMatch &&
-                    activityMatch &&
-                    groupMatch
-                );
-
-            }
-        );
-
-
-    if(
-        filtered.length === 0
-    ){
-
-        body.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="16"
-                    class="empty"
-                >
-                    Tidak ada data yang sesuai.
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        filtered
-        .map(
-            function(row,index){
-
-                return `
-
-                    <tr>
-
-                        <td>
-                            ${index + 1}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.timestamp
-                            )}
-                        </td>
-
-                        <td>
-                            <strong>
-                                ${escapeHtml(
-                                    row.name
-                                )}
-                            </strong>
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.code
-                            )}
-                        </td>
-
-                        <td>
-                            ${activityBadge(
-                                row.activity
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.group
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.test
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                row.date
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kecerdasan
-                        )}">
-                            ${escapeHtml(
-                                row.kecerdasan
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kepribadian
-                        )}">
-                            ${escapeHtml(
-                                row.kepribadian
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.kecermatan
-                        )}">
-                            ${escapeHtml(
-                                row.kecermatan
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.tiu
-                        )}">
-                            ${escapeHtml(
-                                row.tiu
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.twk
-                        )}">
-                            ${escapeHtml(
-                                row.twk
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.tkp
-                        )}">
-                            ${escapeHtml(
-                                row.tkp
-                            )}
-                        </td>
-
-                        <td class="${scoreClass(
-                            row.pengetahuanUmum
-                        )}">
-                            ${escapeHtml(
-                                row.pengetahuanUmum
-                            )}
-                        </td>
-
-                        <td class="total-score">
-                            ${escapeHtml(
-                                row.value
-                            )}
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-        )
-        .join("");
-
+    return allData.filter(function(row){
+        // Search across normalized fields AND original Google Sheet fields.
+        // This makes name, program, test title, dates, IDs, and score columns searchable.
+        const searchableValues = Object.keys(row || {}).map(function(key){
+            const value = row[key];
+            return value == null ? "" : String(value);
+        });
+        searchableValues.push(row.name, row.code, row.group, row.material, row.test, row.date,
+            row.activity, row.value, row.kecerdasan, row.kepribadian, row.kecermatan,
+            row.tiu, row.twk, row.tkp, row.pengetahuanUmum);
+        const text = searchableValues.join(" ").toLowerCase();
+        const rowActivity = String(row.activity || "").trim().toLowerCase();
+        const rowGroup = String(row.group || "").trim().toLowerCase();
+        return (!search || text.includes(search)) &&
+               (!activity || rowActivity === activity) &&
+               (!group || rowGroup === group);
+    });
 }
 
+function setRekapView(view){
+    rekapView = view === "student" ? "student" : "detail";
+    document.getElementById("studentSummaryWrap").style.display = rekapView === "student" ? "block" : "none";
+    document.querySelector(".table-wrap").style.display = rekapView === "detail" ? "block" : "none";
+    document.getElementById("detailViewBtn").classList.toggle("btn-primary", rekapView === "detail");
+    document.getElementById("studentViewBtn").classList.toggle("btn-primary", rekapView === "student");
+    renderTable();
+}
+
+function renderTable(){
+    const filtered = getFilteredRows();
+    const body = document.getElementById("tableBody");
+    const studentBody = document.getElementById("studentSummaryBody");
+
+    if(filtered.length === 0){
+        body.innerHTML = '<tr><td colspan="16" class="empty">Tidak ada data yang sesuai dengan pencarian/filter.</td></tr>';
+        studentBody.innerHTML = '<tr><td colspan="6" class="empty">Tidak ada data yang sesuai dengan pencarian/filter.</td></tr>';
+        return;
+    }
+
+    body.innerHTML = filtered.map(function(row,index){
+        return `<tr>
+            <td>${index + 1}</td>
+            <td>${escapeHtml(row.timestamp)}</td>
+            <td><strong>${escapeHtml(row.name)}</strong></td>
+            <td>${escapeHtml(row.code)}</td>
+            <td>${activityBadge(row.activity)}</td>
+            <td>${escapeHtml(row.group)}</td>
+            <td>${escapeHtml(row.test)}</td>
+            <td>${escapeHtml(row.date)}</td>
+            <td class="${scoreClass(row.kecerdasan)}">${escapeHtml(row.kecerdasan)}</td>
+            <td class="${scoreClass(row.kepribadian)}">${escapeHtml(row.kepribadian)}</td>
+            <td class="${scoreClass(row.kecermatan)}">${escapeHtml(row.kecermatan)}</td>
+            <td class="${scoreClass(row.tiu)}">${escapeHtml(row.tiu)}</td>
+            <td class="${scoreClass(row.twk)}">${escapeHtml(row.twk)}</td>
+            <td class="${scoreClass(row.tkp)}">${escapeHtml(row.tkp)}</td>
+            <td class="${scoreClass(row.pengetahuanUmum)}">${escapeHtml(row.pengetahuanUmum)}</td>
+            <td class="total-score">${escapeHtml(row.value)}</td>
+        </tr>`;
+    }).join("");
+
+    // Group filtered records into one row per student + program, retaining every tryout result.
+    const grouped = new Map();
+    filtered.forEach(function(row){
+        const name = String(row.name || "Nama belum tercatat").trim();
+        const program = String(row.group || "Program belum tercatat").trim();
+        const key = name.toLowerCase();
+        if(!grouped.has(key)) grouped.set(key,{name:name, programs:new Set(), rows:[]});
+        grouped.get(key).programs.add(program);
+        grouped.get(key).rows.push(row);
+    });
+
+    const students = Array.from(grouped.values()).sort(function(a,b){
+        return a.name.localeCompare(b.name, "id", {sensitivity:"base"});
+    });
+    studentBody.innerHTML = students.map(function(student,index){
+        const attempts = student.rows.slice().sort(function(a,b){
+            return String(a.timestamp || a.date || "").localeCompare(String(b.timestamp || b.date || ""));
+        });
+        const scores = attempts.map(function(row){
+            const n = parseFloat(String(row.value == null ? "" : row.value).replace(",","."));
+            return Number.isFinite(n) ? n : null;
+        }).filter(function(n){ return n !== null; });
+        const average = scores.length ? (scores.reduce(function(sum,n){return sum+n;},0)/scores.length).toFixed(1) : "-";
+        const history = attempts.map(function(row){
+            const title = row.test || row.material || "Tryout tanpa nama";
+            const date = row.date || row.timestamp || "Tanggal tidak tercatat";
+            const score = row.value !== "" && row.value != null ? row.value : "Belum ada nilai akhir";
+            return `<div style="padding:6px 0;border-bottom:1px solid #ececf0;"><strong>${escapeHtml(title)}</strong><br><span style="font-size:12px;color:#6b7280">${escapeHtml(date)} · Nilai akhir: ${escapeHtml(score)}</span></div>`;
+        }).join("");
+        return `<tr>
+            <td>${index+1}</td>
+            <td><strong>${escapeHtml(student.name)}</strong></td>
+            <td>${escapeHtml(Array.from(student.programs).join(", "))}</td>
+            <td>${attempts.length}</td>
+            <td style="min-width:260px;white-space:normal">${history}</td>
+            <td class="total-score">${average}</td>
+        </tr>`;
+    }).join("");
+}
 
 /*
 =====================================================
@@ -1363,80 +1284,7 @@ function downloadCSV(){
     }
 
 
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const activity =
-        document
-        .getElementById("activityFilter")
-        .value
-        .toLowerCase();
-
-
-    const group =
-        document
-        .getElementById("groupFilter")
-        .value
-        .toLowerCase();
-
-
-    const filtered =
-        allData.filter(
-            function(row){
-
-                const text =
-                    [
-                        row.name,
-                        row.code,
-                        row.group,
-                        row.material,
-                        row.test,
-                        row.date,
-                        row.value
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                const rowActivity =
-                    String(
-                        row.activity || ""
-                    )
-                    .toLowerCase();
-
-
-                const rowGroup =
-                    String(
-                        row.group || ""
-                    )
-                    .toLowerCase();
-
-
-                return (
-
-                    (!search ||
-                        text.includes(search))
-
-                    &&
-
-                    (!activity ||
-                        rowActivity === activity)
-
-                    &&
-
-                    (!group ||
-                        rowGroup === group)
-
-                );
-
-            }
-        );
-
+    const filtered = getFilteredRows();
 
     if(
         filtered.length === 0
