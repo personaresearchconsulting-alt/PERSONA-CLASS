@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Biodata Siswa PRC Class — Bimbel Cerdas NTB 2026/2027</title>
+<title>Admin Rekap — Persona Class</title>
 
 <style>
 
@@ -155,18 +155,6 @@ body{
     background:#eee;
     color:var(--navy);
 }
-
-/* HEADER LABEL + BIODATA SEARCH */
-.school-year-label{font-size:11px;font-weight:800;letter-spacing:.7px;line-height:1.55;color:var(--rose);margin-bottom:8px}
-.header{align-items:flex-start;flex-wrap:wrap}
-.biodata-top-right{width:min(330px,100%);margin:0 0 0 auto;padding:13px 14px;border-radius:14px;box-shadow:0 5px 18px rgba(23,32,51,.06)}
-.biodata-top-right .biodata-title{font-size:15px;margin-bottom:9px}
-.biodata-top-right .bio-search{gap:6px;flex-wrap:nowrap}
-.biodata-top-right .bio-search input{min-width:0;width:100%;padding:10px 11px;font-size:12px}
-.biodata-top-right .bio-search .btn{padding:10px 12px;font-size:12px;white-space:nowrap}
-.biodata-top-right .bio-results{grid-template-columns:1fr;max-height:220px;overflow:auto;margin-top:8px}
-.header-actions{margin-left:auto}
-@media(max-width:760px){.biodata-top-right{width:100%;margin:0}.header-actions{margin-left:0}.school-year-label{font-size:10px}}
 
 /* SUMMARY */
 
@@ -338,6 +326,21 @@ tbody tr:hover{
 /* BIODATA ADMIN */
 .biodata-panel{margin-top:28px;background:#fff;border:1px solid rgba(201,166,166,.35);border-radius:20px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(23,32,51,.06)}
 .biodata-title{font-size:20px;font-weight:800;letter-spacing:.1px;color:var(--navy);margin:0 0 7px}.biodata-note{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 18px}.bio-search{display:flex;gap:10px;flex-wrap:wrap}.bio-search input{flex:1;min-width:220px;border:1px solid #d9dce3;border-radius:12px;padding:13px 14px;font-size:14px;outline:none;background:#fff}.bio-search input:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(201,166,166,.18)}.bio-results{margin-top:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bio-result{padding:15px 16px;border:1px solid #e8e8ec;border-radius:13px;margin:0;cursor:pointer;background:#fff;transition:border-color .15s,background .15s,transform .15s}.bio-result:hover{background:var(--cream);border-color:var(--rose);transform:translateY(-1px)}.bio-result-name{font-weight:700;color:var(--navy);font-size:14px}.bio-result-meta{font-size:12px;line-height:1.6;color:var(--muted);margin-top:6px}.bio-modal{display:none;position:fixed;inset:0;background:rgba(23,32,51,.72);z-index:99999;padding:clamp(8px,2vw,20px);overflow:auto}.bio-box{width:min(1050px,100%);margin:18px auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.22)}.bio-head{background:var(--cream2);padding:17px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}.bio-head h2{margin:0;color:var(--navy);font-size:19px}.bio-close{border:0;background:#fff;border-radius:50%;width:36px;height:36px;font-size:22px;cursor:pointer;color:var(--navy);flex-shrink:0}.bio-body{padding:clamp(16px,3vw,26px)}.bio-layout{display:grid;grid-template-columns:175px minmax(0,1fr);gap:25px;align-items:start}.bio-photo-wrap{text-align:center;position:sticky;top:12px}.bio-photo{width:150px;height:190px;object-fit:cover;border-radius:12px;border:1px solid #e2e2e2;display:none}.bio-no-photo{width:150px;height:190px;margin:auto;display:flex;align-items:center;justify-content:center;background:var(--cream2);border-radius:12px;color:#888;font-size:12px;padding:12px}.bio-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}.bio-field{padding:11px 0;border-bottom:1px solid #ececf0;min-width:0}.bio-field.full{grid-column:1/-1}.bio-label{font-size:11px;letter-spacing:.35px;text-transform:uppercase;color:#777;margin-bottom:5px}.bio-value{font-size:13px;line-height:1.55;font-weight:600;color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere}.bio-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}@media(max-width:700px){.bio-results{grid-template-columns:1fr}.bio-layout{grid-template-columns:1fr}.bio-photo-wrap{position:static}.bio-fields{grid-template-columns:1fr}.bio-field.full{grid-column:auto}}
+
+/* PENCARIAN BIODATA DI POJOK KANAN ATAS */
+.biodata-top-right{width:min(340px,100%);margin:0 0 0 auto;padding:14px 15px;border-radius:14px;box-shadow:0 5px 18px rgba(23,32,51,.06);flex:0 1 340px}
+.biodata-top-right .biodata-title{font-size:15px;margin-bottom:9px}
+.biodata-top-right .biodata-note{display:none}
+.biodata-top-right .bio-search{gap:7px;flex-wrap:nowrap}
+.biodata-top-right .bio-search input{min-width:0;width:100%;padding:10px 11px;font-size:12px}
+.biodata-top-right .bio-search .btn{padding:10px 12px;font-size:12px;white-space:nowrap}
+.biodata-top-right .bio-results{grid-template-columns:1fr;max-height:220px;overflow:auto;margin-top:8px}
+@media(max-width:900px){.header{align-items:stretch;flex-wrap:wrap}.biodata-top-right{width:100%;max-width:none;flex-basis:100%;margin:0}.header-actions{width:100%}}
+.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px;color:#172033}
+.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}
+.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}
+.bio-screen-heading{text-align:center;border-bottom:1px solid #e5e5e5;padding:4px 0 14px;margin-bottom:18px;color:#172033}.bio-screen-heading .org{font-size:15px;font-weight:800;letter-spacing:.3px}.bio-screen-heading .year{font-size:13px;font-weight:700;margin-top:4px}
+
 </style>
 </head>
 
@@ -393,7 +396,6 @@ tbody tr:hover{
 
             <div>
 
-                <div class="school-year-label">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB<br>TAHUN AJARAN 2026/2027</div>
                 <h1>Rekap Persona Class</h1>
 
                 <p>
@@ -402,12 +404,12 @@ tbody tr:hover{
 
             </div>
 
-            <!-- Pencarian biodata ditempatkan di pojok kanan atas -->
+            <!-- Pencarian biodata di pojok kanan atas -->
             <div class="biodata-panel biodata-top-right">
                 <h2 class="biodata-title">Biodata Siswa</h2>
                 <div class="bio-search">
                     <input id="bioSearchInput" type="text" placeholder="Nama siswa / KodeSiswa" onkeydown="if(event.key==='Enter')searchBiodataAdmin()">
-                    <button class="btn btn-small" onclick="searchBiodataAdmin()">Cari</button>
+                    <button class="btn btn-small" type="button" onclick="searchBiodataAdmin()">Cari</button>
                 </div>
                 <div id="bioResults" class="bio-results"></div>
             </div>
@@ -627,6 +629,7 @@ tbody tr:hover{
             <div class="bio-body">
               <div id="bioLoading" class="status">Memuat biodata...</div>
               <div id="bioDetail" style="display:none">
+                <div class="bio-screen-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div>
                 <div class="bio-layout">
                   <div class="bio-photo-wrap">
                     <img id="bioPhoto" class="bio-photo" alt="Foto peserta">
@@ -1821,7 +1824,7 @@ function closeBiodata(){document.getElementById('bioModal').style.display='none'
 function downloadBiodata(){
     if(!currentBiodata)return;
     const name=bioVal(currentBiodata,['TargetSeleksi','targetSeleksi','Target Seleksi','NamaLengkap','namaLengkap','Nama Lengkap'])||'Peserta';
-    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ddd;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px;margin-bottom:20px}</style></head><body><h1>BIODATA PESERTA</h1>';
+    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ddd;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px;margin-bottom:20px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
     if(currentPhotoData)h+='<img src="'+currentPhotoData.dataUrl+'">';
     h+='<table>';document.querySelectorAll('#bioFields .bio-field').forEach(function(el){h+='<tr><td>'+escapeHtml(el.querySelector('.bio-label').textContent)+'</td><td>'+escapeHtml(el.querySelector('.bio-value').textContent)+'</td></tr>';});h+='</table></body></html>';
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html;charset=utf-8'}));a.download='BIODATA_'+String(name).replace(/[^a-z0-9]+/gi,'_')+'.html';document.body.appendChild(a);a.click();a.remove();
@@ -1829,7 +1832,7 @@ function downloadBiodata(){
 function printBiodata(){
     if(!currentBiodata)return;const w=window.open('','_blank');if(!w){alert('Izinkan pop-up untuk mencetak biodata.');return;}
     const name=bioVal(currentBiodata,['TargetSeleksi','targetSeleksi','Target Seleksi','NamaLengkap','namaLengkap','Nama Lengkap'])||'Peserta';
-    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ccc;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px}</style></head><body><h1>BIODATA PESERTA</h1>';
+    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ccc;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
     if(currentPhotoData)h+='<img src="'+currentPhotoData.dataUrl+'"><br><br>';
     h+='<table>';document.querySelectorAll('#bioFields .bio-field').forEach(function(el){h+='<tr><td>'+escapeHtml(el.querySelector('.bio-label').textContent)+'</td><td>'+escapeHtml(el.querySelector('.bio-value').textContent)+'</td></tr>';});
     h+='</table><script>window.onload=function(){setTimeout(function(){window.print()},500)}<\\/script></body></html>';w.document.write(h);w.document.close();
