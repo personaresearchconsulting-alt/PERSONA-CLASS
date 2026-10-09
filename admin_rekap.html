@@ -1690,11 +1690,13 @@ function searchBiodataAdmin(){
         if(!rows.length){box.innerHTML='<div class="empty">Tidak ada biodata yang cocok.</div>';return;}
         box.innerHTML='';
         rows.forEach(function(row){
-            const nama=String(bioVal(row,['NamaLengkap','namaLengkap','nama_lengkap','Nama Lengkap','name']));
+            // Respons Apps Script saat ini memberi nilai mulai dari kolom Target Seleksi
+            // dengan key yang satu label lebih awal. Gunakan key sumber yang sesuai.
+            const nama=String(bioVal(row,['TargetSeleksi','targetSeleksi','Target Seleksi','NamaLengkap','namaLengkap','Nama Lengkap','name']));
             if(!nama)return;
-            const target=bioVal(row,['TargetSeleksi','targetSeleksi','Target Seleksi']);
-            const panggilan=bioVal(row,['NamaPanggilan','namaPanggilan','Nama Panggilan']);
-            const gender=bioVal(row,['JenisKelamin','jenisKelamin','Jenis Kelamin']);
+            const target=bioVal(row,['KodeSiswa','kodeSiswa','Kode Siswa','TargetSeleksi','targetSeleksi']);
+            const panggilan=bioVal(row,['NamaLengkap','namaLengkap','Nama Lengkap','NamaPanggilan','namaPanggilan']);
+            const gender=bioVal(row,['NamaPanggilan','namaPanggilan','Nama Panggilan','JenisKelamin','jenisKelamin']);
             const div=document.createElement('div');div.className='bio-result';
             div.innerHTML='<div class="bio-result-name">'+escapeHtml(nama)+'</div><div class="bio-result-meta">'+escapeHtml([target,panggilan,gender].filter(Boolean).join(' • '))+'</div>';
             div.onclick=function(){openBiodata(nama)};box.appendChild(div);
@@ -1702,9 +1704,6 @@ function searchBiodataAdmin(){
         if(!box.children.length)box.innerHTML='<div class="empty">Data ditemukan, tetapi nama lengkap tidak tersedia pada respons server.</div>';
     }).catch(function(err){box.innerHTML='<div class="empty">'+escapeHtml(err.message||'Gagal menghubungi server biodata.')+'</div>';});
 }
-
-document.getElementById('bioSearchInput').addEventListener('keydown',function(e){if(e.key==='Enter')searchBiodataAdmin()});
-
 function openBiodata(nama){
     document.getElementById('bioModal').style.display='block';
     document.getElementById('bioModalTitle').textContent='Biodata — '+nama;
@@ -1719,7 +1718,7 @@ function openBiodata(nama){
         renderBiodataFields(currentBiodata);
         document.getElementById('bioLoading').style.display='none';
         document.getElementById('bioDetail').style.display='block';
-        const foto=bioVal(currentBiodata,['FotoURL','fotoURL','fotoUrl','URLFoto','urlFoto']);
+        const foto=bioVal(currentBiodata,['FotoURL','fotoURL','fotoUrl','URLFoto','urlFoto','CaraMengatasi','caraMengatasi','Cara Mengatasi']);
         if(foto)loadAdminPhoto(foto);else showNoPhoto('Foto belum diisi.');
     }).catch(function(err){document.getElementById('bioLoading').textContent=err.message||'Biodata tidak dapat dimuat.';});
 }
@@ -1730,65 +1729,76 @@ function openBiodata(nama){
   Setiap nilai diambil berdasarkan NAMA HEADER/KEY, bukan nomor kolom.
 */
 function renderBiodataFields(d){
+    /*
+      HTML-only compatibility mapping untuk respons yang saat ini bergeser:
+      value Target Seleksi terkirim di key KodeSiswa, Nama Lengkap di key TargetSeleksi,
+      Nama Panggilan di key NamaLengkap, dan seterusnya. Kolom Kode Siswa dan NIK
+      tetap ditampilkan sebagai 00; Tempat Lahir tidak tersedia pada respons ini.
+      Jangan gunakan index array atau mengubah alur simpan hasil tryout.
+    */
     const fields=[
-      ['Kode Siswa',['KodeSiswa','kodeSiswa','Kode Siswa','kode_siswa'],'normal'],
-      ['Target Seleksi',['TargetSeleksi','targetSeleksi','Target Seleksi'],'normal'],
-      ['Nama Lengkap',['NamaLengkap','namaLengkap','Nama Lengkap'],'normal'],
-      ['Nama Panggilan',['NamaPanggilan','namaPanggilan','Nama Panggilan'],'normal'],
-      ['NIK',['NIK','Nik','nik'],'mask'],
-      ['Jenis Kelamin',['JenisKelamin','jenisKelamin','Jenis Kelamin'],'normal'],
-      ['Tempat Lahir',['TempatLahir','tempatLahir','Tempat Lahir'],'normal'],
-      ['Tanggal Lahir',['TanggalLahir','tanggalLahir','Tanggal Lahir'],'normal'],
-      ['Agama',['Agama','agama'],'normal'],
-      ['WhatsApp',['WhatsApp','Whatsapp','whatsapp','NoWhatsApp','NomorWhatsApp'],'normal'],
-      ['Email',['Email','email'],'normal'],
-      ['Tinggi',['Tinggi','tinggi'],'normal'],
-      ['Berat',['Berat','berat'],'normal'],
-      ['Alamat',['Alamat','alamat'],'normal'],
-      ['Sekolah',['Sekolah','sekolah','NamaSekolah'],'normal'],
-      ['Jurusan',['Jurusan','jurusan'],'normal'],
-      ['Tahun Lulus',['TahunLulus','tahunLulus','Tahun Lulus'],'normal'],
-      ['Pendidikan Terakhir',['PendidikanTerakhir','pendidikanTerakhir','Pendidikan Terakhir'],'normal'],
-      ['Nama Ayah',['NamaAyah','namaAyah','Nama Ayah'],'normal'],
-      ['Pekerjaan Ayah',['PekerjaanAyah','pekerjaanAyah','Pekerjaan Ayah'],'normal'],
-      ['Pendidikan Ayah',['PendidikanAyah','pendidikanAyah','Pendidikan Ayah'],'normal'],
-      ['HP Ayah',['HpAyah','HPAyah','hpAyah','NoHpAyah','NomorHpAyah'],'normal'],
-      ['Nama Ibu',['NamaIbu','namaIbu','Nama Ibu'],'normal'],
-      ['Pekerjaan Ibu',['PekerjaanIbu','pekerjaanIbu','Pekerjaan Ibu'],'normal'],
-      ['Pendidikan Ibu',['PendidikanIbu','pendidikanIbu','Pendidikan Ibu'],'normal'],
-      ['HP Ibu',['HpIbu','HPIbu','hpIbu','NoHpIbu','NomorHpIbu'],'normal'],
-      ['Jumlah Saudara',['JumlahSaudara','jumlahSaudara','Jumlah Saudara'],'normal'],
-      ['Organisasi',['Organisasi','organisasi'],'normal'],
-      ['Prestasi',['Prestasi','prestasi'],'normal'],
-      ['Kepemimpinan',['Kepemimpinan','kepemimpinan'],'normal'],
-      ['Kelebihan',['Kelebihan','kelebihan'],'normal'],
-      ['Kekurangan',['Kekurangan','kekurangan'],'normal'],
-      ['Perbaikan',['Perbaikan','perbaikan'],'normal'],
-      ['Hobi',['Hobi','hobi'],'normal'],
-      ['Keterampilan',['Keterampilan','keterampilan'],'normal'],
-      ['Alasan',['Alasan','alasan'],'normal'],
-      ['Persiapan',['Persiapan','persiapan'],'normal'],
-      ['Target Pribadi',['Target','target','TargetPribadi','targetPribadi'],'normal'],
-      ['Pernah Seleksi',['PernahSeleksi','pernahSeleksi','Pernah Seleksi'],'normal'],
-      ['Tahun Seleksi',['TahunSeleksi','tahunSeleksi','Tahun Seleksi'],'normal'],
-      ['Pengalaman Seleksi',['PengalamanSeleksi','pengalamanSeleksi','Pengalaman Seleksi'],'normal'],
-      ['Pengalaman Sulit',['PengalamanSulit','pengalamanSulit','Pengalaman Sulit'],'normal'],
-      ['Cara Mengatasi',['CaraMengatasi','caraMengatasi','Cara Mengatasi'],'normal'],
-      ['Kerja Sama',['KerjaSama','kerjaSama','Kerja Sama'],'normal']
+      ['Kode Siswa',null,'fixed00'],
+      ['Target Seleksi',['KodeSiswa','kodeSiswa','Kode Siswa'],'normal'],
+      ['Nama Lengkap',['TargetSeleksi','targetSeleksi','Target Seleksi'],'normal'],
+      ['Nama Panggilan',['NamaLengkap','namaLengkap','Nama Lengkap'],'normal'],
+      ['NIK',null,'fixed00'],
+      ['Jenis Kelamin',['NamaPanggilan','namaPanggilan','Nama Panggilan'],'normal'],
+      ['Tempat Lahir',null,'missing'],
+      ['Tanggal Lahir',['JenisKelamin','jenisKelamin','Jenis Kelamin'],'date'],
+      ['Agama',['TempatLahir','tempatLahir','Tempat Lahir'],'normal'],
+      ['WhatsApp',['TanggalLahir','tanggalLahir','Tanggal Lahir'],'normal'],
+      ['Email',['Agama','agama'],'normal'],
+      ['Tinggi',['WhatsApp','Whatsapp','whatsapp','NoWhatsApp','NomorWhatsApp'],'normal'],
+      ['Berat',['Email','email'],'normal'],
+      ['Alamat',['Tinggi','tinggi'],'normal'],
+      ['Sekolah',['Berat','berat'],'normal'],
+      ['Jurusan',['Alamat','alamat'],'normal'],
+      ['Tahun Lulus',['Sekolah','sekolah','NamaSekolah'],'normal'],
+      ['Pendidikan Terakhir',['Jurusan','jurusan'],'normal'],
+      ['Nama Ayah',['TahunLulus','tahunLulus','Tahun Lulus'],'normal'],
+      ['Pekerjaan Ayah',['PendidikanTerakhir','pendidikanTerakhir','Pendidikan Terakhir'],'normal'],
+      ['Pendidikan Ayah',['NamaAyah','namaAyah','Nama Ayah'],'normal'],
+      ['HP Ayah',['PekerjaanAyah','pekerjaanAyah','Pekerjaan Ayah'],'normal'],
+      ['Nama Ibu',['PendidikanAyah','pendidikanAyah','Pendidikan Ayah'],'normal'],
+      ['Pekerjaan Ibu',['HPAyah','HpAyah','hpAyah','NoHpAyah','NomorHpAyah'],'normal'],
+      ['Pendidikan Ibu',['NamaIbu','namaIbu','Nama Ibu'],'normal'],
+      ['HP Ibu',['PekerjaanIbu','pekerjaanIbu','Pekerjaan Ibu'],'normal'],
+      ['Jumlah Saudara',['PendidikanIbu','pendidikanIbu','Pendidikan Ibu'],'normal'],
+      ['Organisasi',['HPIbu','HpIbu','hpIbu','NoHpIbu','NomorHpIbu'],'normal'],
+      ['Prestasi',['JumlahSaudara','jumlahSaudara','Jumlah Saudara'],'normal'],
+      ['Kepemimpinan',['Organisasi','organisasi'],'normal'],
+      ['Kelebihan',['Kepemimpinan','kepemimpinan'],'normal'],
+      ['Kekurangan',['Kelebihan','kelebihan'],'normal'],
+      ['Perbaikan',['Kekurangan','kekurangan'],'normal'],
+      ['Hobi',['Perbaikan','perbaikan'],'normal'],
+      ['Keterampilan',['Hobi','hobi'],'normal'],
+      ['Alasan',['Keterampilan','keterampilan'],'normal'],
+      ['Persiapan',['Alasan','alasan'],'normal'],
+      ['Target Pribadi',['Persiapan','persiapan'],'normal'],
+      ['Pernah Seleksi',['Target','target','TargetPribadi','targetPribadi'],'normal'],
+      ['Tahun Seleksi',['PernahSeleksi','pernahSeleksi','Pernah Seleksi'],'normal'],
+      ['Pengalaman Seleksi',['TahunSeleksi','tahunSeleksi','Tahun Seleksi'],'normal'],
+      ['Pengalaman Sulit',['PengalamanSeleksi','pengalamanSeleksi','Pengalaman Seleksi'],'normal'],
+      ['Cara Mengatasi',['PengalamanSulit','pengalamanSulit','Pengalaman Sulit'],'normal']
     ];
     const full=['Alamat','Organisasi','Prestasi','Kelebihan','Kekurangan','Perbaikan','Alasan','Persiapan','Pengalaman Seleksi','Pengalaman Sulit','Cara Mengatasi'];
     const box=document.getElementById('bioFields');box.innerHTML='';
     fields.forEach(function(f){
-        let value=bioVal(d,f[1]);
-        if(f[2]==='mask')value='00';
-        if(f[0]==='Kode Siswa' && !value)value='00';
-        if(value===undefined||value===null||String(value).trim()==='')return;
+        let value='';
+        if(f[2]==='fixed00') value='00';
+        else if(f[2]==='missing') value='—';
+        else value=bioVal(d,f[1]||[]);
+        if(f[2]==='date' && value){
+            const parsed=new Date(value);
+            if(!isNaN(parsed.getTime())) value=new Date(parsed.getTime()+8*60*60*1000).toISOString().slice(0,10);
+            else value=String(value).split('T')[0];
+        }
+        if(value===undefined||value===null||String(value).trim()==='')value='—';
         const el=document.createElement('div');el.className='bio-field'+(full.indexOf(f[0])>=0?' full':'');
         el.innerHTML='<div class="bio-label">'+escapeHtml(f[0])+'</div><div class="bio-value">'+escapeHtml(value)+'</div>';
         box.appendChild(el);
     });
 }
-
 function resetBioPhoto(){const img=document.getElementById('bioPhoto');img.src='';img.style.display='none';document.getElementById('bioNoPhoto').style.display='flex';document.getElementById('bioNoPhoto').textContent='Memuat foto...';document.getElementById('downloadPhotoBtn').style.display='none';currentPhotoData=null;}
 function extractDriveId(u){if(!u)return '';let m=String(u).match(/\/file\/d\/([a-zA-Z0-9_-]+)/);if(m)return m[1];m=String(u).match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:'';}
 function loadAdminPhoto(url){
