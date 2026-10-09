@@ -341,6 +341,12 @@ tbody tr:hover{
 .bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}
 .bio-screen-heading{text-align:center;border-bottom:1px solid #e5e5e5;padding:4px 0 14px;margin-bottom:18px;color:#172033}.bio-screen-heading .org{font-size:15px;font-weight:800;letter-spacing:.3px}.bio-screen-heading .year{font-size:13px;font-weight:700;margin-top:4px}
 
+
+/* Identitas penyelenggara sistem */
+.prc-brand{font-size:12px;font-weight:800;letter-spacing:1.2px;color:#172033;margin-bottom:10px;text-align:center}
+.prc-brand-header{text-align:left;margin-bottom:6px;font-size:11px}
+@media print{.prc-brand-header{display:none}}
+
 </style>
 </head>
 
@@ -354,6 +360,7 @@ tbody tr:hover{
 
         <div class="login-card">
 
+            <div class="prc-brand">PERSONA RESEARCH &amp; CONSULTING</div>
             <h1>Area Pengelola</h1>
 
             <p>
@@ -396,6 +403,7 @@ tbody tr:hover{
 
             <div>
 
+                <div class="prc-brand prc-brand-header">PERSONA RESEARCH &amp; CONSULTING</div>
                 <h1>Rekap Persona Class</h1>
 
                 <p>
@@ -642,7 +650,7 @@ tbody tr:hover{
             <div class="bio-body">
               <div id="bioLoading" class="status">Memuat biodata...</div>
               <div id="bioDetail" style="display:none">
-                <div class="bio-screen-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div>
+                <div class="bio-screen-heading"><div class="org">PERSONA RESEARCH &amp; CONSULTING</div><div class="year">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB · TAHUN AJARAN 2026/2027</div></div>
                 <div class="bio-layout">
                   <div class="bio-photo-wrap">
                     <img id="bioPhoto" class="bio-photo" alt="Foto peserta">
@@ -689,44 +697,73 @@ let rekapView = "detail";
 /* Normalisasi nama kolom dari Google Sheet HasilTryout ke field yang dipakai tabel.
    Data mentah tetap dipertahankan; hanya menambahkan alias untuk tampilan/filter. */
 function normalizeTryoutRow(row){
+    // Terima objek langsung maupun pembungkus record dari respons API.
+    if(row && typeof row === "object" && !Array.isArray(row)){
+        if(row.row && typeof row.row === "object") row = row.row;
+        else if(row.record && typeof row.record === "object") row = row.record;
+        else if(row.values && typeof row.values === "object") row = row.values;
+    }
+    // Apps Script saat ini mengirim objek dengan header asli Google Sheet.
+    // Array juga didukung sebagai pengaman jika respons lama berbentuk baris mentah.
+    const knownHeaders = ["Timestamp","SessionID","NamaSiswa","Program","NamaTryout","Tanggal","WaktuMulai","WaktuSelesai","Durasi","Kecerdasan","Kepribadian","Kecermatan","TIU","TWK","TKP","PengetahuanUmum","NilaiAkhir"];
+    if(Array.isArray(row)){
+        const mapped = {};
+        knownHeaders.forEach(function(h,i){ mapped[h] = row[i] === undefined || row[i] === null ? "" : row[i]; });
+        row = mapped;
+    }
     row = row && typeof row === "object" ? row : {};
     const keyMap = {};
     Object.keys(row).forEach(function(k){
-        keyMap[String(k).replace(/[^a-z0-9]/gi, "").toLowerCase()] = row[k];
+        const normalized = String(k).normalize ? String(k).normalize("NFD").replace(/[\u0300-\u036f]/g, "") : String(k);
+        keyMap[normalized.replace(/[^a-z0-9]/gi, "").toLowerCase()] = row[k];
     });
     function pick(names){
         for(let i=0;i<names.length;i++){
+            const normalized = String(names[i]).normalize ? String(names[i]).normalize("NFD").replace(/[\u0300-\u036f]/g, "") : String(names[i]);
+            const k=normalized.replace(/[^a-z0-9]/gi, "").toLowerCase();
+            if(Object.prototype.hasOwnProperty.call(keyMap,k) && keyMap[k] !== null && keyMap[k] !== undefined && keyMap[k] !== "") return keyMap[k];
+        }
+        // Nilai numerik 0 harus tetap dipertahankan, bukan dianggap kosong.
+        for(let i=0;i<names.length;i++){
             const k=String(names[i]).replace(/[^a-z0-9]/gi, "").toLowerCase();
-            if(Object.prototype.hasOwnProperty.call(keyMap,k) && keyMap[k] !== null && keyMap[k] !== undefined) return keyMap[k];
+            if(Object.prototype.hasOwnProperty.call(keyMap,k) && (keyMap[k] === 0 || keyMap[k] === "0")) return keyMap[k];
         }
         return "";
     }
     const timestamp=pick(["Timestamp","Waktu","CreatedAt"]);
-    const name=pick(["NamaSiswa","Nama Siswa","NamaLengkap","Nama"]);
+    const name=pick(["NamaSiswa","Nama Siswa","NamaLengkap","Nama","Nama Peserta"]);
     const code=pick(["SessionID","Session Id","KodeSiswa","Kode Siswa"]);
     const group=pick(["Program","TargetSeleksi","Target Seleksi"]);
-    const test=pick(["NamaTryout","Nama Tryout","NamaTes","Nama Tes"]);
+    const test=pick(["NamaTryout","Nama Tryout","NamaTes","Nama Tes","Tryout"]);
     const date=pick(["Tanggal","TanggalTryout","Tanggal Tryout"]);
     const activity=pick(["Aktivitas","Activity","JenisAktivitas","Jenis Aktivitas"]);
-    const value=pick(["NilaiAkhir","Nilai Akhir","Total","TotalNilai"]);
+    const value=pick(["NilaiAkhir","Nilai Akhir","Total","TotalNilai","SkorAkhir","Skor Akhir"]);
     return Object.assign({}, row, {
-        timestamp: timestamp,
-        name: name,
-        code: code,
-        activity: activity || "TRYOUT",
-        group: group,
-        material: pick(["Materi","NamaMateri"]),
-        test: test,
-        date: date,
+        timestamp: timestamp, name: name, code: code,
+        activity: activity || "TRYOUT", group: group,
+        material: pick(["Materi","NamaMateri"]), test: test, date: date,
         kecerdasan: pick(["Kecerdasan"]),
         kepribadian: pick(["Kepribadian"]),
         kecermatan: pick(["Kecermatan"]),
-        tiu: pick(["TIU"]),
-        twk: pick(["TWK"]),
-        tkp: pick(["TKP"]),
+        tiu: pick(["TIU"]), twk: pick(["TWK"]), tkp: pick(["TKP"]),
         pengetahuanUmum: pick(["PengetahuanUmum","Pengetahuan Umum"]),
         value: value
     });
+}
+
+function extractTryoutRows(payload){
+    if(Array.isArray(payload)) return payload;
+    if(!payload || typeof payload !== "object") return [];
+    const candidates = [payload.results, payload.data, payload.rows, payload.records, payload.result];
+    for(let i=0;i<candidates.length;i++){
+        if(Array.isArray(candidates[i])) return candidates[i];
+        if(candidates[i] && typeof candidates[i] === "object"){
+            if(Array.isArray(candidates[i].results)) return candidates[i].results;
+            if(Array.isArray(candidates[i].data)) return candidates[i].data;
+            if(Array.isArray(candidates[i].rows)) return candidates[i].rows;
+        }
+    }
+    return [];
 }
 
 
@@ -744,8 +781,10 @@ async function loginAdmin(){
     const errorBox =
         document.getElementById("loginError");
 
-    const pin =
-        input.value.trim();
+    const pin = input.value.trim();
+    // PIN 0901 adalah alias akses admin; Apps Script yang sedang berjalan
+    // tetap menggunakan PIN server 0501 sehingga Code.gs tidak perlu diubah.
+    const serverPin = pin === "0901" ? "0501" : pin;
 
     errorBox.textContent = "";
 
@@ -767,7 +806,7 @@ async function loginAdmin(){
         const url =
             SCRIPT_URL +
             "?mode=admin&adminPin=" +
-            encodeURIComponent(pin);
+            encodeURIComponent(serverPin);
 
 
         const response =
@@ -807,7 +846,7 @@ async function loginAdmin(){
         }
 
 
-        adminPin = pin;
+        adminPin = serverPin;
 
 
         document
@@ -820,10 +859,7 @@ async function loginAdmin(){
         .style.display = "block";
 
 
-        allData =
-            (Array.isArray(data.results) ? data.results :
-             (Array.isArray(data.data) ? data.data : []))
-            .map(normalizeTryoutRow);
+        allData = extractTryoutRows(data).map(normalizeTryoutRow);
 
 
         updateSummary();
@@ -940,10 +976,7 @@ async function loadData(){
         }
 
 
-        allData =
-            (Array.isArray(data.results) ? data.results :
-             (Array.isArray(data.data) ? data.data : []))
-            .map(normalizeTryoutRow);
+        allData = extractTryoutRows(data).map(normalizeTryoutRow);
 
 
         updateSummary();
@@ -951,10 +984,8 @@ async function loadData(){
         renderTable();
 
 
-        status.textContent =
-            "Data berhasil dimuat: " +
-            allData.length +
-            " record.";
+        const readableNames = allData.filter(function(row){ return String(row.name || "").trim() !== ""; }).length;
+        status.textContent = "Data berhasil dimuat: " + allData.length + " record; " + readableNames + " data nama siswa terbaca.";
 
 
     }catch(error){
@@ -1130,9 +1161,10 @@ RENDER TABLE
 */
 
 function getFilteredRows(){
-    const search = String(document.getElementById("searchInput").value || "").trim().toLowerCase();
-    const activity = String(document.getElementById("activityFilter").value || "").trim().toLowerCase();
-    const group = String(document.getElementById("groupFilter").value || "").trim().toLowerCase();
+    const cleanSearch = function(value){ return String(value == null ? "" : value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim(); };
+    const search = cleanSearch(document.getElementById("searchInput").value);
+    const activity = cleanSearch(document.getElementById("activityFilter").value);
+    const group = cleanSearch(document.getElementById("groupFilter").value);
 
     return allData.filter(function(row){
         // Search across normalized fields AND original Google Sheet fields.
@@ -1144,12 +1176,12 @@ function getFilteredRows(){
         searchableValues.push(row.name, row.code, row.group, row.material, row.test, row.date,
             row.activity, row.value, row.kecerdasan, row.kepribadian, row.kecermatan,
             row.tiu, row.twk, row.tkp, row.pengetahuanUmum);
-        const text = searchableValues.join(" ").toLowerCase();
-        const rowActivity = String(row.activity || "").trim().toLowerCase();
-        const rowGroup = String(row.group || "").trim().toLowerCase();
+        const text = cleanSearch(searchableValues.join(" "));
+        const rowActivity = cleanSearch(row.activity || "");
+        const rowGroup = cleanSearch(row.group || "");
         return (!search || text.includes(search)) &&
-               (!activity || rowActivity === activity) &&
-               (!group || rowGroup === group);
+               (!activity || rowActivity.includes(activity)) &&
+               (!group || rowGroup.includes(group));
     });
 }
 
@@ -1672,7 +1704,7 @@ function closeBiodata(){document.getElementById('bioModal').style.display='none'
 function downloadBiodata(){
     if(!currentBiodata)return;
     const name=bioVal(currentBiodata,['TargetSeleksi','targetSeleksi','Target Seleksi','NamaLengkap','namaLengkap','Nama Lengkap'])||'Peserta';
-    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ddd;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px;margin-bottom:20px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
+    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ddd;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px;margin-bottom:20px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">PERSONA RESEARCH &amp; CONSULTING</div><div class="year">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB · TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
     if(currentPhotoData)h+='<img src="'+currentPhotoData.dataUrl+'">';
     h+='<table>';document.querySelectorAll('#bioFields .bio-field').forEach(function(el){h+='<tr><td>'+escapeHtml(el.querySelector('.bio-label').textContent)+'</td><td>'+escapeHtml(el.querySelector('.bio-value').textContent)+'</td></tr>';});h+='</table></body></html>';
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html;charset=utf-8'}));a.download='BIODATA_'+String(name).replace(/[^a-z0-9]+/gi,'_')+'.html';document.body.appendChild(a);a.click();a.remove();
@@ -1680,7 +1712,7 @@ function downloadBiodata(){
 function printBiodata(){
     if(!currentBiodata)return;const w=window.open('','_blank');if(!w){alert('Izinkan pop-up untuk mencetak biodata.');return;}
     const name=bioVal(currentBiodata,['TargetSeleksi','targetSeleksi','Target Seleksi','NamaLengkap','namaLengkap','Nama Lengkap'])||'Peserta';
-    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ccc;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB</div><div class="year">TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
+    let h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Biodata '+escapeHtml(name)+'</title><style>body{font-family:Arial;margin:30px;color:#172033}table{width:100%;border-collapse:collapse}td{border:1px solid #ccc;padding:8px;vertical-align:top}td:first-child{width:28%;font-weight:bold;background:#f4eee6}img{max-width:160px;max-height:210px}.bio-print-heading{text-align:center;border-bottom:2px solid #172033;padding-bottom:14px;margin-bottom:22px}.bio-print-heading .org{font-size:17px;font-weight:800;letter-spacing:.4px}.bio-print-heading .year{font-size:14px;font-weight:700;margin-top:5px}</style></head><body><div class="bio-print-heading"><div class="org">PERSONA RESEARCH &amp; CONSULTING</div><div class="year">BIODATA SISWA PRC CLASS - BIMBEL CERDAS NTB · TAHUN AJARAN 2026/2027</div></div><h1>BIODATA PESERTA</h1>';
     if(currentPhotoData)h+='<img src="'+currentPhotoData.dataUrl+'"><br><br>';
     h+='<table>';document.querySelectorAll('#bioFields .bio-field').forEach(function(el){h+='<tr><td>'+escapeHtml(el.querySelector('.bio-label').textContent)+'</td><td>'+escapeHtml(el.querySelector('.bio-value').textContent)+'</td></tr>';});
     h+='</table><script>window.onload=function(){setTimeout(function(){window.print()},500)}<\\/script></body></html>';w.document.write(h);w.document.close();
