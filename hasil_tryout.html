@@ -783,51 +783,26 @@ async function checkResult(){
         }
 
 
-        document.getElementById(
-            "studentDisplayName"
-        ).textContent =
-            data.student &&
-            data.student.name
-                ? data.student.name
-                : name;
-
-
-        document.getElementById(
-            "studentProgram"
-        ).textContent =
-            data.student &&
-            data.student.program
-                ? "Program: " + data.student.program
-                : "Riwayat hasil tryout";
-
-
         const results =
             Array.isArray(data.results)
                 ? data.results
                 : (Array.isArray(data.data) ? data.data : []);
 
-        // Cegah hasil beberapa siswa tercampur saat nama depan sama.
-        const matchedNames = Array.from(new Set(
-            results
-                .map(function(item){
-                    return String(getResultValue(item, "NamaSiswa") || "").trim();
-                })
-                .filter(Boolean)
-        ));
+        // Nama terpilih berasal dari backend yang sudah menormalkan kapitalisasi.
+        // Jangan menolak hasil hanya karena ejaan kapitalisasi berbeda di baris lama.
+        const displayName =
+            data.student && data.student.name
+                ? data.student.name
+                : (results.length
+                    ? String(getResultValue(results[0], "NamaSiswa") || name).trim()
+                    : name);
 
-        if(matchedNames.length > 1){
-            resultsSection.style.display = "none";
-            message.className = "message error";
-            message.textContent =
-                "Ada beberapa siswa dengan awalan nama tersebut: " +
-                matchedNames.join(", ") +
-                ". Ketik beberapa huruf lagi agar hasil tidak tercampur.";
-            return;
-        }
+        document.getElementById("studentDisplayName").textContent = displayName;
 
-        if(matchedNames.length === 1){
-            document.getElementById("studentDisplayName").textContent = matchedNames[0];
-        }
+        document.getElementById("studentProgram").textContent =
+            data.student && data.student.program
+                ? "Program: " + data.student.program
+                : "Riwayat hasil tryout";
 
         if(results.length === 0){
 
