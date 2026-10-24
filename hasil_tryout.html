@@ -387,7 +387,7 @@ tbody tr:hover{
         >
 
         <div class="hint">
-            Ketik nama depan, tengah, atau belakang. Huruf besar/kecil bebas, misalnya: muhamad, SATRIA, atau putra.
+            Ketik nama depan, tengah, belakang, atau sebagian nama. Huruf besar/kecil dianggap sama. Jika ada beberapa nama yang cocok, pilih nama lengkap yang benar.
         </div>
 
     </div>
@@ -637,7 +637,7 @@ function getResultValue(item, fieldName){
    CHECK RESULT
 ===================================================== */
 
-async function checkResult(){
+async function checkResult(forceExactSelection){
 
     const input =
         document.getElementById("studentName");
@@ -696,7 +696,8 @@ async function checkResult(){
         const query =
             new URLSearchParams({
                 mode: "student",
-                namaSiswa: name
+                namaSiswa: name,
+                selectedName: forceExactSelection ? "1" : "0"
             });
 
 
@@ -745,12 +746,12 @@ async function checkResult(){
 
         if(data.status === "multiple"){
 
-            message.className = "message error";
+            message.className = "message";
             message.textContent = "";
 
             const explanation = document.createElement("div");
             explanation.textContent = data.message ||
-                "Ditemukan beberapa siswa dengan nama yang cocok. Klik nama lengkap siswa yang ingin dilihat.";
+                "Ditemukan beberapa nama yang cocok. Klik nama lengkap siswa yang ingin dilihat.";
             message.appendChild(explanation);
 
             const choices = document.createElement("div");
@@ -763,7 +764,7 @@ async function checkResult(){
                 choice.textContent = fullName;
                 choice.addEventListener("click", function(){
                     input.value = fullName;
-                    checkResult();
+                    checkResult(true);
                 });
                 choices.appendChild(choice);
             });
