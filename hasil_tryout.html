@@ -723,7 +723,7 @@ async function checkResult(){
 
             message.textContent =
                 data.message ||
-                "Nama tersebut digunakan oleh lebih dari satu siswa. Masukkan nama lengkap.";
+                "Ada beberapa siswa dengan awalan nama tersebut. Ketik beberapa huruf lagi agar hasil tidak tercampur.";
 
             return;
 
@@ -793,7 +793,7 @@ async function checkResult(){
             message.className = "message success";
 
             message.textContent =
-                "Nama ditemukan, tetapi belum ada hasil tryout.";
+                "Belum ada hasil tryout yang cocok. Periksa ejaan nama atau coba ketik nama lengkap.";
 
             return;
 
