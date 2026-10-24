@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -590,6 +589,25 @@ function displayValue(value){
 
 
 /* =====================================================
+   BACA FIELD HASIL DENGAN TOLERANSI HURUF BESAR/KECIL
+   Code.gs mengembalikan nama header asli dari Google Sheets.
+===================================================== */
+
+function getResultValue(item, fieldName){
+
+    if(!item || typeof item !== "object") return "";
+
+    const wanted = String(fieldName || "").toLowerCase();
+    const key = Object.keys(item).find(function(currentKey){
+        return String(currentKey).trim().toLowerCase() === wanted;
+    });
+
+    return key === undefined ? "" : item[key];
+
+}
+
+
+/* =====================================================
    CHECK RESULT
 ===================================================== */
 
@@ -652,7 +670,7 @@ async function checkResult(){
         const query =
             new URLSearchParams({
                 mode: "student",
-                name: name
+                namaSiswa: name
             });
 
 
@@ -742,7 +760,7 @@ async function checkResult(){
         const results =
             Array.isArray(data.results)
                 ? data.results
-                : [];
+                : (Array.isArray(data.data) ? data.data : []);
 
 
         if(results.length === 0){
@@ -776,49 +794,49 @@ async function checkResult(){
                     </td>
 
                     <td>
-                        ${getProgramBadge(item.program)}
+                        ${getProgramBadge(getResultValue(item, "Program"))}
                     </td>
 
                     <td>
                         <strong>
-                            ${escapeHtml(item.namaTryout)}
+                            ${displayValue(getResultValue(item, "NamaTryout"))}
                         </strong>
                     </td>
 
                     <td>
-                        ${escapeHtml(item.tanggal)}
+                        ${displayValue(getResultValue(item, "Tanggal"))}
                     </td>
 
-                    <td class="${getScoreClass(item.kecerdasan)}">
-                        ${displayValue(item.kecerdasan)}
+                    <td class="${getScoreClass(getResultValue(item, "Kecerdasan"))}">
+                        ${displayValue(getResultValue(item, "Kecerdasan"))}
                     </td>
 
-                    <td class="${getScoreClass(item.kepribadian)}">
-                        ${displayValue(item.kepribadian)}
+                    <td class="${getScoreClass(getResultValue(item, "Kepribadian"))}">
+                        ${displayValue(getResultValue(item, "Kepribadian"))}
                     </td>
 
-                    <td class="${getScoreClass(item.kecermatan)}">
-                        ${displayValue(item.kecermatan)}
+                    <td class="${getScoreClass(getResultValue(item, "Kecermatan"))}">
+                        ${displayValue(getResultValue(item, "Kecermatan"))}
                     </td>
 
-                    <td class="${getScoreClass(item.tiu)}">
-                        ${displayValue(item.tiu)}
+                    <td class="${getScoreClass(getResultValue(item, "TIU"))}">
+                        ${displayValue(getResultValue(item, "TIU"))}
                     </td>
 
-                    <td class="${getScoreClass(item.twk)}">
-                        ${displayValue(item.twk)}
+                    <td class="${getScoreClass(getResultValue(item, "TWK"))}">
+                        ${displayValue(getResultValue(item, "TWK"))}
                     </td>
 
-                    <td class="${getScoreClass(item.tkp)}">
-                        ${displayValue(item.tkp)}
+                    <td class="${getScoreClass(getResultValue(item, "TKP"))}">
+                        ${displayValue(getResultValue(item, "TKP"))}
                     </td>
 
-                    <td class="${getScoreClass(item.pengetahuanUmum)}">
-                        ${displayValue(item.pengetahuanUmum)}
+                    <td class="${getScoreClass(getResultValue(item, "PengetahuanUmum"))}">
+                        ${displayValue(getResultValue(item, "PengetahuanUmum"))}
                     </td>
 
-                    <td class="${getFinalScoreClass(item.nilaiAkhir)}">
-                        ${displayValue(item.nilaiAkhir)}
+                    <td class="${getFinalScoreClass(getResultValue(item, "NilaiAkhir"))}">
+                        ${displayValue(getResultValue(item, "NilaiAkhir"))}
                     </td>
 
                 `;
@@ -896,4 +914,3 @@ document
 
 </body>
 </html>
-```
