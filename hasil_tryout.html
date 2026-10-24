@@ -382,12 +382,12 @@ tbody tr:hover{
         <input
             type="text"
             id="studentName"
-            placeholder="Contoh: Bagas"
+            placeholder="Ketik nama depan, tengah, atau belakang"
             autocomplete="off"
         >
 
         <div class="hint">
-            Ketik nama depan saja. Huruf besar atau kecil tidak berpengaruh, misalnya: bagas, Bagas, atau BAGAS.
+            Ketik nama depan, tengah, atau belakang. Huruf besar/kecil bebas, misalnya: muhamad, SATRIA, atau putra.
         </div>
 
     </div>
@@ -750,7 +750,7 @@ async function checkResult(){
 
             const explanation = document.createElement("div");
             explanation.textContent = data.message ||
-                "Ditemukan beberapa siswa dengan awalan nama tersebut. Klik nama lengkap siswa yang ingin dilihat.";
+                "Ditemukan beberapa siswa dengan nama yang cocok. Klik nama lengkap siswa yang ingin dilihat.";
             message.appendChild(explanation);
 
             const choices = document.createElement("div");
