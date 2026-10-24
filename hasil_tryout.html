@@ -494,6 +494,48 @@ const SCRIPT_URL =
 
 
 /* =====================================================
+   JSONP REQUEST — menghindari kendala CORS Apps Script
+===================================================== */
+let prcJsonpCounter = 0;
+
+function requestStudentData(params){
+    return new Promise(function(resolve, reject){
+        const callbackName = "prcStudentCallback_" + (++prcJsonpCounter) + "_" + Date.now();
+        const script = document.createElement("script");
+        const query = new URLSearchParams(params);
+        query.set("callback", callbackName);
+
+        let finished = false;
+        const cleanup = function(){
+            if(finished) return;
+            finished = true;
+            delete window[callbackName];
+            if(script.parentNode) script.parentNode.removeChild(script);
+            clearTimeout(timeoutId);
+        };
+
+        window[callbackName] = function(data){
+            cleanup();
+            resolve(data);
+        };
+
+        script.onerror = function(){
+            cleanup();
+            reject(new Error("Tidak dapat menghubungi Apps Script. Periksa URL deployment dan akses Web App."));
+        };
+
+        const timeoutId = setTimeout(function(){
+            cleanup();
+            reject(new Error("Permintaan ke Apps Script melewati batas waktu. Coba lagi."));
+        }, 20000);
+
+        script.src = SCRIPT_URL + "?" + query.toString();
+        document.head.appendChild(script);
+    });
+}
+
+
+/* =====================================================
    ESCAPE HTML
 ===================================================== */
 
@@ -693,41 +735,11 @@ async function checkResult(forceExactSelection){
          * dengan benar.
          */
 
-        const query =
-            new URLSearchParams({
-                mode: "student",
-                namaSiswa: name,
-                selectedName: forceExactSelection ? "1" : "0"
-            });
-
-
-        const url =
-            SCRIPT_URL + "?" + query.toString();
-
-
-        const response =
-            await fetch(
-                url,
-                {
-                    method: "GET",
-                    mode: "cors",
-                    cache: "no-store"
-                }
-            );
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "Server memberikan respons HTTP " +
-                response.status
-            );
-
-        }
-
-
-        const data =
-            await response.json();
+        const data = await requestStudentData({
+            mode: "student",
+            namaSiswa: name,
+            selectedName: forceExactSelection ? "1" : "0"
+        });
 
 
         if(
@@ -757,7 +769,17 @@ async function checkResult(forceExactSelection){
             const choices = document.createElement("div");
             choices.className = "name-match-list";
 
+            const uniqueMatches = [];
+            const seenMatches = new Set();
             (Array.isArray(data.matches) ? data.matches : []).forEach(function(fullName){
+                const cleanName = String(fullName == null ? "" : fullName).trim().replace(/\s+/g, " ");
+                const nameKey = cleanName.toLowerCase();
+                if(!cleanName || seenMatches.has(nameKey)) return;
+                seenMatches.add(nameKey);
+                uniqueMatches.push(cleanName);
+            });
+
+            uniqueMatches.forEach(function(fullName){
                 const choice = document.createElement("button");
                 choice.type = "button";
                 choice.className = "name-match-button";
