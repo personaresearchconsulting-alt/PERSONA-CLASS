@@ -356,12 +356,12 @@ tbody tr:hover{
         <input
             type="text"
             id="studentName"
-            placeholder="Masukkan nama siswa"
+            placeholder="Contoh: Bagas"
             autocomplete="off"
         >
 
         <div class="hint">
-            Masukkan nama sesuai yang digunakan saat mengikuti tryout.
+            Ketik nama depan saja. Huruf besar atau kecil tidak berpengaruh, misalnya: bagas, Bagas, atau BAGAS.
         </div>
 
     </div>
@@ -762,6 +762,28 @@ async function checkResult(){
                 ? data.results
                 : (Array.isArray(data.data) ? data.data : []);
 
+        // Cegah hasil beberapa siswa tercampur saat nama depan sama.
+        const matchedNames = Array.from(new Set(
+            results
+                .map(function(item){
+                    return String(getResultValue(item, "NamaSiswa") || "").trim();
+                })
+                .filter(Boolean)
+        ));
+
+        if(matchedNames.length > 1){
+            resultsSection.style.display = "none";
+            message.className = "message error";
+            message.textContent =
+                "Ada beberapa siswa dengan awalan nama tersebut: " +
+                matchedNames.join(", ") +
+                ". Ketik beberapa huruf lagi agar hasil tidak tercampur.";
+            return;
+        }
+
+        if(matchedNames.length === 1){
+            document.getElementById("studentDisplayName").textContent = matchedNames[0];
+        }
 
         if(results.length === 0){
 
