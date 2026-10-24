@@ -163,6 +163,32 @@ main{
     border:1px solid #BDE5C8;
 }
 
+.name-match-list{
+    display:flex;
+    flex-direction:column;
+    gap:.5rem;
+    margin-top:.75rem;
+}
+
+.name-match-button{
+    display:block;
+    width:100%;
+    padding:.7rem .85rem;
+    border:1px solid #D8DDE7;
+    border-radius:8px;
+    background:#fff;
+    color:var(--navy);
+    text-align:left;
+    font:inherit;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.name-match-button:hover{
+    background:#F4EEE6;
+    border-color:var(--navy-light);
+}
+
 .results-section{
     display:none;
     margin-top:2.5rem;
@@ -720,11 +746,29 @@ async function checkResult(){
         if(data.status === "multiple"){
 
             message.className = "message error";
+            message.textContent = "";
 
-            message.textContent =
-                data.message ||
-                "Ada beberapa siswa dengan awalan nama tersebut. Ketik beberapa huruf lagi agar hasil tidak tercampur.";
+            const explanation = document.createElement("div");
+            explanation.textContent = data.message ||
+                "Ditemukan beberapa siswa dengan awalan nama tersebut. Klik nama lengkap siswa yang ingin dilihat.";
+            message.appendChild(explanation);
 
+            const choices = document.createElement("div");
+            choices.className = "name-match-list";
+
+            (Array.isArray(data.matches) ? data.matches : []).forEach(function(fullName){
+                const choice = document.createElement("button");
+                choice.type = "button";
+                choice.className = "name-match-button";
+                choice.textContent = fullName;
+                choice.addEventListener("click", function(){
+                    input.value = fullName;
+                    checkResult();
+                });
+                choices.appendChild(choice);
+            });
+
+            message.appendChild(choices);
             return;
 
         }
