@@ -741,6 +741,10 @@ async function checkResult(forceExactSelection){
             selectedName: forceExactSelection ? "1" : "0"
         });
 
+        // Jangan tampilkan respons pencarian lama jika pengguna sudah mengetik nama lain.
+        if(!forceExactSelection && input.value.trim() !== name){
+            return;
+        }
 
         if(
             !data ||
@@ -961,18 +965,37 @@ async function checkResult(forceExactSelection){
    ENTER
 ===================================================== */
 
-document
-    .getElementById("studentName")
-    .addEventListener(
-        "keydown",
-        function(event){
+const studentNameInput = document.getElementById("studentName");
+let prcLiveSearchTimer = null;
 
-            if(event.key === "Enter"){
-                checkResult();
-            }
+// Cari otomatis setelah pengguna berhenti mengetik selama 600 ms.
+studentNameInput.addEventListener("input", function(){
+    clearTimeout(prcLiveSearchTimer);
 
+    const typedName = studentNameInput.value.trim();
+
+    if(typedName.length < 2){
+        document.getElementById("message").textContent = "";
+        document.getElementById("message").className = "message";
+        document.getElementById("resultsSection").style.display = "none";
+        document.getElementById("resultsBody").innerHTML = "";
+        document.getElementById("emptyState").style.display = "none";
+        return;
+    }
+
+    prcLiveSearchTimer = setTimeout(function(){
+        if(studentNameInput.value.trim() === typedName){
+            checkResult(false);
         }
-    );
+    }, 600);
+});
+
+studentNameInput.addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+        clearTimeout(prcLiveSearchTimer);
+        checkResult(false);
+    }
+});
 
 </script>
 
