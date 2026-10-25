@@ -163,6 +163,15 @@ main{
     border:1px solid #BDE5C8;
 }
 
+/* Daftar nama yang cocok harus tetap terlihat tanpa gaya pesan sukses. */
+.message.matches{
+    display:block;
+    background:transparent;
+    color:var(--text-main);
+    border:none;
+    padding:0;
+}
+
 .name-match-list{
     display:flex;
     flex-direction:column;
@@ -560,7 +569,9 @@ function requestStudentData(params, requestId) {
 }
 function showMatches(matches, explanation, requestId) {
   message.replaceChildren();
-  message.className = "message";
+  // BUG FIX: .message saja memiliki display:none, sehingga pilihan nama
+  // tidak terlihat ketika hasil pencarian berstatus "multiple".
+  message.className = "message matches";
   const note = document.createElement("div");
   note.textContent = explanation || "Ada beberapa siswa yang cocok. Pilih nama lengkap yang benar:";
   message.appendChild(note);
