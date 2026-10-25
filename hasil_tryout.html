@@ -667,22 +667,28 @@ async function checkResult(forceExactSelection) {
     }
   }
 }
-button.addEventListener("click", () => { clearTimeout(searchTimer); checkResult(false); });
-input.addEventListener("keydown", event => {
-  if (event.key === "Enter") { event.preventDefault(); clearTimeout(searchTimer); checkResult(false); }
+// Pencarian dijalankan hanya setelah tombol ditekan atau Enter digunakan.
+// Ini mencegah permintaan otomatis bertumpuk saat pengguna masih mengetik.
+button.addEventListener("click", () => {
+  clearTimeout(searchTimer);
+  checkResult(false);
 });
+
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    clearTimeout(searchTimer);
+    checkResult(false);
+  }
+});
+
 input.addEventListener("input", () => {
   clearTimeout(searchTimer);
-  const value = input.value.trim();
-  ++requestNumber; // batalkan respons lama saat pengguna mulai mengetik lagi
+  ++requestNumber; // abaikan respons pencarian sebelumnya saat nama diubah
   button.disabled = false;
   button.textContent = "LIHAT HASIL";
   clearResults();
-  if (value.length < 2) { showMessage("", ""); return; }
-  showMessage("Ketik selesai untuk mencari nama yang cocok…", "success");
-  searchTimer = setTimeout(() => {
-    if (input.value.trim() === value) checkResult(false);
-  }, 700);
+  showMessage("", "");
 });
 </script>
 
