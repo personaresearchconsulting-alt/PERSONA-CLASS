@@ -397,7 +397,6 @@ tbody tr:hover{
         type="button"
         id="checkButton"
         class="btn btn-primary"
-        onclick="checkResult()"
     >
         LIHAT HASIL
     </button>
@@ -484,519 +483,207 @@ tbody tr:hover{
 
 
 <script>
+/* PRC CLASS - Hasil Siswa
+   HTML pencarian diperbaiki. Tidak mengubah Code.gs, database, atau fungsi penyimpanan nilai. */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
+const input = document.getElementById("studentName");
+const button = document.getElementById("checkButton");
+const message = document.getElementById("message");
+const resultsSection = document.getElementById("resultsSection");
+const resultsBody = document.getElementById("resultsBody");
+const emptyState = document.getElementById("emptyState");
+let requestNumber = 0;
+let jsonpNumber = 0;
+let searchTimer = null;
 
-/* =====================================================
-   APPS SCRIPT
-===================================================== */
-
-const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyFxmO0ocvr5HqK2WuGyjt7_JeTOcs4vGDg7QZejeiE2QvCP_qkonJcZc5hz9AFW2Vg/exec";
-
-
-/* =====================================================
-   JSONP REQUEST — menghindari kendala CORS Apps Script
-===================================================== */
-let prcJsonpCounter = 0;
-
-function requestStudentData(params){
-    return new Promise(function(resolve, reject){
-        const callbackName = "prcStudentCallback_" + (++prcJsonpCounter) + "_" + Date.now();
-        const script = document.createElement("script");
-        const query = new URLSearchParams(params);
-        query.set("callback", callbackName);
-
-        let finished = false;
-        const cleanup = function(){
-            if(finished) return;
-            finished = true;
-            delete window[callbackName];
-            if(script.parentNode) script.parentNode.removeChild(script);
-            clearTimeout(timeoutId);
-        };
-
-        window[callbackName] = function(data){
-            cleanup();
-            resolve(data);
-        };
-
-        script.onerror = function(){
-            cleanup();
-            reject(new Error("Tidak dapat menghubungi Apps Script. Periksa URL deployment dan akses Web App."));
-        };
-
-        const timeoutId = setTimeout(function(){
-            cleanup();
-            reject(new Error("Permintaan ke Apps Script melewati batas waktu. Coba lagi."));
-        }, 20000);
-
-        script.src = SCRIPT_URL + "?" + query.toString();
-        document.head.appendChild(script);
+function showMessage(text, type) {
+  message.replaceChildren();
+  message.className = "message" + (type ? " " + type : "");
+  message.textContent = text || "";
+}
+function clearResults() {
+  resultsSection.style.display = "none";
+  resultsBody.replaceChildren();
+  emptyState.style.display = "none";
+  document.getElementById("studentDisplayName").textContent = "-";
+  document.getElementById("studentProgram").textContent = "-";
+}
+function escapeHtml(value) {
+  return String(value == null ? "" : value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function getResultValue(item, fieldName) {
+  if (!item || typeof item !== "object") return "";
+  const wanted = String(fieldName).trim().toLowerCase();
+  const key = Object.keys(item).find(k => String(k).trim().toLowerCase() === wanted);
+  return key === undefined ? "" : item[key];
+}
+function displayValue(value) {
+  return value === null || value === undefined || value === "" ? "-" : escapeHtml(value);
+}
+function getScoreClass(value) {
+  if (value === null || value === undefined || value === "") return "";
+  const n = parseFloat(String(value).replace(",", "."));
+  if (Number.isNaN(n)) return "";
+  return n < 60 ? "score score-low" : "score score-normal";
+}
+function getFinalScoreClass(value) {
+  if (value === null || value === undefined || value === "") return "";
+  const n = parseFloat(String(value).replace(",", "."));
+  if (Number.isNaN(n)) return "";
+  return n < 60 ? "score score-low" : "score score-total";
+}
+function getProgramBadge(value) {
+  return value ? '<span class="badge badge-program">' + escapeHtml(value) + '</span>' : "-";
+}
+function requestStudentData(params, requestId) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "prcStudentCallback_" + (++jsonpNumber) + "_" + Date.now();
+    const script = document.createElement("script");
+    const query = new URLSearchParams(params);
+    query.set("callback", callbackName);
+    query.set("_", String(Date.now()));
+    let done = false;
+    const timeoutId = setTimeout(() => finish(new Error("Server tidak merespons dalam 20 detik. Periksa URL deployment Apps Script.")), 20000);
+    function finish(error, data) {
+      if (done) return;
+      done = true;
+      clearTimeout(timeoutId);
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+      if (error) reject(error); else resolve(data);
+    }
+    window[callbackName] = data => finish(null, data);
+    script.onerror = () => finish(new Error("Gagal menghubungi Apps Script. Pastikan URL Web App benar dan aksesnya tersedia."));
+    script.src = SCRIPT_URL + "?" + query.toString();
+    document.head.appendChild(script);
+  });
+}
+function showMatches(matches, explanation, requestId) {
+  message.replaceChildren();
+  message.className = "message";
+  const note = document.createElement("div");
+  note.textContent = explanation || "Ada beberapa siswa yang cocok. Pilih nama lengkap yang benar:";
+  message.appendChild(note);
+  const list = document.createElement("div");
+  list.className = "name-match-list";
+  const seen = new Set();
+  (Array.isArray(matches) ? matches : []).forEach(fullName => {
+    const clean = String(fullName == null ? "" : fullName).trim().replace(/\s+/g, " ");
+    const key = clean.toLocaleLowerCase("id-ID");
+    if (!clean || seen.has(key)) return;
+    seen.add(key);
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "name-match-button";
+    item.textContent = clean;
+    item.addEventListener("click", () => {
+      input.value = clean;
+      clearTimeout(searchTimer);
+      checkResult(true);
     });
+    list.appendChild(item);
+  });
+  if (!seen.size) {
+    showMessage("Server mengirim daftar nama kosong. Coba lagi atau periksa deployment Apps Script.", "error");
+    return;
+  }
+  message.appendChild(list);
 }
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-    return String(value == null ? "" : value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   SCORE
-===================================================== */
-
-function getScoreClass(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-        return "";
+async function checkResult(forceExactSelection) {
+  const name = input.value.trim();
+  const myRequest = ++requestNumber;
+  showMessage("", "");
+  clearResults();
+  if (!name) {
+    showMessage("Nama siswa wajib diisi.", "error");
+    input.focus();
+    return;
+  }
+  button.disabled = true;
+  button.textContent = "MEMUAT...";
+  showMessage("Sedang mencari nama siswa…", "success");
+  try {
+    const data = await requestStudentData({
+      mode: "student",
+      namaSiswa: name,
+      selectedName: forceExactSelection ? "1" : "0"
+    }, myRequest);
+    // Respons pencarian lama tidak boleh menghapus hasil pencarian terbaru.
+    if (myRequest !== requestNumber || input.value.trim() !== name) return;
+    if (!data || data.status === "error") throw new Error(data && data.message ? data.message : "Respons server tidak valid.");
+    if (data.status === "multiple") {
+      showMatches(data.matches, data.message, myRequest);
+      return;
     }
-
-    const number =
-        parseFloat(
-            String(value).replace(",", ".")
-        );
-
-    if(isNaN(number)){
-        return "";
+    if (data.status !== "success") throw new Error("Format respons server tidak dikenali. Periksa versi deployment Apps Script.");
+    const results = Array.isArray(data.results) ? data.results : (Array.isArray(data.data) ? data.data : []);
+    const displayName = data.student && data.student.name ? data.student.name : (results.length ? String(getResultValue(results[0], "NamaSiswa") || name).trim() : name);
+    document.getElementById("studentDisplayName").textContent = displayName;
+    document.getElementById("studentProgram").textContent = data.student && data.student.program ? "Program: " + data.student.program : "Riwayat hasil tryout";
+    if (!results.length) {
+      resultsSection.style.display = "block";
+      emptyState.style.display = "block";
+      showMessage("Nama belum ditemukan pada data hasil tryout. Coba bagian nama lain atau nama lengkap.", "error");
+      return;
     }
-
-    return number < 60
-        ? "score score-low"
-        : "score score-normal";
-
-}
-
-
-function getFinalScoreClass(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-        return "";
-    }
-
-    const number =
-        parseFloat(
-            String(value).replace(",", ".")
-        );
-
-    if(isNaN(number)){
-        return "";
-    }
-
-    return number < 60
-        ? "score score-low"
-        : "score score-total";
-
-}
-
-
-/* =====================================================
-   BADGES
-===================================================== */
-
-function getProgramBadge(program){
-
-    if(!program){
-        return "-";
-    }
-
-    return `
-        <span class="badge badge-program">
-            ${escapeHtml(program)}
-        </span>
-    `;
-
-}
-
-
-function getActivityBadge(){
-
-    return `
-        <span class="badge badge-tryout">
-            TRYOUT
-        </span>
-    `;
-
-}
-
-
-/* =====================================================
-   DISPLAY
-===================================================== */
-
-function displayValue(value){
-
-    if(
-        value === null ||
-        value === undefined ||
-        value === ""
-    ){
-        return "-";
-    }
-
-    return escapeHtml(value);
-
-}
-
-
-/* =====================================================
-   BACA FIELD HASIL DENGAN TOLERANSI HURUF BESAR/KECIL
-   Code.gs mengembalikan nama header asli dari Google Sheets.
-===================================================== */
-
-function getResultValue(item, fieldName){
-
-    if(!item || typeof item !== "object") return "";
-
-    const wanted = String(fieldName || "").toLowerCase();
-    const key = Object.keys(item).find(function(currentKey){
-        return String(currentKey).trim().toLowerCase() === wanted;
+    results.forEach((item, index) => {
+      const row = document.createElement("tr");
+      const cells = [
+        String(index + 1),
+        '<span class="badge badge-tryout">TRYOUT</span>',
+        getProgramBadge(getResultValue(item, "Program")),
+        "<strong>" + displayValue(getResultValue(item, "NamaTryout")) + "</strong>",
+        displayValue(getResultValue(item, "Tanggal")),
+        displayValue(getResultValue(item, "Kecerdasan")),
+        displayValue(getResultValue(item, "Kepribadian")),
+        displayValue(getResultValue(item, "Kecermatan")),
+        displayValue(getResultValue(item, "TIU")),
+        displayValue(getResultValue(item, "TWK")),
+        displayValue(getResultValue(item, "TKP")),
+        displayValue(getResultValue(item, "PengetahuanUmum")),
+        displayValue(getResultValue(item, "NilaiAkhir"))
+      ];
+      row.innerHTML = cells.map((cell, i) => {
+        if (i === 0 || i === 1 || i === 2 || i === 3 || i === 4) return "<td>" + cell + "</td>";
+        const field = ["", "", "", "", "", "Kecerdasan", "Kepribadian", "Kecermatan", "TIU", "TWK", "TKP", "PengetahuanUmum", "NilaiAkhir"][i];
+        const value = getResultValue(item, field);
+        const cls = i === 12 ? getFinalScoreClass(value) : getScoreClass(value);
+        return '<td class="' + cls + '">' + cell + "</td>";
+      }).join("");
+      resultsBody.appendChild(row);
     });
-
-    return key === undefined ? "" : item[key];
-
-}
-
-
-/* =====================================================
-   CHECK RESULT
-===================================================== */
-
-async function checkResult(forceExactSelection){
-
-    const input =
-        document.getElementById("studentName");
-
-    const button =
-        document.getElementById("checkButton");
-
-    const message =
-        document.getElementById("message");
-
-    const resultsSection =
-        document.getElementById("resultsSection");
-
-    const resultsBody =
-        document.getElementById("resultsBody");
-
-    const emptyState =
-        document.getElementById("emptyState");
-
-    const name =
-        input.value.trim();
-
-
-    message.className = "message";
-    message.textContent = "";
-
-    resultsSection.style.display = "none";
-    resultsBody.innerHTML = "";
+    resultsSection.style.display = "block";
     emptyState.style.display = "none";
-
-
-    if(!name){
-
-        message.className = "message error";
-        message.textContent = "Nama siswa wajib diisi.";
-        input.focus();
-
-        return;
-
+    showMessage("Data hasil ditemukan: " + results.length + " catatan tryout.", "success");
+    setTimeout(() => { if (myRequest === requestNumber) resultsSection.scrollIntoView({behavior:"smooth", block:"start"}); }, 100);
+  } catch (error) {
+    if (myRequest !== requestNumber) return;
+    console.error("PRC CLASS search error:", error);
+    showMessage(error && error.message ? error.message : "Terjadi kesalahan saat mencari data.", "error");
+  } finally {
+    if (myRequest === requestNumber) {
+      button.disabled = false;
+      button.textContent = "LIHAT HASIL";
     }
-
-
-    button.disabled = true;
-    button.textContent = "MEMUAT...";
-
-
-    try{
-
-        /*
-         * PENTING:
-         * URL dibuat menggunakan URLSearchParams
-         * agar parameter mode dan nama dikirim
-         * dengan benar.
-         */
-
-        const data = await requestStudentData({
-            mode: "student",
-            namaSiswa: name,
-            selectedName: forceExactSelection ? "1" : "0"
-        });
-
-        // Jangan tampilkan respons pencarian lama jika pengguna sudah mengetik nama lain.
-        if(!forceExactSelection && input.value.trim() !== name){
-            return;
-        }
-
-        if(
-            !data ||
-            data.status === "error"
-        ){
-
-            throw new Error(
-                data && data.message
-                    ? data.message
-                    : "Data siswa tidak ditemukan."
-            );
-
-        }
-
-
-        if(data.status === "multiple"){
-
-            message.className = "message";
-            message.textContent = "";
-
-            const explanation = document.createElement("div");
-            explanation.textContent = data.message ||
-                "Ditemukan beberapa nama yang cocok. Klik nama lengkap siswa yang ingin dilihat.";
-            message.appendChild(explanation);
-
-            const choices = document.createElement("div");
-            choices.className = "name-match-list";
-
-            const uniqueMatches = [];
-            const seenMatches = new Set();
-            (Array.isArray(data.matches) ? data.matches : []).forEach(function(fullName){
-                const cleanName = String(fullName == null ? "" : fullName).trim().replace(/\s+/g, " ");
-                const nameKey = cleanName.toLowerCase();
-                if(!cleanName || seenMatches.has(nameKey)) return;
-                seenMatches.add(nameKey);
-                uniqueMatches.push(cleanName);
-            });
-
-            uniqueMatches.forEach(function(fullName){
-                const choice = document.createElement("button");
-                choice.type = "button";
-                choice.className = "name-match-button";
-                choice.textContent = fullName;
-                choice.addEventListener("click", function(){
-                    input.value = fullName;
-                    checkResult(true);
-                });
-                choices.appendChild(choice);
-            });
-
-            message.appendChild(choices);
-            return;
-
-        }
-
-
-        if(data.status !== "success"){
-
-            throw new Error(
-                "Data hasil tidak dapat ditampilkan."
-            );
-
-        }
-
-
-        const results =
-            Array.isArray(data.results)
-                ? data.results
-                : (Array.isArray(data.data) ? data.data : []);
-
-        // Nama terpilih berasal dari backend yang sudah menormalkan kapitalisasi.
-        // Jangan menolak hasil hanya karena ejaan kapitalisasi berbeda di baris lama.
-        const displayName =
-            data.student && data.student.name
-                ? data.student.name
-                : (results.length
-                    ? String(getResultValue(results[0], "NamaSiswa") || name).trim()
-                    : name);
-
-        document.getElementById("studentDisplayName").textContent = displayName;
-
-        document.getElementById("studentProgram").textContent =
-            data.student && data.student.program
-                ? "Program: " + data.student.program
-                : "Riwayat hasil tryout";
-
-        if(results.length === 0){
-
-            emptyState.style.display = "block";
-            resultsSection.style.display = "block";
-
-            message.className = "message success";
-
-            message.textContent =
-                "Belum ada hasil tryout yang cocok. Periksa ejaan nama atau coba ketik nama lengkap.";
-
-            return;
-
-        }
-
-
-        results.forEach(
-            function(item,index){
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-
-                    <td>${index + 1}</td>
-
-                    <td>
-                        ${getActivityBadge()}
-                    </td>
-
-                    <td>
-                        ${getProgramBadge(getResultValue(item, "Program"))}
-                    </td>
-
-                    <td>
-                        <strong>
-                            ${displayValue(getResultValue(item, "NamaTryout"))}
-                        </strong>
-                    </td>
-
-                    <td>
-                        ${displayValue(getResultValue(item, "Tanggal"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "Kecerdasan"))}">
-                        ${displayValue(getResultValue(item, "Kecerdasan"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "Kepribadian"))}">
-                        ${displayValue(getResultValue(item, "Kepribadian"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "Kecermatan"))}">
-                        ${displayValue(getResultValue(item, "Kecermatan"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "TIU"))}">
-                        ${displayValue(getResultValue(item, "TIU"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "TWK"))}">
-                        ${displayValue(getResultValue(item, "TWK"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "TKP"))}">
-                        ${displayValue(getResultValue(item, "TKP"))}
-                    </td>
-
-                    <td class="${getScoreClass(getResultValue(item, "PengetahuanUmum"))}">
-                        ${displayValue(getResultValue(item, "PengetahuanUmum"))}
-                    </td>
-
-                    <td class="${getFinalScoreClass(getResultValue(item, "NilaiAkhir"))}">
-                        ${displayValue(getResultValue(item, "NilaiAkhir"))}
-                    </td>
-
-                `;
-
-
-                resultsBody.appendChild(row);
-
-            }
-        );
-
-
-        resultsSection.style.display = "block";
-
-        message.className = "message success";
-
-        message.textContent =
-            "Data hasil berhasil ditemukan.";
-
-
-        setTimeout(
-            function(){
-
-                resultsSection.scrollIntoView({
-                    behavior:"smooth",
-                    block:"start"
-                });
-
-            },
-            100
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "PRC RESULT ERROR:",
-            error
-        );
-
-        message.className = "message error";
-
-        message.textContent =
-            error && error.message
-                ? error.message
-                : "Terjadi kesalahan saat mengambil data.";
-
-    }finally{
-
-        button.disabled = false;
-        button.textContent = "LIHAT HASIL";
-
-    }
-
+  }
 }
-
-
-/* =====================================================
-   ENTER
-===================================================== */
-
-const studentNameInput = document.getElementById("studentName");
-let prcLiveSearchTimer = null;
-
-// Cari otomatis setelah pengguna berhenti mengetik selama 600 ms.
-studentNameInput.addEventListener("input", function(){
-    clearTimeout(prcLiveSearchTimer);
-
-    const typedName = studentNameInput.value.trim();
-
-    if(typedName.length < 2){
-        document.getElementById("message").textContent = "";
-        document.getElementById("message").className = "message";
-        document.getElementById("resultsSection").style.display = "none";
-        document.getElementById("resultsBody").innerHTML = "";
-        document.getElementById("emptyState").style.display = "none";
-        return;
-    }
-
-    prcLiveSearchTimer = setTimeout(function(){
-        if(studentNameInput.value.trim() === typedName){
-            checkResult(false);
-        }
-    }, 600);
+button.addEventListener("click", () => { clearTimeout(searchTimer); checkResult(false); });
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter") { event.preventDefault(); clearTimeout(searchTimer); checkResult(false); }
 });
-
-studentNameInput.addEventListener("keydown", function(event){
-    if(event.key === "Enter"){
-        clearTimeout(prcLiveSearchTimer);
-        checkResult(false);
-    }
+input.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  const value = input.value.trim();
+  ++requestNumber; // batalkan respons lama saat pengguna mulai mengetik lagi
+  button.disabled = false;
+  button.textContent = "LIHAT HASIL";
+  clearResults();
+  if (value.length < 2) { showMessage("", ""); return; }
+  showMessage("Ketik selesai untuk mencari nama yang cocok…", "success");
+  searchTimer = setTimeout(() => {
+    if (input.value.trim() === value) checkResult(false);
+  }, 700);
 });
-
 </script>
 
 </body>
