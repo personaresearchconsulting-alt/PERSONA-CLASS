@@ -832,6 +832,10 @@
             const isValid = VALID_PASSWORDS.some(pass => pass.toLowerCase() === inputVal.toLowerCase());
 
             if (isValid) {
+                // Simpan sesi 8 jam agar halaman Akademik pada origin yang sama mengenali login.
+                try {
+                    localStorage.setItem('prcClassAuthUntil', String(Date.now() + 8 * 60 * 60 * 1000));
+                } catch (e) {}
                 // Success: Hide Login, Show Dashboard
                 loginPage.style.display = 'none';
                 dashboard.style.display = 'flex';
@@ -843,6 +847,7 @@
 
         // 4. Logout Logic
         function handleLogout() {
+            try { localStorage.removeItem('prcClassAuthUntil'); } catch (e) {}
             dashboard.style.display = 'none';
             loginPage.style.display = 'flex';
             passwordInput.value = '';
