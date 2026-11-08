@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -793,104 +794,254 @@
          JAVASCRIPT SYSTEM & PROTECTION
     ================================================== -->
     <script>
-        // 1. Password Generation Manual (PRC00 - PRC101)
-        const VALID_PASSWORDS = [
-            'PRC00', 'BAGAS11', 'ILHAM0801', 'CANDRA17', 'EGA12', 'AGUS25', 'YANDHETA1', 'DIKA2408', 'dika24', 'zihan2008', 'PRC10',
-            'rendy2005', 'FATHIR06', 'GALUH23', 'DOMI22', 'FITRA07122007', 'JUAN020708@', 'DIDIT010908', 'GALANGADR', '0901', '710211',
-            'IMAMARYARR', '@HUDA02', 'JEPEH123', 'alfiannn', '290608', 'ipan2007', 'FEBRY12', 'PRC28', 'PRC29', 'PRC30',
-            'PRC31', 'PRC32', 'PRC33', 'PRC34', 'PRC35', 'PRC36', 'PRC37', 'PRC38', 'PRC39', 'PRC40',
-            'PRC41', 'PRC42', 'PRC43', 'PRC44', 'PRC45', 'PRC46', 'PRC47', 'PRC48', 'PRC49', 'PRC50',
-            'PRC51', 'PRC52', 'PRC53', 'PRC54', 'PRC55', 'PRC56', 'PRC57', 'PRC58', 'PRC59', 'PRC60',
-            'PRC61', 'PRC62', 'PRC63', 'PRC64', 'PRC65', 'PRC66', 'PRC67', 'PRC68', 'PRC69', 'PRC70',
-            'PRC71', 'PRC72', 'PRC73', 'PRC74', 'PRC75', 'PRC76', 'PRC77', 'PRC78', 'PRC79', 'PRC80',
-            'PRC81', 'PRC82', 'PRC83', 'PRC84', 'PRC85', 'PRC86', 'PRC87', 'PRC88', 'PRC89', 'PRC90',
-            'PRC91', 'PRC92', 'PRC93', 'PRC94', 'PRC95', 'PRC96', 'PRC97', 'PRC98', 'PRC99', 'PRC100', 'PRC101'
-        ];
+        // ==================================================
+        // PRC CLASS — SERVER AUTHENTICATION
+        // ==================================================
 
-        // 2. DOM Elements
-        const loginPage = document.getElementById('loginPage');
-        const dashboard = document.getElementById('dashboard');
-        const passwordInput = document.getElementById('passwordInput');
-        const btnLogin = document.getElementById('btnLogin');
-        const btnLogout = document.getElementById('btnLogout');
-        const errorMessage = document.getElementById('errorMessage');
+        const PRC_API_URL = "https://script.google.com/macros/s/AKfycbxRW0SbZqbDVW0jvNzRmdLhSRinwDv9axtIGdzosB13SyeQMe9gmilAvsO1KbvdvEW4Tg/exec";
 
-        // 3. Login Logic
-        function handleLogin() {
-            const inputVal = passwordInput.value.trim();
+        const DEVICE_KEY = "prcClassDeviceId";
+        const TOKEN_KEY = "prcClassSessionToken";
+        const AUTH_KEY = "prcClassAuthUntil";
 
-            // Clear previous error
-            errorMessage.textContent = '';
-            errorMessage.classList.remove('active');
+        // 1. DOM ELEMENTS
+        const loginPage = document.getElementById("loginPage");
+        const dashboard = document.getElementById("dashboard");
+        const passwordInput = document.getElementById("passwordInput");
+        const btnLogin = document.getElementById("btnLogin");
+        const btnLogout = document.getElementById("btnLogout");
+        const errorMessage = document.getElementById("errorMessage");
 
-            if (!inputVal) {
+        // 2. IDENTITAS PERANGKAT
+        function getDeviceId() {
+            let deviceId = localStorage.getItem(DEVICE_KEY);
+
+            if (!deviceId) {
+                deviceId = "PRC-" +
+                    (window.crypto && crypto.randomUUID
+                        ? crypto.randomUUID()
+                        : Date.now() + "-" + Math.random().toString(36).slice(2));
+
+                localStorage.setItem(DEVICE_KEY, deviceId);
+            }
+
+            return deviceId;
+        }
+
+        // 3. KOMUNIKASI DENGAN APPS SCRIPT
+        async function callPrcServer(payload) {
+            const response = await fetch(PRC_API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(payload),
+                redirect: "follow"
+            });
+
+            if (!response.ok) {
+                throw new Error("Server tidak dapat dihubungi. Coba kembali.");
+            }
+
+            return await response.json();
+        }
+
+        // 4. TAMPILAN
+        function showDashboard() {
+            loginPage.style.display = "none";
+            dashboard.style.display = "flex";
+            passwordInput.value = "";
+            clearError();
+        }
+
+        function showLogin() {
+            dashboard.style.display = "none";
+            loginPage.style.display = "flex";
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add("active");
+        }
+
+        function clearError() {
+            errorMessage.textContent = "";
+            errorMessage.classList.remove("active");
+        }
+
+        // 5. LOGIN SISWA
+        async function handleLogin() {
+            const password = passwordInput.value.trim();
+
+            clearError();
+
+            if (!password) {
                 showError("Masukkan password terlebih dahulu.");
                 return;
             }
 
-            // Memeriksa input secara akurat (cocokkan huruf besar/kecil persis atau dalam daftar resmi)
-            const isValid = VALID_PASSWORDS.some(pass => pass.toLowerCase() === inputVal.toLowerCase());
+            btnLogin.disabled = true;
+            btnLogin.textContent = "MEMERIKSA AKSES...";
 
-            if (isValid) {
-                // Simpan sesi 8 jam agar halaman Akademik pada origin yang sama mengenali login.
-                try {
-                    localStorage.setItem('prcClassAuthUntil', String(Date.now() + 8 * 60 * 60 * 1000));
-                } catch (e) {}
-                // Success: Hide Login, Show Dashboard
-                loginPage.style.display = 'none';
-                dashboard.style.display = 'flex';
-                passwordInput.value = '';
-            } else {
-                showError("Password tidak ditemukan.");
+            try {
+                const result = await callPrcServer({
+                    mode: "studentlogin",
+                    password: password,
+                    deviceId: getDeviceId()
+                });
+
+                if (result.status !== "success" || !result.token) {
+                    showError(result.message || "Password tidak valid.");
+                    return;
+                }
+
+                localStorage.setItem(TOKEN_KEY, result.token);
+
+                // Penanda kompatibilitas untuk halaman lama
+                // yang masih membaca prcClassAuthUntil.
+                localStorage.setItem(
+                    AUTH_KEY,
+                    String(Date.now() + 8 * 60 * 60 * 1000)
+                );
+
+                showDashboard();
+
+            } catch (error) {
+                showError(
+                    error.message ||
+                    "Gagal menghubungi server. Periksa koneksi internet."
+                );
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.textContent = "Masuk Kelas";
             }
         }
 
-        // 4. Logout Logic
-        function handleLogout() {
-            try { localStorage.removeItem('prcClassAuthUntil'); } catch (e) {}
-            dashboard.style.display = 'none';
-            loginPage.style.display = 'flex';
-            passwordInput.value = '';
-            errorMessage.textContent = '';
-            errorMessage.classList.remove('active');
-            passwordInput.focus();
+        // 6. VALIDASI SESI SAAT HALAMAN DIBUKA
+        async function checkExistingSession() {
+            const token = localStorage.getItem(TOKEN_KEY);
+
+            if (!token) {
+                showLogin();
+                return;
+            }
+
+            btnLogin.disabled = true;
+
+            try {
+                const result = await callPrcServer({
+                    mode: "validatestudentsession",
+                    token: token,
+                    deviceId: getDeviceId()
+                });
+
+                if (result.status === "success" && result.valid === true) {
+                    localStorage.setItem(
+                        AUTH_KEY,
+                        String(Date.now() + 8 * 60 * 60 * 1000)
+                    );
+
+                    showDashboard();
+                } else {
+                    localStorage.removeItem(TOKEN_KEY);
+                    localStorage.removeItem(AUTH_KEY);
+                    showLogin();
+                }
+
+            } catch (error) {
+                // Jika server sementara gagal dihubungi,
+                // jangan menghapus token dan jangan membebaskan sesi.
+                showLogin();
+                showError(
+                    "Tidak dapat memeriksa sesi ke server. " +
+                    "Periksa koneksi internet lalu muat ulang halaman."
+                );
+            } finally {
+                btnLogin.disabled = false;
+            }
         }
 
-        // 5. Helper Function for Errors
-        function showError(msg) {
-            errorMessage.textContent = msg;
-            errorMessage.classList.add('active');
+        // 7. LOGOUT
+        async function handleLogout() {
+            const token = localStorage.getItem(TOKEN_KEY);
+
+            if (!token) {
+                showLogin();
+                return;
+            }
+
+            btnLogout.disabled = true;
+            btnLogout.textContent = "MEMPROSES...";
+
+            try {
+                const result = await callPrcServer({
+                    mode: "studentlogout",
+                    token: token,
+                    deviceId: getDeviceId()
+                });
+
+                if (result.status !== "success") {
+                    alert(
+                        result.message ||
+                        "Logout belum berhasil. Sesi masih perlu diperiksa."
+                    );
+                    return;
+                }
+
+                localStorage.removeItem(TOKEN_KEY);
+                localStorage.removeItem(AUTH_KEY);
+
+                passwordInput.value = "";
+                clearError();
+                showLogin();
+                passwordInput.focus();
+
+            } catch (error) {
+                alert(
+                    "Logout belum dapat dikonfirmasi oleh server. " +
+                    "Jangan hapus data browser. Coba kembali saat koneksi stabil."
+                );
+            } finally {
+                btnLogout.disabled = false;
+                btnLogout.textContent = "KELUAR";
+            }
         }
 
-        // 6. Event Listeners
-        btnLogin.addEventListener('click', handleLogin);
-        btnLogout.addEventListener('click', handleLogout);
+        // 8. EVENT LISTENERS
+        btnLogin.addEventListener("click", handleLogin);
+        btnLogout.addEventListener("click", handleLogout);
 
-        passwordInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
+        passwordInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
                 handleLogin();
             }
         });
 
-        // 7. Basic Protection Features
-        document.addEventListener('contextmenu', function(e) {
+        // 9. BASIC PROTECTION — DIPERTAHANKAN
+        document.addEventListener("contextmenu", function(e) {
             e.preventDefault();
         });
 
-        document.addEventListener('keydown', function(e) {
-            // Disable F12
-            if (e.key === 'F12') {
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
                 e.preventDefault();
             }
-            // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-            if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'i', 'j', 'c'].includes(e.key)) {
+
+            if (
+                e.ctrlKey &&
+                e.shiftKey &&
+                ["I", "J", "C", "i", "j", "c"].includes(e.key)
+            ) {
                 e.preventDefault();
             }
-            // Disable Ctrl+U
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+
+            if (e.ctrlKey && (e.key === "u" || e.key === "U")) {
                 e.preventDefault();
             }
         });
+
+        // 10. PERIKSA SESI SAAT HALAMAN DIMUAT
+        checkExistingSession();
     </script>
 </body>
 </html>
